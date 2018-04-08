@@ -1,43 +1,56 @@
 package schema.blocks.implementation.blocks;
 
+import schema.blocks.implementation.type.AbstractMaterial;
+import schema.blocks.implementation.type.Energy;
+
 public class Warm extends Block {
 	
 	public Warm(int id) {
 		super();
 		this.id = id;
+		this.createPort();
+		this.createPort();
 	}
 	
-	public void resolve() { /* TODO */
-		double delta = this.energy_in.joule / (this.material_in.thermal_c * this.material_in.kg);
-		if(delta > this.material_in.t) {
-			double Q = this.material_in.thermal_c * this.material_in.kg * this.material_in.t;
+	public void resolve() { 
+
+    	if (this.portsIn.get(0).value instanceof Energy) {
+    		this.portsIn.get(0).value = Energy.setJoule();
+    	}	
 			
-			if (Q == this.material_in.melt_const * this.material_in.kg) {	//Q=lambda*m
-				this.material_out.t = 0;
-				this.material_out.state = "liquid";
+		else if (this.portsIn.get(0).value instanceof AbstractMaterial) {
+			this.portsIn.get(0).value = AbstractMaterial.setValues();
+		}
+    	
+    	double delta = this.portsIn.joule / (this.portsIn.AbstractMaterial.thermal_c * this.portsIn.AbstractMaterial.kg);
+		if(delta > this.portsIn.AbstractMaterial.t) {
+			double Q = this.AbstractMaterial.thermal_c * this.AbstractMaterial.kg * this.AbstractMaterial.t;
+			
+			if (Q == this.portsIn.AbstractMaterial.melt_const * this.portsIn.AbstractMaterial.kg) {	//Q=lambda*m
+				this.portsOut.AbstractMaterial.t = 0;
+				this.portsOut.AbstractMaterial.state = "liquid";
 				return;
 			}
-			else if (Q > this.material_in.melt_const * this.material_in.kg) {
-				Q = Q - this.material_in.melt_const * this.material_in.kg;
-				delta = Q / (this.material_in.thermal_c * this.material_in.kg);
-				this.material_out.t = delta;
-				this.material_out.state = "liquid";
+			else if (Q > this.portsIn.AbstractMaterial.melt_const * this.portsIn.AbstractMaterial.kg) {
+				Q = Q - this.portsIn.AbstractMaterial.melt_const * this.portsIn.AbstractMaterial.kg;
+				delta = Q / (this.portsIn.AbstractMaterial.thermal_c * this.portsIn.AbstractMaterial.kg);
+				this.portsOut.AbstractMaterial.t = delta;
+				this.portsOut.AbstractMaterial.state = "liquid";
 				return;
 			}
 			else {
-				this.material_out.t = 0;
+				this.portsOut.AbstractMaterial.t = 0;
 				return;
 			}
 		}
 		
-		this.material_out.kg = this.material_in.kg;
-		this.material_out.thermal_c = this.material_in.thermal_c;
+		this.portsOut.AbstractMaterial.kg = this.portsIn.AbstractMaterial.kg;
+		this.portsOut.AbstractMaterial.thermal_c = this.portsIn.AbstractMaterial.thermal_c;
 		
-		this.material_out.t = this.material_in.t + delta;
-	}
+		this.portsOut.AbstractMaterial.t = this.portsIn.AbstractMaterial.t + delta;
+    }
 	
 	public Block.Operation getOperation() {
 		return Operation.WARM;
 	}
 	
-}
