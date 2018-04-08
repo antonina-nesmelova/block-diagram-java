@@ -1,0 +1,53 @@
+<project name="ija2016-3" default="compile">
+<!-- def properties  -->
+	<property name="dest.dir" value="build"/>
+	<property
+		name="lib.path"
+		value="lib/junit-4.12.jar:lib/hamcrest-core-1.3.jar"
+	/>
+
+	<property
+		name="test.classpath"
+		value="${lib.path}:${dest.dir}:."
+	/>
+	<property name="test.class.name" value="KlondikeTest"/>
+<!-- end of properties -->
+
+<!-- def targets -->
+	<target name="compile" depends="compile.proj">
+		<javac
+			srcdir="src"
+			classpath="${test.classpath}"
+			destdir="${dest.dir}"
+			includeAntRuntime="no"
+		>			
+			<include name="${test.class.name}.java"/>
+		</javac>
+	</target>
+
+	<target name="run" depends="compile">
+		<java
+			classpath="${test.classpath}:"
+			classname="org.junit.runner.JUnitCore"
+		>
+			<arg value="${test.class.name}"/>
+		</java>
+	</target>
+
+	<target name="clean">
+		<delete failonerror="false">
+			<fileset dir="${dest.dir}" includes="**/*"/>
+		</delete>
+	</target>
+
+	<target name="compile.proj">
+		<javac
+			srcdir="src/" 
+			destdir="${dest.dir}"
+			includeAntRuntime="no"
+		>
+			<exclude name="${test.class.name}.java"/>
+		</javac>
+	</target>
+<!-- end of targets -->
+</project>
