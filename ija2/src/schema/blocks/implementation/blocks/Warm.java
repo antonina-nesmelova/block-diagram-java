@@ -24,7 +24,7 @@ public class Warm extends Block {
     	
     	double delta = this.portsIn.joule / (this.portsIn.AbstractMaterial.thermal_c * this.portsIn.AbstractMaterial.kg);
 		if(delta > this.portsIn.AbstractMaterial.t) {
-			double Q = this.AbstractMaterial.thermal_c * this.AbstractMaterial.kg * this.AbstractMaterial.t;
+			double Q = this.portsIn.AbstractMaterial.thermal_c * this.portsIn.AbstractMaterial.kg * this.portsIn.AbstractMaterial.t;
 			
 			if (Q == this.portsIn.AbstractMaterial.melt_const * this.portsIn.AbstractMaterial.kg) {	//Q=lambda*m
 				this.portsOut.AbstractMaterial.t = 0;
@@ -54,3 +54,4 @@ public class Warm extends Block {
 		return Operation.WARM;
 	}
 	
+}
