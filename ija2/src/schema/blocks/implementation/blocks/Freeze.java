@@ -1,38 +1,49 @@
 package schema.blocks.implementation.blocks;
 
-public class Freeze extends Block{
+import schema.blocks.implementation.type.AbstractMaterial;
+import schema.blocks.implementation.type.Energy;
+
+public class Freeze extends Block {
     public Freeze(int id) {
         super();
         this.id = id;
+        this.createPort();
+        this.createPort();
     }
 
-    public void resolve() { /* TODO */
-        double delta = this.energy_in.joule / (this.material_in.thermal_c * this.material_in.kg);
-        if(delta*(-1) > this.material_in.t) {
-            double Q = this.material_in.thermal_c * this.material_in.kg * this.material_in.t;
+    public void resolve() { 
 
-            if (Q == this.material_in.melt_const * this.material_in.kg) {	//Q=lambda*m
-                this.material_out.t = 0;
-                this.material_out.state = "liquid";
+    	if (this.portsIn.get(0).value instanceof Energy) {
+    		this.portsIn.get(0).value = Energy.setJoule();
+    	}	
+			
+		else if (this.portsIn.get(0).value instanceof AbstractMaterial) {
+			this.portsIn.get(0).value = AbstractMaterial.setValues();
+		}
+    	
+        double delta = this.portsIn.joule / (this.portsIn.thermal_c * this.portsIn.kg);
+        if(delta*(-1) > this.portsIn.t) {
+            double Q = this.portsIn.thermal_c * this.portsIn.kg * this.portsIn.t;
+            if (Q == this.portsIn.melt_const * this.portsIn.kg) {	//Q=lambda*m
+                this.portsIn.t = 0;
+                this.portsIn.state = "liquid";
                 return;
             }
-            else if (Q > this.material_in.melt_const * this.material_in.kg) {
-                Q = Q - this.material_in.melt_const * this.material_in.kg;
-                delta = Q / (this.material_in.thermal_c * this.material_in.kg);
-                this.material_out.t = delta;
-                this.material_out.state = "liquid";
+            else if (Q > this.portsIn.melt_const * this.portsIn.kg) {
+                Q = Q - this.portsIn.melt_const * this.portsIn.kg;
+                delta = Q / (this.portsIn.hermal_c * this.portsIn.kg);
+                this.portsIn.t = delta;
+                this.portsIn.state = "liquid";
                 return;
             }
             else {
-                this.material_out.t = 0;
+                this.portsOut.t = 0;
                 return;
             }
         }
-
-        this.material_out = this.material_in;
-        this.material_out = this.material_in;
-
-        this.material_out.t = this.material_in.t + delta;
+        this.portsOut = this.portsIn;
+        this.portsOut = this.portsIn;
+        this.portsOut.t = this.portsIn.t + delta;
     }
 
     public Block.Operation getOperation() {
