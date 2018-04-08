@@ -1,11 +1,13 @@
 package schema.blocks;
 
-import schema.blocks.implementation.type.Energy;
+import schema.blocks.implementation.ports.PortIn;
+import schema.blocks.implementation.ports.PortOut;
 
 public abstract class Block {
 
+	public int id;
 	
-	public AbstractMaterial material_in;
+	/*public AbstractMaterial material_in;
 	public AbstractMaterial material_out;
 	
 	public Energy energy_in;
@@ -14,13 +16,22 @@ public abstract class Block {
 	public int is_free_m_in;
 	public boolean is_free_m_out;
 	public int is_free_e_in;
-	public boolean is_free_e_out;
+	public boolean is_free_e_out;*/
+
+	public PortIn pIn1;
+	public PortIn pIn2;
+	public PortOut pOut1;
+	public PortOut pOut2;
 
 	protected Block() {
-		this.is_free_m_in = -1;
+		/*this.is_free_m_in = -1;
 		this.is_free_e_out = true;
 		this.is_free_m_out = true;
-		this.is_free_e_in = -1;
+		this.is_free_e_in = -1;*/
+		pIn1 = new PortIn();
+		pIn2 = new PortIn();
+		pOut1 = new PortOut();
+		pOut2 = new PortOut();
 	}
 
 	public enum Operation {
