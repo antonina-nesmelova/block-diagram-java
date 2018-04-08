@@ -4,9 +4,11 @@ public class Freeze extends Block{
     public Freeze(int id) {
         super();
         this.id = id;
+        this.createPort();
+        this.createPort();
     }
 
-    public void resolve() { /* TODO */
+    public void resolve() { }/* TODO
         double delta = this.energy_in.joule / (this.material_in.thermal_c * this.material_in.kg);
         if(delta*(-1) > this.material_in.t) {
             double Q = this.material_in.thermal_c * this.material_in.kg * this.material_in.t;
@@ -34,7 +36,7 @@ public class Freeze extends Block{
 
         this.material_out.t = this.material_in.t + delta;
     }
-
+*/
     public Block.Operation getOperation() {
         return Operation.FREEZE;
     }

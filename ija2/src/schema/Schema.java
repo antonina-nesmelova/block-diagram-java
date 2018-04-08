@@ -42,13 +42,8 @@ public class Schema {
 		return b;
 	}
 	
-	public boolean setPortType(Block block, Type.type type, int pId) {
-		if (block instanceof Warm || block instanceof Freeze) {
-			if (type == Type.type.WATER)
-		}
-		else {
-		/* ... */
-		}
+	public boolean setPortValue(Block block, Type type, int pId) {
+		return block.setPortValue(pId, type);
 	}
 	
 	/*public Type getValue(int blockId, boolean in, boolean material) {

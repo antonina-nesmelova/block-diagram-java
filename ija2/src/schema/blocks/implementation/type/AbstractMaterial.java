@@ -5,8 +5,8 @@ import schema.blocks.Type;
 
 public abstract class AbstractMaterial implements Material {
 	public double kg;
-	public  double t;
-	public  String state;
+	public double t;
+	public String state;
 	public double thermal_c;
 	public double freeze_t;
 	public double gass_t;

@@ -5,9 +5,13 @@ public class Warm extends Block {
 	public Warm(int id) {
 		super();
 		this.id = id;
+		this.createPort();
+		this.createPort();
 	}
+
+	public void resolve() {  }
 	
-	public void resolve() { /* TODO */
+	/*public void resolve() {
 		double delta = this.energy_in.joule / (this.material_in.thermal_c * this.material_in.kg);
 		if(delta > this.material_in.t) {
 			double Q = this.material_in.thermal_c * this.material_in.kg * this.material_in.t;
@@ -34,7 +38,7 @@ public class Warm extends Block {
 		this.material_out.thermal_c = this.material_in.thermal_c;
 		
 		this.material_out.t = this.material_in.t + delta;
-	}
+	}*/
 	
 	public Block.Operation getOperation() {
 		return Operation.WARM;
