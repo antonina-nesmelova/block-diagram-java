@@ -5,5 +5,6 @@ public class PortIn extends Port {
 
     public PortIn() {
         super();
+        this.portOut = null;
     }
 }

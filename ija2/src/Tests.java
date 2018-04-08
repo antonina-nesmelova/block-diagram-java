@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.junit.After;
 
 import schema.blocks.implementation.type.AbstractMaterial;
-import schema.blocks.Block;
+import schema.blocks.implementation.blocks.Block;
 import schema.Schema;
 import schema.blocks.implementation.type.Energy;
 import schema.blocks.implementation.type.Water;

@@ -1,14 +1,10 @@
 package schema.blocks.implementation.blocks;
-import schema.blocks.Block;
-import schema.blocks.Type;
-import schema.blocks.implementation.ports.Port;
 
 public class Warm extends Block {
 	
 	public Warm(int id) {
 		super();
 		this.id = id;
-		pIn1.setType(Type.type.ENERGY);
 	}
 	
 	public void resolve() { /* TODO */
@@ -42,14 +38,6 @@ public class Warm extends Block {
 	
 	public Block.Operation getOperation() {
 		return Operation.WARM;
-	}
-
-	public Port getPort() {
-
-	}
-
-	private Port getEnergy() {
-
 	}
 	
 }

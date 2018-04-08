@@ -10,7 +10,8 @@ public abstract class Port {
     public boolean free;
 
     protected Port() {
-        free = true;
+        this.free = true;
+        this.value = null;
     }
 
     public void setType(Type.type type) {

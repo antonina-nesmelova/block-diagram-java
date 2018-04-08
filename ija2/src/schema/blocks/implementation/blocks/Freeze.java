@@ -1,5 +1,4 @@
 package schema.blocks.implementation.blocks;
-import schema.blocks.Block;
 
 public class Freeze extends Block{
     public Freeze(int id) {

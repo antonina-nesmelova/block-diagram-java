@@ -2,11 +2,12 @@ package schema;
 
 import java.util.*;
 
-import schema.blocks.Block;
+import schema.blocks.implementation.blocks.Block;
 import schema.blocks.Type;
 import schema.blocks.implementation.blocks.Freeze;
 import schema.blocks.implementation.blocks.Warm;
-import schema.blocks.implementation.type.Energy;
+
+//import static schema.blocks.Type.type.WATER;
 
 public class Schema {
 	
@@ -41,9 +42,10 @@ public class Schema {
 		return b;
 	}
 	
-	public boolean setPortType(Block block, Type type, int pId) { /* TODO */
-		if ((block instanceof Warm || block instanceof Freeze)) //prvni ports techto bloku je typu Energy
-			/* ... */
+	public boolean setPortType(Block block, Type.type type, int pId) {
+		if (block instanceof Warm || block instanceof Freeze) {
+			if (type == Type.type.WATER)
+		}
 		else {
 		/* ... */
 		}
