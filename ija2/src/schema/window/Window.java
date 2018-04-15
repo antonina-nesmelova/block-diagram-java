@@ -57,7 +57,7 @@ public class Window {
 		btnNewButton_1.setBounds(12, 133, 83, 39);
 		frame.getContentPane().add(btnNewButton_1);
 		
-		JButton btnMakeIce = new JButton("Make \r\nIce");
+		JButton btnMakeIce = new JButton("Make Ice");
 		btnMakeIce.setBounds(10, 192, 85, 39);
 		frame.getContentPane().add(btnMakeIce);
 		
