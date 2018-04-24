@@ -1,0 +1,23 @@
+package interfaces;
+
+import java.awt.*;
+
+public interface Constants {
+
+    final static int SCREEN_WIDTH = ((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth()-50) / 2;
+    final static int SCREEN_HEIGHT = ((int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()-50) / 2;
+
+    final static int BLOCK_WIDTH = 71;
+    final static int BLOCK_HEIGHT = 95;
+    final static int INDENT = 20;
+
+    final static int BUTTON_WIDTH = 150;
+    final static int BUTTON_HEIGHT = 30;
+
+    final static int MENU_X = (SCREEN_WIDTH / 2) - (BUTTON_WIDTH / 2);
+    final static int MENU_Y = (SCREEN_HEIGHT / 2);
+    
+    final static int UNDO_BUT_X = (BUTTON_WIDTH / 4); 
+    final static int UNDO_BUT_Y = BUTTON_HEIGHT; 
+
+}
