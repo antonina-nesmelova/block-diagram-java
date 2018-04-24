@@ -96,7 +96,6 @@ public class Window {
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		menuBar.setBackground(new Color(211, 211, 211));
-		//menuBar.setBounds(0, 0, 709, 31);
 		frame.setVisible(true);		
 		
 		JMenu Save = new JMenu("Save");
@@ -104,14 +103,15 @@ public class Window {
 		menuBar.add(Save);
 		
 		JMenu menu = new JMenu("Save");
-		menu.setHorizontalAlignment(SwingConstants.LEFT);
-		menu.setForeground(new Color(128, 0, 128));
-		Save.add(menu);
+		JMenuItem save = new JMenuItem("Save");
+		save.setHorizontalAlignment(SwingConstants.LEFT);
+		save.setForeground(new Color(128, 0, 128));
+		Save.add(save);
 		
-		JMenu mnSaveAs = new JMenu("Save as...");
-		mnSaveAs.setHorizontalAlignment(SwingConstants.LEFT);
-		mnSaveAs.setForeground(new Color(128, 0, 128));
-		Save.add(mnSaveAs);
+		JMenuItem saveas = new JMenuItem("Save As...");
+		saveas.setHorizontalAlignment(SwingConstants.LEFT);
+		saveas.setForeground(new Color(128, 0, 128));
+		Save.add(saveas);
 		
 		JMenu Download = new JMenu("Download");
 		Download.setForeground(new Color(128, 0, 128));
