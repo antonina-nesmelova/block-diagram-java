@@ -18,6 +18,7 @@ import javax.swing.SwingConstants;
 import java.awt.Choice;
 import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
+import javax.swing.JCheckBox;
 
 public class Window {
 
@@ -70,49 +71,65 @@ public class Window {
 		btnWarm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JButton warmblock = new JButton("Warm");
-				JPanel panel = new JPanel();
-				panel.setBorder(new LineBorder(new Color(230, 200, 140)));
-				panel.setBackground(new Color(245, 222, 179));
-				desktopPane.setLayer(panel, 1);
-				panel.setBounds(165, 11, 120, 86);
-				desktopPane.add(panel);
-				panel.setLayout(null);
+				warmblock.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						JPanel panel = new JPanel();
+						panel.setBorder(new LineBorder(new Color(230, 200, 140)));
+						panel.setBackground(new Color(245, 222, 179));
+						desktopPane.setLayer(panel, 1);
+						panel.setBounds(165, 11, 120, 86);
+						desktopPane.add(panel);
+						panel.setLayout(null);
 				
-				Choice choice_1 = new Choice();
-				choice_1.setBounds(14, 10, 85, 20);
-				panel.add(choice_1);
-				choice_1.add("Water");
-				choice_1.add("Alkohol");
-				choice_1.add("Energy");
+						Choice choice_1 = new Choice();
+						choice_1.setBounds(14, 10, 85, 20);
+						panel.add(choice_1);
+						choice_1.add("Water");
+						choice_1.add("Alkohol");
+						choice_1.add("Energy");
 						
-				txtMass = new JTextField();
-				panel.add(txtMass);
-				txtMass.setColumns(5);
+						txtMass = new JTextField();
+						panel.add(txtMass);
+						txtMass.setColumns(5);
 						
-				txtTemperature = new JTextField();
-				panel.add(txtTemperature);
-				txtTemperature.setColumns(5);
-				frame.setVisible(true);
-				choice_1.add("Water");
-				choice_1.add("Alkohol");
-				choice_1.add("Energy");
+						txtTemperature = new JTextField();
+						panel.add(txtTemperature);
+						txtTemperature.setColumns(5);
+						frame.setVisible(true);
+						choice_1.add("Water");
+						choice_1.add("Alkohol");
+						choice_1.add("Energy");
 
-				JFormattedTextField MassField = new JFormattedTextField();
-				MassField.setToolTipText("Mass");
-				MassField.setBounds(14, 40, 85, 20);
-				panel.add(MassField);
-				frame.setVisible(true);
+						JFormattedTextField MassField = new JFormattedTextField();
+						MassField.setToolTipText("Mass");
+						MassField.setBounds(14, 40, 85, 20);
+						panel.add(MassField);
+						frame.setVisible(true);
 						
-				JFormattedTextField TemperatureField = new JFormattedTextField();
-				TemperatureField.setToolTipText("Temperature");
-				TemperatureField.setBounds(14, 60, 85, 20);
-				panel.add(TemperatureField);
-				frame.setVisible(true);
-				
+						JFormattedTextField TemperatureField = new JFormattedTextField();
+						TemperatureField.setToolTipText("Temperature");
+						TemperatureField.setBounds(14, 60, 85, 20);
+						panel.add(TemperatureField);
+						frame.setVisible(true);
+					}
+				});
 				warmblock.setBackground(new Color(255, 250, 240));
 				warmblock.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				warmblock.setBounds(55, 40, 130, 115);
 				desktopPane.add(warmblock);
+				frame.setVisible(true);
+
+
+				JCheckBox chckbxNewCheckBox = new JCheckBox("");
+				chckbxNewCheckBox.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						desktopPane.remove(warmblock);
+					}
+				});
+				chckbxNewCheckBox.setSelected(true);
+				desktopPane.setLayer(chckbxNewCheckBox, 1);
+				chckbxNewCheckBox.setBounds(163, 131, 22, 23);
+				desktopPane.add(chckbxNewCheckBox);
 				frame.setVisible(true);
 			}
 		});
@@ -127,44 +144,48 @@ public class Window {
 		btnFreeze.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 					JButton freezeblock = new JButton("Freeze");
-					JPanel panel = new JPanel();
-					panel.setBorder(new LineBorder(new Color(230, 200, 140)));
-					panel.setBackground(new Color(245, 222, 179));
-					desktopPane.setLayer(panel, 1);
-					panel.setBounds(440, 11, 120, 86);
-					desktopPane.add(panel);
-					panel.setLayout(null);
+					freezeblock.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent arg0) {
+							JPanel panel = new JPanel();
+							panel.setBorder(new LineBorder(new Color(230, 200, 140)));
+							panel.setBackground(new Color(245, 222, 179));
+							desktopPane.setLayer(panel, 1);
+							panel.setBounds(440, 11, 120, 86);
+							desktopPane.add(panel);
+							panel.setLayout(null);
 					
-					Choice choice_1 = new Choice();
-					choice_1.setBounds(14, 10, 85, 20);
-					panel.add(choice_1);
-					choice_1.add("Water");
-					choice_1.add("Alkohol");
-					choice_1.add("Energy");
+							Choice choice_1 = new Choice();
+							choice_1.setBounds(14, 10, 85, 20);
+							panel.add(choice_1);
+							choice_1.add("Water");
+							choice_1.add("Alkohol");
+							choice_1.add("Energy");
 							
-					txtMass = new JTextField();
-					panel.add(txtMass);
-					txtMass.setColumns(5);
+							txtMass = new JTextField();
+							panel.add(txtMass);
+							txtMass.setColumns(5);
 							
-					txtTemperature = new JTextField();
-					panel.add(txtTemperature);
-					txtTemperature.setColumns(5);
-					frame.setVisible(true);
-					choice_1.add("Water");
-					choice_1.add("Alkohol");
-					choice_1.add("Energy");
+							txtTemperature = new JTextField();
+							panel.add(txtTemperature);
+							txtTemperature.setColumns(5);
+							frame.setVisible(true);
+							choice_1.add("Water");
+							choice_1.add("Alkohol");
+							choice_1.add("Energy");
 
-					JFormattedTextField MassField = new JFormattedTextField();
-					MassField.setToolTipText("Mass");
-					MassField.setBounds(14, 40, 85, 20);
-					panel.add(MassField);
-					frame.setVisible(true);
+							JFormattedTextField MassField = new JFormattedTextField();
+							MassField.setToolTipText("Mass");
+							MassField.setBounds(14, 40, 85, 20);
+							panel.add(MassField);
+							frame.setVisible(true);
 							
-					JFormattedTextField TemperatureField = new JFormattedTextField();
-					TemperatureField.setToolTipText("Temperature");
-					TemperatureField.setBounds(14, 60, 85, 20);
-					panel.add(TemperatureField);
-					frame.setVisible(true);
+							JFormattedTextField TemperatureField = new JFormattedTextField();
+							TemperatureField.setToolTipText("Temperature");
+							TemperatureField.setBounds(14, 60, 85, 20);
+							panel.add(TemperatureField);
+							frame.setVisible(true);
+						}
+					});		
 					freezeblock.setBackground(new Color(255, 250, 240));
 					freezeblock.setFont(new Font("Tahoma", Font.PLAIN, 13));
 					freezeblock.setBounds(325, 40, 130, 115);
