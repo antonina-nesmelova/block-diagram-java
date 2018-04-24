@@ -16,7 +16,6 @@ import java.util.ArrayList;
 public class Window {
 
     public static String NAME = "Block Schema's editor";     //name of window
-    public static boolean splitted;
 
     public static void main(String[] args) {
 
