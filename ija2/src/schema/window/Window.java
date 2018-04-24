@@ -14,12 +14,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Window {
+	
+	JFrame frame;
 
     public static String NAME = "Block Schema's editor";     //name of window
 
     public static void main(String[] args) {
 
         JFrame frame = new JFrame(NAME);
+
 
         frame.getContentPane().setLayout(new GridBagLayout());
         frame.getContentPane().add(new Panel(frame));
@@ -32,3 +35,6 @@ public class Window {
         frame.setResizable(false);
     }
 }
+
+
+
