@@ -20,7 +20,6 @@ public class Window {
     public static void main(String[] args) {
 
         JFrame frame = new JFrame(NAME);
-        splitted = false;
 
         frame.getContentPane().setLayout(new GridBagLayout());
         frame.getContentPane().add(new Panel(frame));
