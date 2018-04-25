@@ -93,10 +93,11 @@ public class Window {
     
     private void block_creator(int t) {    	
     	Random rand = new Random();
-		int x = rand.nextInt(width - 350) + 100;
-		int y = rand.nextInt(height - 350) + 100;
+		int x = rand.nextInt(width - 450) + 100;
+		int y = rand.nextInt(height - 450) + 100;
     		if(t == 0) {  
     			JButton warmblock = new JButton("Warm");
+    			Movement mv = new Movement(warmblock);
                 warmblock.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent arg0) {
                     	JPanel wrmpnl = Data(x, y);
@@ -106,7 +107,6 @@ public class Window {
                         clsbtn.setToolTipText("Close");
                         desktopPane.add(clsbtn);
                         frame.setVisible(true);
-                    	
                     	if(wrmpnl != null) {
                     		clsbtn.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent arg0) {
