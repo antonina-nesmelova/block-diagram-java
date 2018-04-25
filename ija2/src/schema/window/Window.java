@@ -10,6 +10,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFormattedTextField;
 import javax.swing.JMenuBar;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.JMenu;
@@ -31,7 +32,10 @@ public class Window {
     private JTextField txtMass;
     private JTextField txtTemperature;
     private JDesktopPane desktopPane;
+    private JButton btnWarm;
+    private JButton btnFreeze;
     private JPanel panel;
+    //Component[] componentList = desktopPane.getComponents();
 
     /**
      * Launch the application.
@@ -56,11 +60,11 @@ public class Window {
         initialize();
     }
 
-    public void Dots(int lh, int rh, int ld, int rd) {
+    /*public void Dots(int lh, int rh, int ld, int rd) {
     	
-    }
-    public void Data(int width, int height) {
-    	panel = new JPanel();
+    }*/
+    public JPanel Data(int width, int height) {
+    	JPanel panel = new JPanel();
         panel.setBorder(new LineBorder(new Color(230, 200, 140)));
         panel.setBackground(new Color(245, 222, 179));
         desktopPane.setLayer(panel, 1);
@@ -95,35 +99,16 @@ public class Window {
         TemperatureField.setBounds(14, 60, 85, 20);
         panel.add(TemperatureField);
         frame.setVisible(true);
+        
+        return panel;
     }
-    /**
-     * Initialize the contents of the frame.
-     */
-    private void initialize() {
-
-    	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    	int width = (int) screenSize.getWidth();
-    	int height = (int) screenSize.getHeight();
-    	
-        frame = new JFrame(NAME);
-        frame.setBounds(0, 0, width, height);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(null);
-
-
-        desktopPane = new JDesktopPane();
-        desktopPane.setBackground(new Color(171, 171, 171));
-        desktopPane.setBounds(155, 28, (width - 200), (height - 150));
-        frame.getContentPane().add(desktopPane);
-
-
-        JButton btnWarm = new JButton("Warm");
-        btnWarm.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                JButton warmblock = new JButton("Warm");
+    
+    private void block_creator(int t) {
+    		if(t == 0) {
+    			JButton warmblock = new JButton("Warm");
                 warmblock.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent arg0) {
-                    	Data(165, 11);
+                    	panel = Data(165, 11);
                     }
                 });
                 warmblock.setBackground(new Color(255, 250, 240));
@@ -148,19 +133,9 @@ public class Window {
                 clsbtn.setBounds(163, 131, 22, 23);
                 desktopPane.add(clsbtn);
                 frame.setVisible(true);
-            }
-        });
-        btnWarm.setForeground(new Color(128, 0, 128));
-        btnWarm.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 11));
-        btnWarm.setBackground(new Color(211, 211, 211));
-        btnWarm.setBounds(12, 80, 109, 56);
-        frame.getContentPane().add(btnWarm);
-
-
-        JButton btnFreeze = new JButton("Freeze");
-        btnFreeze.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                JButton freezeblock = new JButton("Freeze");
+    		}
+    		if(t == 1) {
+    			JButton freezeblock = new JButton("Freeze");
                 freezeblock.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent arg0) {
                         Data(435, 11);
@@ -186,17 +161,57 @@ public class Window {
                 desktopPane.setLayer(clsbtn, 1);
                 clsbtn.setBounds(432, 131, 22, 23);
                 desktopPane.add(clsbtn);
-                frame.setVisible(true);
+                frame.setVisible(true);               
+    		}
+   }
+    /**
+     * Initialize the contents of the frame.
+     */
+    private void initialize() {
+
+    	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    	int width = (int) screenSize.getWidth();
+    	int height = (int) screenSize.getHeight();
+    	
+    	/*	Window	*/
+        frame = new JFrame(NAME);
+        frame.setBounds(0, 0, width, height);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().setLayout(null);
+
+        /*	Working area	*/
+        desktopPane = new JDesktopPane();
+        desktopPane.setBackground(new Color(171, 171, 171));
+        desktopPane.setBounds(155, 28, (width - 200), (height - 150));
+        frame.getContentPane().add(desktopPane);
+
+        /*	Button Warm	 */
+        btnWarm = new JButton("Warm");
+    	btnWarm.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            	block_creator(0);
             }
         });
-        
-        
+        btnWarm.setForeground(new Color(128, 0, 128));
+        btnWarm.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 11));
+        btnWarm.setBackground(new Color(211, 211, 211));
+        btnWarm.setBounds(12, 80, 109, 56);
+        frame.getContentPane().add(btnWarm);
 
+        /*	Button Freeze	 */
+        btnFreeze = new JButton("Freeze");
+        btnFreeze.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {     	
+            	block_creator(1);
+            }
+        });
+  
         btnFreeze.setForeground(new Color(128, 0, 128));
         btnFreeze.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 11));
         btnFreeze.setBackground(new Color(211, 211, 211));
         btnFreeze.setBounds(12, 158, 109, 56);
         frame.getContentPane().add(btnFreeze);
+        //listener();
 
         JButton btnMakeIce = new JButton("Make Ice");
         btnMakeIce.setForeground(new Color(128, 0, 128));
