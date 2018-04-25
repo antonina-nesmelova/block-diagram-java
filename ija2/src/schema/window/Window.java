@@ -104,11 +104,12 @@ public class Window {
     	
     		if(t == 0) {
     			int x = rand.nextInt(width - 200) + 10;
+    			int y = rand.nextInt(height - 150) + 10;
     			JButton warmblock = new JButton("Warm");
                 JButton clsbtn = new JButton("X");
                 warmblock.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent arg0) {
-                    	JPanel wrmpnl = Data(x, x);
+                    	JPanel wrmpnl = Data(x, y);
                     	if(wrmpnl != null) {
                     		clsbtn.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent arg0) {
@@ -120,7 +121,7 @@ public class Window {
                 });
                 warmblock.setBackground(new Color(255, 250, 240));
                 warmblock.setFont(new Font("Tahoma", Font.PLAIN, 13));
-                warmblock.setBounds((x - 95), (x - 85), 130, 115);
+                warmblock.setBounds((x - 95), (y - 85), 130, 115);
                 desktopPane.add(warmblock);
                 frame.setVisible(true);
 
@@ -133,7 +134,7 @@ public class Window {
                     }
                 });
                 desktopPane.setLayer(clsbtn, 1);
-                clsbtn.setBounds((x + 13), (x - 85), 22, 23);
+                clsbtn.setBounds((x + 13), (y - 85), 22, 23);
                 clsbtn.setToolTipText("Close");
                 desktopPane.add(clsbtn);
                 frame.setVisible(true);
@@ -141,11 +142,12 @@ public class Window {
     		
     		if(t == 1) {
     			int x = rand.nextInt(width - 200) + 10;
+    			int y = rand.nextInt(height - 150) + 10;
     			JButton freezeblock = new JButton("Freeze");
     			JButton clsbtn = new JButton("X");
                 freezeblock.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent arg0) {
-                    	JPanel frzpnl = Data(x, x);
+                    	JPanel frzpnl = Data(x, y);
                     	if(frzpnl != null) {
                     		clsbtn.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent arg0) {
@@ -157,7 +159,7 @@ public class Window {
                 });
                 freezeblock.setBackground(new Color(255, 250, 240));
                 freezeblock.setFont(new Font("Tahoma", Font.PLAIN, 13));
-                freezeblock.setBounds((x - 95), (x - 85), 130, 115);
+                freezeblock.setBounds((x - 95), (y - 85), 130, 115);
                 desktopPane.add(freezeblock);
                 frame.setVisible(true);
                 clsbtn.addActionListener(new ActionListener() {
@@ -169,7 +171,7 @@ public class Window {
                     }
                 });
                 desktopPane.setLayer(clsbtn, 1);
-                clsbtn.setBounds((x + 13), (x - 85), 22, 23);
+                clsbtn.setBounds((x + 13), (y - 85), 22, 23);
                 clsbtn.setToolTipText("Close");
                 desktopPane.add(clsbtn);
                 frame.setVisible(true);               
@@ -177,11 +179,12 @@ public class Window {
     		
     		if(t == 2) {
     			int x = rand.nextInt(width - 200) + 10;
+    			int y = rand.nextInt(height - 150) + 10;
     			JButton iceblock = new JButton("Make Ice");
     			JButton clsbtn = new JButton("X");
     			iceblock.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent arg0) {
-                    	JPanel inepnl = Data(x, x);
+                    	JPanel inepnl = Data(x, y);
                     	if(inepnl != null) {
                     		clsbtn.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent arg0) {
@@ -193,7 +196,7 @@ public class Window {
                 });
     			iceblock.setBackground(new Color(255, 250, 240));
     			iceblock.setFont(new Font("Tahoma", Font.PLAIN, 13));
-    			iceblock.setBounds((x - 95), (x - 85), 130, 115);
+    			iceblock.setBounds((x - 95), (y - 85), 130, 115);
                 desktopPane.add(iceblock);
                 frame.setVisible(true);
                 clsbtn.addActionListener(new ActionListener() {
@@ -205,18 +208,19 @@ public class Window {
                     }
                 });
                 desktopPane.setLayer(clsbtn, 1);
-                clsbtn.setBounds((x + 13), (x - 85), 22, 23);
+                clsbtn.setBounds((x + 13), (y - 85), 22, 23);
                 clsbtn.setToolTipText("Close");
                 desktopPane.add(clsbtn);
                 frame.setVisible(true); 
     		}
     		if(t == 3) {
     			int x = rand.nextInt(width - 200) + 10;
+    			int y = rand.nextInt(height - 150) + 10;
     			JButton iceblock = new JButton("Make Liquid");
     			JButton clsbtn = new JButton("X");
     			iceblock.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent arg0) {
-                    	JPanel inepnl = Data(x, x);
+                    	JPanel inepnl = Data(x, y);
                     	if(inepnl != null) {
                     		clsbtn.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent arg0) {
@@ -228,7 +232,7 @@ public class Window {
                 });
     			iceblock.setBackground(new Color(255, 250, 240));
     			iceblock.setFont(new Font("Tahoma", Font.PLAIN, 13));
-    			iceblock.setBounds((x - 95), (x - 85), 130, 115);
+    			iceblock.setBounds((x - 95), (y - 85), 130, 115);
                 desktopPane.add(iceblock);
                 frame.setVisible(true);
                 clsbtn.addActionListener(new ActionListener() {
@@ -240,18 +244,19 @@ public class Window {
                     }
                 });
                 desktopPane.setLayer(clsbtn, 1);
-                clsbtn.setBounds((x + 13), (x - 85), 22, 23);
+                clsbtn.setBounds((x + 13), (y - 85), 22, 23);
                 clsbtn.setToolTipText("Close");
                 desktopPane.add(clsbtn);
                 frame.setVisible(true); 
     		}
     		if(t == 4) {
     			int x = rand.nextInt(width - 200) + 10;
+    			int y = rand.nextInt(height - 150) + 10;
     			JButton gasblock = new JButton("Make Gas");
     			JButton clsbtn = new JButton("X");
     			gasblock.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent arg0) {
-                    	JPanel inepnl = Data(x, x);
+                    	JPanel inepnl = Data(x, y);
                     	if(inepnl != null) {
                     		clsbtn.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent arg0) {
@@ -263,7 +268,7 @@ public class Window {
                 });
     			gasblock.setBackground(new Color(255, 250, 240));
     			gasblock.setFont(new Font("Tahoma", Font.PLAIN, 13));
-    			gasblock.setBounds((x - 95), (x - 85), 130, 115);
+    			gasblock.setBounds((x - 95), (y - 85), 130, 115);
                 desktopPane.add(gasblock);
                 frame.setVisible(true);
                 clsbtn.addActionListener(new ActionListener() {
@@ -275,7 +280,7 @@ public class Window {
                     }
                 });
                 desktopPane.setLayer(clsbtn, 1);
-                clsbtn.setBounds((x + 13), (x - 85), 22, 23);
+                clsbtn.setBounds((x + 13), (y - 85), 22, 23);
                 clsbtn.setToolTipText("Close");
                 desktopPane.add(clsbtn);
                 frame.setVisible(true); 
