@@ -135,6 +135,7 @@ public class Window {
                 });
                 desktopPane.setLayer(clsbtn, 1);
                 clsbtn.setBounds(163, 131, 22, 23);
+                clsbtn.setToolTipText("Close");
                 desktopPane.add(clsbtn);
                 frame.setVisible(true);
     		}
@@ -169,6 +170,7 @@ public class Window {
                 });
                 desktopPane.setLayer(clsbtn, 1);
                 clsbtn.setBounds(432, 131, 22, 23);
+                clsbtn.setToolTipText("Close");
                 desktopPane.add(clsbtn);
                 frame.setVisible(true);               
     		}
@@ -203,6 +205,41 @@ public class Window {
                 });
                 desktopPane.setLayer(clsbtn, 1);
                 clsbtn.setBounds(684, 131, 22, 23);
+                clsbtn.setToolTipText("Close");
+                desktopPane.add(clsbtn);
+                frame.setVisible(true); 
+    		}
+    		if(t == 3) {
+    			JButton iceblock = new JButton("Make Liquid");
+    			JButton clsbtn = new JButton("Close");
+    			iceblock.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent arg0) {
+                    	JPanel inepnl = Data(965, 11);
+                    	if(inepnl != null) {
+                    		clsbtn.addActionListener(new ActionListener() {
+                                public void actionPerformed(ActionEvent arg0) {
+                                	desktopPane.remove(inepnl);
+                                }
+                            });
+                    	}
+                    }
+                });
+    			iceblock.setBackground(new Color(255, 250, 240));
+    			iceblock.setFont(new Font("Tahoma", Font.PLAIN, 13));
+    			iceblock.setBounds(850, 40, 130, 115);
+                desktopPane.add(iceblock);
+                frame.setVisible(true);
+                clsbtn.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent arg0) {
+                        desktopPane.remove(iceblock);
+                        desktopPane.remove(clsbtn);
+                        desktopPane.revalidate();
+                        desktopPane.repaint();
+                    }
+                });
+                desktopPane.setLayer(clsbtn, 1);
+                clsbtn.setBounds(959, 131, 22, 23);
+                clsbtn.setToolTipText("Close");
                 desktopPane.add(clsbtn);
                 frame.setVisible(true); 
     		}
@@ -267,8 +304,13 @@ public class Window {
         btnMakeIce.setBounds(12, 240, 109, 56);
         frame.getContentPane().add(btnMakeIce);
         
-
+        /*	Button Make Liquid	 */
         JButton btnMakeLiquid = new JButton("Make Liquid");
+        btnMakeLiquid.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {     	
+            	block_creator(3);
+            }
+        });
         btnMakeLiquid.setForeground(new Color(128, 0, 128));
         btnMakeLiquid.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 10));
         btnMakeLiquid.setBackground(new Color(211, 211, 211));
