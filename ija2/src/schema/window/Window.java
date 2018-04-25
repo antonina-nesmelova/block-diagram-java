@@ -24,7 +24,6 @@ import javax.swing.SwingConstants;
 import java.awt.Choice;
 import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
-import javax.swing.JCheckBox;
 
 public class Window {
 
@@ -35,9 +34,6 @@ public class Window {
     private JDesktopPane desktopPane;
     private JButton btnWarm;
     private JButton btnFreeze;
-    private JPanel panel;
-    //Component[] componentList = desktopPane.getComponents();
-
     /**
      * Launch the application.
      */
