@@ -16,6 +16,7 @@ import java.awt.Dimension;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.Font;
+import java.awt.Scrollbar;
 import java.awt.Toolkit;
 
 import javax.swing.JPanel;
@@ -264,6 +265,14 @@ public class Window {
         desktopPane.setBackground(new Color(171, 171, 171));
         desktopPane.setBounds(155, 28, (width - 200), (height - 150));
         frame.getContentPane().add(desktopPane);
+        Scrollbar scrollbar_1 = new Scrollbar();
+        scrollbar_1.setOrientation(Scrollbar.HORIZONTAL);
+        scrollbar_1.setBounds(0, (height - 167), (width - 200), 17);
+        desktopPane.add(scrollbar_1);
+        Scrollbar scrollbar_2 = new Scrollbar();
+        scrollbar_2.setOrientation(Scrollbar.VERTICAL);
+        scrollbar_2.setBounds((width - 217), 0, 17, (height - 167));
+        desktopPane.add(scrollbar_2);
 
         /*	Button Warm	 */
         btnWarm = new JButton("Warm");
