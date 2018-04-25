@@ -106,9 +106,17 @@ public class Window {
     private void block_creator(int t) {
     		if(t == 0) {
     			JButton warmblock = new JButton("Warm");
+                JButton clsbtn = new JButton("Close");
                 warmblock.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent arg0) {
-                    	panel = Data(165, 11);
+                    	JPanel wrmpnl = Data(165, 11);
+                    	if(wrmpnl != null) {
+                    		clsbtn.addActionListener(new ActionListener() {
+                                public void actionPerformed(ActionEvent arg0) {
+                                	desktopPane.remove(wrmpnl);
+                                }
+                            });
+                    	}
                     }
                 });
                 warmblock.setBackground(new Color(255, 250, 240));
@@ -117,14 +125,10 @@ public class Window {
                 desktopPane.add(warmblock);
                 frame.setVisible(true);
 
-                JButton clsbtn = new JButton("Close");
                 clsbtn.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent arg0) {
                         desktopPane.remove(warmblock);
                         desktopPane.remove(clsbtn);
-                        if(panel != null) {
-                        	desktopPane.remove(panel);
-                        }
                         desktopPane.revalidate();
                         desktopPane.repaint();
                     }
@@ -134,11 +138,20 @@ public class Window {
                 desktopPane.add(clsbtn);
                 frame.setVisible(true);
     		}
+    		
     		if(t == 1) {
     			JButton freezeblock = new JButton("Freeze");
+    			JButton clsbtn = new JButton("Close");
                 freezeblock.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent arg0) {
-                        Data(435, 11);
+                    	JPanel frzpnl = Data(435, 11);
+                    	if(frzpnl != null) {
+                    		clsbtn.addActionListener(new ActionListener() {
+                                public void actionPerformed(ActionEvent arg0) {
+                                	desktopPane.remove(frzpnl);
+                                }
+                            });
+                    	}
                     }
                 });
                 freezeblock.setBackground(new Color(255, 250, 240));
@@ -146,14 +159,10 @@ public class Window {
                 freezeblock.setBounds(325, 40, 130, 115);
                 desktopPane.add(freezeblock);
                 frame.setVisible(true);
-                JButton clsbtn = new JButton("Close");
                 clsbtn.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent arg0) {
                         desktopPane.remove(freezeblock);
                         desktopPane.remove(clsbtn);
-                        if(panel != null) {
-                        	desktopPane.remove(panel);
-                        }
                         desktopPane.revalidate();
                         desktopPane.repaint();
                     }
@@ -162,6 +171,40 @@ public class Window {
                 clsbtn.setBounds(432, 131, 22, 23);
                 desktopPane.add(clsbtn);
                 frame.setVisible(true);               
+    		}
+    		
+    		if(t == 2) {
+    			JButton iceblock = new JButton("Make Ice");
+    			JButton clsbtn = new JButton("Close");
+    			iceblock.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent arg0) {
+                    	JPanel inepnl = Data(685, 11);
+                    	if(inepnl != null) {
+                    		clsbtn.addActionListener(new ActionListener() {
+                                public void actionPerformed(ActionEvent arg0) {
+                                	desktopPane.remove(inepnl);
+                                }
+                            });
+                    	}
+                    }
+                });
+    			iceblock.setBackground(new Color(255, 250, 240));
+    			iceblock.setFont(new Font("Tahoma", Font.PLAIN, 13));
+    			iceblock.setBounds(575, 40, 130, 115);
+                desktopPane.add(iceblock);
+                frame.setVisible(true);
+                clsbtn.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent arg0) {
+                        desktopPane.remove(iceblock);
+                        desktopPane.remove(clsbtn);
+                        desktopPane.revalidate();
+                        desktopPane.repaint();
+                    }
+                });
+                desktopPane.setLayer(clsbtn, 1);
+                clsbtn.setBounds(684, 131, 22, 23);
+                desktopPane.add(clsbtn);
+                frame.setVisible(true); 
     		}
    }
     /**
@@ -205,20 +248,25 @@ public class Window {
             	block_creator(1);
             }
         });
-  
         btnFreeze.setForeground(new Color(128, 0, 128));
         btnFreeze.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 11));
         btnFreeze.setBackground(new Color(211, 211, 211));
         btnFreeze.setBounds(12, 158, 109, 56);
         frame.getContentPane().add(btnFreeze);
-        //listener();
-
+        
+        /*	Button Make Ice	 */
         JButton btnMakeIce = new JButton("Make Ice");
+        btnMakeIce.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {     	
+            	block_creator(2);
+            }
+        });
         btnMakeIce.setForeground(new Color(128, 0, 128));
         btnMakeIce.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 11));
         btnMakeIce.setBackground(new Color(211, 211, 211));
         btnMakeIce.setBounds(12, 240, 109, 56);
         frame.getContentPane().add(btnMakeIce);
+        
 
         JButton btnMakeLiquid = new JButton("Make Liquid");
         btnMakeLiquid.setForeground(new Color(128, 0, 128));
