@@ -22,8 +22,8 @@ public class Window {
 
     private JFrame frame;
     public static String NAME = "Block diagrams modeling physical processes";
-    private JTextField txtMass;
-    private JTextField txtTemperature;
+    //private JTextField txtMass;
+    //private JTextField txtTemperature;
     private JDesktopPane desktopPane;
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	int width = (int) screenSize.getWidth();
@@ -67,15 +67,6 @@ public class Window {
         choice_1.add("Water");
         choice_1.add("Alkohol");
         choice_1.add("Energy");
-
-        txtMass = new JTextField();
-        panel.add(txtMass);
-        txtMass.setColumns(5);
-
-        txtTemperature = new JTextField();
-        panel.add(txtTemperature);
-        txtTemperature.setColumns(5);
-        frame.setVisible(true);
 
         JFormattedTextField MassField = new JFormattedTextField();
         MassField.setToolTipText("Mass");
