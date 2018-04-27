@@ -14,7 +14,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
@@ -22,8 +21,6 @@ public class Window {
 
     private JFrame frame;
     public static String NAME = "Block diagrams modeling physical processes";
-    //private JTextField txtMass;
-    //private JTextField txtTemperature;
     private JDesktopPane desktopPane;
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	int width = (int) screenSize.getWidth();
@@ -43,6 +40,7 @@ public class Window {
                 }
             }
         });
+        
     }
 
 	/**
@@ -67,20 +65,34 @@ public class Window {
         choice_1.add("Water");
         choice_1.add("Alkohol");
         choice_1.add("Energy");
-
+          
         JFormattedTextField MassField = new JFormattedTextField();
         MassField.setToolTipText("Mass");
-        MassField.setValue(0);
+        //MassField.setValue(0);
         MassField.setBounds(14, 40, 85, 20);
         panel.add(MassField);
         frame.setVisible(true);
-
+        
+        MassField.addActionListener(new ActionListener() {
+    	    @Override
+    	    public void actionPerformed(ActionEvent event) {
+    	        System.out.println("The entered text is: " + MassField.getText());
+    	    }
+    	});
+        
         JFormattedTextField TemperatureField = new JFormattedTextField();
         TemperatureField.setToolTipText("Temperature");
-        MassField.setValue(0);
+        TemperatureField.setValue(MassField.getValue());
         TemperatureField.setBounds(14, 60, 85, 20);
         panel.add(TemperatureField);
         frame.setVisible(true);
+        TemperatureField.setValue(MassField.getText());
+        TemperatureField.addActionListener(new ActionListener() {
+    	    @Override
+    	    public void actionPerformed(ActionEvent event) {
+    	        System.out.println("The entered text is: " + MassField.getText());
+    	    }
+    	});
         
         return panel;
     }
@@ -94,12 +106,11 @@ public class Window {
         block.setBounds(x, y, 130, 115);
         desktopPane.add(block);
         frame.setVisible(true);
-		
     		if(t == 0) {  
                 JLabel jlabel = new JLabel("Warm");
                 jlabel.setFont(new Font("Verdana",1,18));
                 block.add(jlabel);
-                block.setBorder(new LineBorder(Color.BLACK)); 
+                block.setBorder(new LineBorder(Color.BLACK));    
     		}
     		else if(t == 1) {
                 JLabel jlabel = new JLabel("Freeze");
@@ -211,7 +222,7 @@ public class Window {
         frame.setBounds(0, 0, width, height);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null); 
-
+        
         /*	Working area	*/        
         desktopPane = new JDesktopPane();
         desktopPane.setBackground(new Color(171, 171, 171));
