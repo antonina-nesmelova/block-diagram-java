@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -56,7 +57,7 @@ public class Window {
         panel.setBorder(new LineBorder(new Color(230, 200, 140)));
         panel.setBackground(new Color(245, 222, 179));
         desktopPane.setLayer(panel, 2);
-        panel.setBounds(width, height, 120, 86);
+        panel.setBounds(width, height, 125, 86);
         desktopPane.add(panel);
         panel.setLayout(null);
 
@@ -93,206 +94,120 @@ public class Window {
     
     private void block_creator(int t) {    	
     	Random rand = new Random();
-		int x = rand.nextInt(width - 450) + 100;
-		int y = rand.nextInt(height - 450) + 100;
+		int x = rand.nextInt(width - 500) + 100;
+		int y = rand.nextInt(height - 500) + 100;
+		JPanel block = new JPanel();
+		block.setBackground(new Color(255, 250, 240));
+        block.setBounds(x, y, 130, 115);
+        desktopPane.add(block);
+        frame.setVisible(true);
+		
     		if(t == 0) {  
-    			JButton warmblock = new JButton("Warm");
-    			Movement mv = new Movement(warmblock);
-                warmblock.addActionListener(new ActionListener() {
+                JLabel jlabel = new JLabel("Warm");
+                jlabel.setFont(new Font("Verdana",1,18));
+                block.add(jlabel);
+                block.setBorder(new LineBorder(Color.BLACK)); 
+    		}
+    		else if(t == 1) {
+                JLabel jlabel = new JLabel("Freeze");
+                jlabel.setFont(new Font("Verdana",1,18));
+                block.add(jlabel);
+                block.setBorder(new LineBorder(Color.BLACK)); 
+    		}
+    		else if(t == 2) {
+                JLabel jlabel = new JLabel("Make Ice");
+                jlabel.setFont(new Font("Verdana",1,18));
+                block.add(jlabel);
+                block.setBorder(new LineBorder(Color.BLACK)); 
+    		}
+    		else if(t == 3) {
+                JLabel jlabel = new JLabel("Make Liquid");
+                jlabel.setFont(new Font("Verdana",1,18));
+                block.add(jlabel);
+                block.setBorder(new LineBorder(Color.BLACK)); 
+    		}
+    		else if(t == 4) {
+                JLabel jlabel = new JLabel("Make Gas");
+                jlabel.setFont(new Font("Verdana",1,18));
+                block.add(jlabel);
+                block.setBorder(new LineBorder(Color.BLACK)); 
+    		}
+                
+    		JButton del_block = new JButton("Delete");
+                desktopPane.setLayer(del_block, 1);
+                del_block.setBounds((x + 27), (y + 75), 75, 23);
+                del_block.setToolTipText("Delete Block");
+                desktopPane.add(del_block);
+                frame.setVisible(true);
+                
+    			JButton details = new JButton("X");
+    			desktopPane.setLayer(details, 1);
+                details.setBounds((x + 113), y, 17, 17);
+                details.setToolTipText("Details");
+                desktopPane.add(details);
+                frame.setVisible(true);
+                
+    			details.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent arg0) {
-                    	JPanel wrmpnl = Data(x, y);
-                    	JButton clsbtn = new JButton("X");
-                    	desktopPane.setLayer(clsbtn, 1);
-                        clsbtn.setBounds((x + 13), (y - 85), 22, 23);
-                        clsbtn.setToolTipText("Close");
-                        desktopPane.add(clsbtn);
+                    	JPanel panel = Data((x + 120), (y - 70));
+                    	JButton pnl_cls = new JButton("X");
+                        desktopPane.setLayer(pnl_cls, 3);
+                        pnl_cls.setBounds((x + 230), (y - 70), 15, 15);
+                        pnl_cls.setToolTipText("Close");
+                        desktopPane.add(pnl_cls);
                         frame.setVisible(true);
-                    	if(wrmpnl != null) {
-                    		clsbtn.addActionListener(new ActionListener() {
+                        
+                    	if (panel != null) {
+                    		del_block.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent arg0) {
-                                	desktopPane.remove(wrmpnl);
+                                	desktopPane.remove(block);
+                                    desktopPane.remove(del_block);
+                                    desktopPane.remove(details);
+                                    desktopPane.remove(panel);
+                                    desktopPane.remove(pnl_cls);
+                                    desktopPane.revalidate();
+                                    desktopPane.repaint();
+                                }
+                            });
+                    	}
+                        
+                        pnl_cls.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent arg0) {
+                            	desktopPane.remove(panel);
+                                desktopPane.remove(pnl_cls);
+                                desktopPane.revalidate();
+                                desktopPane.repaint();
+                            }
+                        });
+                    }
+                });
+    			
+    			del_block.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent arg0) {
+                    	desktopPane.remove(block);
+                        desktopPane.remove(del_block);
+                        desktopPane.remove(details);
+                        desktopPane.revalidate();
+                        desktopPane.repaint();
+                    }
+                });
+ }
+
+                    	/*JPanel panel = Data(x, y);
+                    	Movement mv = new Movement(panel);
+                    	
+                    	
+                    	if(panel != null) {
+                    		details.addActionListener(new ActionListener() {
+                                public void actionPerformed(ActionEvent arg0) {
+                                	desktopPane.remove(panel);
                                 	desktopPane.remove(warmblock);
-                                    desktopPane.remove(clsbtn);
+                                    desktopPane.remove(details);
                                     desktopPane.revalidate();
                                     desktopPane.repaint();
                                 }
                             });
-                    		warmblock.addActionListener(new ActionListener() {
-                                public void actionPerformed(ActionEvent arg0) {
-                                	desktopPane.remove(wrmpnl);
-                                    desktopPane.remove(clsbtn);
-                                    desktopPane.revalidate();
-                                    desktopPane.repaint();
-                                }
-                            });
-                    	}
-                    }
-                });  
-                warmblock.setBackground(new Color(255, 250, 240));
-                warmblock.setFont(new Font("Tahoma", Font.PLAIN, 13));
-                warmblock.setBounds((x - 95), (y - 85), 130, 115);
-                desktopPane.add(warmblock);
-                frame.setVisible(true);
-    		}
-    		
-    		if(t == 1) {
-    			JButton freezeblock = new JButton("Freeze");
-    			freezeblock.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent arg0) {
-                    	JPanel frzpnl = Data(x, y);
-                    	JButton clsbtn = new JButton("X");
-                    	desktopPane.setLayer(clsbtn, 1);
-                        clsbtn.setBounds((x + 13), (y - 85), 22, 23);
-                        clsbtn.setToolTipText("Close");
-                        desktopPane.add(clsbtn);
-                        frame.setVisible(true);
-                    	
-                    	if(frzpnl != null) {
-                    		clsbtn.addActionListener(new ActionListener() {
-                                public void actionPerformed(ActionEvent arg0) {
-                                	desktopPane.remove(frzpnl);
-                                	desktopPane.remove(freezeblock);
-                                    desktopPane.remove(clsbtn);
-                                    desktopPane.revalidate();
-                                    desktopPane.repaint();
-                                }
-                            });
-                    		freezeblock.addActionListener(new ActionListener() {
-                                public void actionPerformed(ActionEvent arg0) {
-                                	desktopPane.remove(frzpnl);
-                                    desktopPane.remove(clsbtn);
-                                    desktopPane.revalidate();
-                                    desktopPane.repaint();
-                                }
-                            });
-                    	}
-                    }
-                });  
-    			freezeblock.setBackground(new Color(255, 250, 240));
-    			freezeblock.setFont(new Font("Tahoma", Font.PLAIN, 13));
-    			freezeblock.setBounds((x - 95), (y - 85), 130, 115);
-                desktopPane.add(freezeblock);
-                frame.setVisible(true);
-    		}
-    		
-    		if(t == 2) {
-    			JButton mkice = new JButton("Make Ice");
-    			mkice.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent arg0) {
-                    	JPanel icepnl = Data(x, y);
-                    	JButton clsbtn = new JButton("X");
-                    	desktopPane.setLayer(clsbtn, 1);
-                        clsbtn.setBounds((x + 13), (y - 85), 22, 23);
-                        clsbtn.setToolTipText("Close");
-                        desktopPane.add(clsbtn);
-                        frame.setVisible(true);
-                    	
-                    	if(icepnl != null) {
-                    		clsbtn.addActionListener(new ActionListener() {
-                                public void actionPerformed(ActionEvent arg0) {
-                                	desktopPane.remove(icepnl);
-                                	desktopPane.remove(mkice);
-                                    desktopPane.remove(clsbtn);
-                                    desktopPane.revalidate();
-                                    desktopPane.repaint();
-                                }
-                            });
-                    		mkice.addActionListener(new ActionListener() {
-                                public void actionPerformed(ActionEvent arg0) {
-                                	desktopPane.remove(icepnl);
-                                    desktopPane.remove(clsbtn);
-                                    desktopPane.revalidate();
-                                    desktopPane.repaint();
-                                }
-                            });
-                    	}
-                    }
-                });  
-    			mkice.setBackground(new Color(255, 250, 240));
-    			mkice.setFont(new Font("Tahoma", Font.PLAIN, 13));
-    			mkice.setBounds((x - 95), (y - 85), 130, 115);
-                desktopPane.add(mkice);
-                frame.setVisible(true);
-    		}
-    		if(t == 3) {
-    			JButton mklqd = new JButton("Make Liquid");
-    			mklqd.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent arg0) {
-                    	JPanel lqdpnl = Data(x, y);
-                    	JButton clsbtn = new JButton("X");
-                    	desktopPane.setLayer(clsbtn, 1);
-                        clsbtn.setBounds((x + 13), (y - 85), 22, 23);
-                        clsbtn.setToolTipText("Close");
-                        desktopPane.add(clsbtn);
-                        frame.setVisible(true);
-                    	
-                    	if(lqdpnl != null) {
-                    		clsbtn.addActionListener(new ActionListener() {
-                                public void actionPerformed(ActionEvent arg0) {
-                                	desktopPane.remove(lqdpnl);
-                                	desktopPane.remove(mklqd);
-                                    desktopPane.remove(clsbtn);
-                                    desktopPane.revalidate();
-                                    desktopPane.repaint();
-                                }
-                            });
-                    		mklqd.addActionListener(new ActionListener() {
-                                public void actionPerformed(ActionEvent arg0) {
-                                	desktopPane.remove(lqdpnl);
-                                    desktopPane.remove(clsbtn);
-                                    desktopPane.revalidate();
-                                    desktopPane.repaint();
-                                }
-                            });
-                    	}
-                    }
-                });  
-    			mklqd.setBackground(new Color(255, 250, 240));
-    			mklqd.setFont(new Font("Tahoma", Font.PLAIN, 13));
-    			mklqd.setBounds((x - 95), (y - 85), 130, 115);
-                desktopPane.add(mklqd);
-                frame.setVisible(true);
-    		}
-    		if(t == 4) {
-    			JButton mkgas = new JButton("Make Gas");
-    			mkgas.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent arg0) {
-                    	JPanel gaspnl = Data(x, y);
-                    	JButton clsbtn = new JButton("X");
-                    	desktopPane.setLayer(clsbtn, 1);
-                        clsbtn.setBounds((x + 13), (y - 85), 22, 23);
-                        clsbtn.setToolTipText("Close");
-                        desktopPane.add(clsbtn);
-                        frame.setVisible(true);
-                    	
-                    	if(gaspnl != null) {
-                    		clsbtn.addActionListener(new ActionListener() {
-                                public void actionPerformed(ActionEvent arg0) {
-                                	desktopPane.remove(gaspnl);
-                                	desktopPane.remove(mkgas);
-                                    desktopPane.remove(clsbtn);
-                                    desktopPane.revalidate();
-                                    desktopPane.repaint();
-                                }
-                            });
-                    		mkgas.addActionListener(new ActionListener() {
-                                public void actionPerformed(ActionEvent arg0) {
-                                	desktopPane.remove(gaspnl);
-                                    desktopPane.remove(clsbtn);
-                                    desktopPane.revalidate();
-                                    desktopPane.repaint();
-                                }
-                            });
-                    	}
-                    }
-                });  
-    			mkgas.setBackground(new Color(255, 250, 240));
-    			mkgas.setFont(new Font("Tahoma", Font.PLAIN, 13));
-    			mkgas.setBounds((x - 95), (y - 85), 130, 115);
-                desktopPane.add(mkgas);
-                frame.setVisible(true);
-    		}
-   }
+                    	} */
     /**
      * Initialize the contents of the frame.
      */
@@ -302,7 +217,7 @@ public class Window {
         frame = new JFrame(NAME);
         frame.setBounds(0, 0, width, height);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(null);
+        frame.getContentPane().setLayout(null); 
 
         /*	Working area	*/        
         desktopPane = new JDesktopPane();
