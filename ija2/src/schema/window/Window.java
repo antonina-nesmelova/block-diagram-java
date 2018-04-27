@@ -93,38 +93,28 @@ public class Window {
         block.setBounds(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
         desktopPane.add(block);
         frame.setVisible(true);
-        
+        JLabel jlabel = null;
+            
     		if(t == 0) {  
-                JLabel jlabel = new JLabel("Warm");
-                jlabel.setFont(new Font("Verdana",1,18));
-                block.add(jlabel);
-                block.setBorder(new LineBorder(Color.BLACK));    
+                jlabel = new JLabel("Warm");   
     		}
     		else if(t == 1) {
-                JLabel jlabel = new JLabel("Freeze");
-                jlabel.setFont(new Font("Verdana",1,18));
-                block.add(jlabel);
-                block.setBorder(new LineBorder(Color.BLACK)); 
+                jlabel = new JLabel("Freeze"); 
     		}
     		else if(t == 2) {
-                JLabel jlabel = new JLabel("Make Ice");
-                jlabel.setFont(new Font("Verdana",1,18));
-                block.add(jlabel);
-                block.setBorder(new LineBorder(Color.BLACK)); 
+                jlabel = new JLabel("Make Ice"); 
     		}
     		else if(t == 3) {
-                JLabel jlabel = new JLabel("Make Liquid");
-                jlabel.setFont(new Font("Verdana",1,18));
-                block.add(jlabel);
-                block.setBorder(new LineBorder(Color.BLACK)); 
+                jlabel = new JLabel("Make Liquid");
     		}
     		else if(t == 4) {
-                JLabel jlabel = new JLabel("Make Gas");
-                jlabel.setFont(new Font("Verdana",1,18));
-                block.add(jlabel);
-                block.setBorder(new LineBorder(Color.BLACK)); 
+                jlabel = new JLabel("Make Gas"); 
     		}
-    		
+    	
+    	jlabel.setFont(new Font("Verdana",1,18));
+        block.add(jlabel);
+        block.setBorder(new LineBorder(Color.BLACK));
+            
     		/*	Details Button */
     		JButton details = new JButton("Details");
     		desktopPane.setLayer(details, 1);
