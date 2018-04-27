@@ -39,22 +39,13 @@ public class Window {
         initialize();
     }
 
-    public JPanel Data(int width, int height) {
+    public JPanel Data() {      	
     	JPanel panel = new JPanel();
-        panel.setBorder(new LineBorder(new Color(230, 200, 140)));
-        panel.setBackground(new Color(245, 222, 179));
-        desktopPane.setLayer(panel, 2);
-        panel.setBounds(width, height, 125, 86);
-        desktopPane.add(panel);
-        panel.setLayout(null);
-
-        Choice choice_1 = new Choice();
-        choice_1.setBounds(14, 10, 85, 20);
-        panel.add(choice_1);
-        choice_1.add("Water");
-        choice_1.add("Alkohol");
-        choice_1.add("Energy");
-          
+		panel.setBounds(0, 0, 125, 86);
+		panel.setBackground(new Color(245, 222, 179));
+		desktopPane.add(panel);
+		panel.setLayout(null);
+		
         JFormattedTextField MassField = new JFormattedTextField();
         MassField.setToolTipText("Mass");
         //MassField.setValue(0);
@@ -74,7 +65,7 @@ public class Window {
         TemperatureField.setValue(MassField.getValue());
         TemperatureField.setBounds(14, 60, 85, 20);
         panel.add(TemperatureField);
-        frame.setVisible(true);
+        frame.setVisible(true); 
         
         TemperatureField.setValue(MassField.getText());
         TemperatureField.addActionListener(new ActionListener() {
@@ -83,11 +74,10 @@ public class Window {
     	        System.out.println("The entered text is: " + MassField.getText());
     	    }
     	});
-        
-        return panel;
+		return panel;
     }
     
-    private void block_creator(int t, int x, int y) {    			
+    private void block_creator(int t, int x, int y) {   
 		JPanel block = new JPanel();
 		block.setBackground(new Color(255, 250, 240));
         block.setBounds(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
@@ -114,10 +104,9 @@ public class Window {
     	jlabel.setFont(new Font("Verdana",1,18));
         block.add(jlabel);
         block.setBorder(new LineBorder(Color.BLACK));
-            
+        
         /*	Choice Type */
         Choice choice_1 = new Choice();
-        choice_1.setBounds(14, 10, 85, 20);
         block.add(choice_1);
         choice_1.add("Water");
         choice_1.add("Alkohol");
@@ -126,9 +115,20 @@ public class Window {
         /*	Delete Button */
         JButton delete = new JButton("Delete");
         delete.setToolTipText("Delete Block");
+        block.setLayout(new FlowLayout());
         block.add(delete);
         frame.setVisible(true);
-    			
+        
+        /*	Mass Button */
+        /*JButton mass = new JButton("+");
+        mass.setToolTipText("Insert Mass");
+        block.add(mass);
+        frame.setVisible(true);
+        mass.addActionListener(new ActionListener() {
+    		public void actionPerformed(ActionEvent arg0) {
+    			JPanel panel = Data();
+    		}
+        });	*/	
     	delete.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent arg0) {
     			desktopPane.remove(block);
@@ -136,6 +136,7 @@ public class Window {
             	desktopPane.repaint();
             }
     	});
+    	
 
       Movement drag = new Movement(block);
  }
