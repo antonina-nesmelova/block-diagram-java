@@ -1,10 +1,20 @@
+package schema.window;
+
+import java.awt.Component;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+
+import javax.swing.JPanel;
 
 
 public class Movement extends JPanel implements MouseMotionListener, MouseListener { 
-	private int X;
-	private int Y;
-	private int mouseX;
+	private int blockX;
 	private int mouseY;
+	private int pnlX;
+	private int pnlY;
+	private int dst_X;
+	private int dst_Y;
 	
 	public Movement(Component... pns) {
     	for(Component frame : pns) {
@@ -18,11 +28,16 @@ public class Movement extends JPanel implements MouseMotionListener, MouseListen
     }
     public void mouseDragged(MouseEvent evt) {
     	getCoordinates(evt);
-        //evt.getComponent().setLocation((evt.getX()+evt.getComponent().getX())-X, (evt.getY()+evt.getComponent().getY())-Y);
+    	dst_X = blockX+evt.getComponent().getX(); 
+    	dst_Y = mouseY+evt.getComponent().getY();
+        evt.getComponent().setLocation(dst_X, dst_Y);
     }
-
+    /**
+     * Funkce získává souřadnice kurzoru myši.
+     * @param mouseEvent    děj myši
+     */
     private void getCoordinates(MouseEvent mouseEvent) {
-        mouseX = mouseEvent.getX();
+        blockX = mouseEvent.getX();
         mouseY = mouseEvent.getY();
     }
     
