@@ -3,14 +3,14 @@ package schema.blocks;
 public interface Type {
     public enum type {
         WATER,
-        ALKOHOL,
+        ALCOHOL,
         ENERGY;
 
         @Override
         public String toString() {
             switch (this) {
                 case WATER:    return "water";
-                case ALKOHOL: return "alkohol";
+                case ALCOHOL: return "alcohol";
                 case ENERGY:   return "energy";
             }
 

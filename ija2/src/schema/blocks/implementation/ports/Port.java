@@ -14,18 +14,18 @@ public abstract class Port {
         this.value = null;
     }
 
-    public void setType(Type.type type) {
+    public void setType(Type.type type, double mass, double temp) {
         switch (type) {
             case WATER: {
-                value = new Water();
+                value = new Water(mass, temp);
                 break;
             }
-            case ALKOHOL: {
-                value = new Alcohol();
+            case ALCOHOL: {
+                value = new Alcohol(mass, temp);
                 break;
             }
             case ENERGY: {
-                value = new Energy();
+                value = new Energy(mass, temp);
                 break;
             }
         }

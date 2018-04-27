@@ -13,10 +13,14 @@ public abstract class Block {
 
 	public List<PortIn> portsIn = new ArrayList<PortIn>();
 	public List<PortOut> portsOut = new ArrayList<PortOut>();
-	public int number;
+	public int maxInPorts;
+    public int maxOutPorts;
 
 	protected Block() {
 		this.number = 0;
+		for (int i = 0; i < maxInPorts; i++){
+			PortIn port = new PortIn();
+		}
 		PortOut port = new PortOut();
 		this.portsOut.add(port);
 	}
@@ -46,30 +50,39 @@ public abstract class Block {
 
 	public abstract void resolve();
 
-	public int createPort() {
+	public int createPortIn() {
 		if (this.number < 2) {
 			PortIn port = new PortIn();
 			this.portsIn.add(port);
-			this.number++;
+			this.number += 1;
 			return (number-1);
 		} else {
 			return -1;
 		}
 	}
 
+    public int createPortOut() {
+        if (this.number < 2) {
+            PortOut port = new PortOut();
+            this.portsOut.add(port);
+            this.number += 1;
+            return (number-1);
+        } else {
+            return -1;
+        }
+    }
+
 	public boolean setPortValue(int id, Type value) {
-		if (id == 0 || id == 1) {
-			if (id == 0 && !this.portsIn.get(1).value.equals(value)) {
-				this.portsIn.get(id).value = value;
-				return true;
-			} else if (id == 1 && !this.portsIn.get(0).value.equals(value)) {
-				this.portsIn.get(id).value = value;
-				return true;
-			} else {
-				return false;
-			}
+
+		if (!portsIn.contains(value)) {
+			this.portsIn.get(id).value = value;
+			return true;
 		} else {
 			return false;
 		}
+	}
+
+	public Type getPortValue(int id) {
+		return this.portsIn.get(id).value;
 	}
 }

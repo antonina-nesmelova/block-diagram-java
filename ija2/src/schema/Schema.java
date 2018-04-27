@@ -42,41 +42,8 @@ public class Schema {
 		return b;
 	}
 	
-	public boolean setPortValue(Block block, Type type, int pId) {
+	public boolean setPortValue(Block block, Type.type type, int pId, double mass, double temp) {
+		
 		return block.setPortValue(pId, type);
 	}
-	
-	/*public Type getValue(int blockId, boolean in, boolean material) {
-		if (in) {
-			if (material) return this.blocks.get(blockId).material_in;
-			else return this.blocks.get(blockId).energy_in;
-		} else {
-			if (material) return this.blocks.get(blockId).material_out;
-			else return this.blocks.get(blockId).energy_out;
-		}
-	}
-	
-	public void makeRelation(Type in, Type free_out, int idIn, int idOut) {
-		if (in instanceof AbstractMaterial && free_out instanceof AbstractMaterial) {
-			if ((this.blocks.get(idIn).is_free_m_in < 0) && this.blocks.get(idOut).is_free_m_out) {
-				this.blocks.get(idOut).is_free_m_out = false;
-				this.blocks.get(idIn).is_free_m_in = idOut;
-			}
-		} else {
-			if ((this.blocks.get(idIn).is_free_e_in < 0) && this.blocks.get(idOut).is_free_e_out) {
-				this.blocks.get(idOut).is_free_e_out = false;
-				this.blocks.get(idIn).is_free_e_in = idOut;
-			}
-		}
-	}
-
-	public void deleteRelation(int idIn, boolean material) {
-		if (material) {
-			this.blocks.get(this.blocks.get(idIn).is_free_m_in).is_free_m_out = true;
-			this.blocks.get(idIn).is_free_m_in = -1;
-		} else {
-			this.blocks.get(this.blocks.get(idIn).is_free_e_in).is_free_e_out = true;
-			this.blocks.get(idIn).is_free_e_in = -1;
-		}
-	}*/
 }

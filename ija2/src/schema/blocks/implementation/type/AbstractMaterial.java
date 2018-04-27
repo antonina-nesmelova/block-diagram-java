@@ -30,12 +30,20 @@ public abstract class AbstractMaterial implements Material {
 		}
 	}
 
-	public AbstractMaterial() {
-
+	public AbstractMaterial(double mass, double temp) {
+		setValues(mass, temp);
 	}
 
 	public void setValues(double kg, double t) {
+		this.setMass(kg);
+		this.setTemp(t);
+	}
+
+	public void setMass(double kg) {
 		this.kg = kg;
+	}
+
+	public void setTemp(double t) {
 		this.t = t;
 		this.controlState();
 	}
@@ -59,16 +67,5 @@ public abstract class AbstractMaterial implements Material {
 			this.state = State.LIQUID;
 		else
 			this.state = State.GASS;
-	}
-
-	@Override
-	public boolean equals(Object otherType) {
-		if (this == otherType) {
-			return true;
-		}
-		if (otherType instanceof AbstractMaterial) {
-			return true;
-		}
-		return false;
 	}
 }
