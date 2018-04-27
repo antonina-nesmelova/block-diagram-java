@@ -123,6 +123,7 @@ public class Window {
         choice_1.add("Alkohol");
         choice_1.add("Energy");
         
+        /*	Delete Button */
         JButton delete = new JButton("Delete");
         delete.setToolTipText("Delete Block");
         block.add(delete);
