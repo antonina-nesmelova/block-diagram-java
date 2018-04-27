@@ -10,9 +10,7 @@ import javax.swing.JPanel;
 
 public class Movement extends JPanel implements MouseMotionListener, MouseListener { 
 	private int blockX;
-	private int mouseY;
-	private int pnlX;
-	private int pnlY;
+	private int blockY;
 	private int dst_X;
 	private int dst_Y;
 	
@@ -29,7 +27,7 @@ public class Movement extends JPanel implements MouseMotionListener, MouseListen
     public void mouseDragged(MouseEvent evt) {
     	getCoordinates(evt);
     	dst_X = blockX+evt.getComponent().getX(); 
-    	dst_Y = mouseY+evt.getComponent().getY();
+    	dst_Y = blockY+evt.getComponent().getY();
         evt.getComponent().setLocation(dst_X, dst_Y);
     }
     /**
@@ -38,7 +36,7 @@ public class Movement extends JPanel implements MouseMotionListener, MouseListen
      */
     private void getCoordinates(MouseEvent mouseEvent) {
         blockX = mouseEvent.getX();
-        mouseY = mouseEvent.getY();
+        blockY = mouseEvent.getY();
     }
     
 	@Override
@@ -70,5 +68,4 @@ public class Movement extends JPanel implements MouseMotionListener, MouseListen
 		// TODO Auto-generated method stub
 		
 	}
-
 }
