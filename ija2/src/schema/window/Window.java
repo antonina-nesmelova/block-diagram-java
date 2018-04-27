@@ -196,6 +196,7 @@ public class Window {
                         desktopPane.revalidate();
                         desktopPane.repaint();
                     }
+    			 });
  }
     /**
      * Initialize the contents of the frame.
