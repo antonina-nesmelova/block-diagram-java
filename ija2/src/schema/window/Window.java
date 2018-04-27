@@ -100,10 +100,11 @@ public class Window {
     		else if(t == 4) {
                 jlabel = new JLabel("Make Gas"); 
     		}
-    	
-    	jlabel.setFont(new Font("Verdana", 1, 18));
+    		
+    	/*	Name of the block	*/
+    	jlabel.setFont(new Font("Verdana", 1, 14));
         block.add(jlabel, BorderLayout.NORTH);
-        jlabel.setBounds(37, 15, 85, 25);
+        jlabel.setBounds(28, 15, 85, 25);
         block.setBorder(new LineBorder(Color.BLACK));
         
         /*	Choice Type */
@@ -170,7 +171,7 @@ public class Window {
         	}
         });
         btnWarm.setForeground(new Color(128, 0, 128));
-        btnWarm.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 11));
+        btnWarm.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 12));
         btnWarm.setBackground(new Color(211, 211, 211));
         btnWarm.setBounds(17, 80, BUTTON_WIDTH,BUTTON_HEIGHT);
         frame.getContentPane().add(btnWarm);
@@ -185,7 +186,7 @@ public class Window {
             }
         });
         btnFreeze.setForeground(new Color(128, 0, 128));
-        btnFreeze.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 11));
+        btnFreeze.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 12));
         btnFreeze.setBackground(new Color(211, 211, 211));
         btnFreeze.setBounds(17, 158, BUTTON_WIDTH,BUTTON_HEIGHT);
         frame.getContentPane().add(btnFreeze);
@@ -200,7 +201,7 @@ public class Window {
             }
         });
         btnMakeIce.setForeground(new Color(128, 0, 128));
-        btnMakeIce.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 11));
+        btnMakeIce.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 12));
         btnMakeIce.setBackground(new Color(211, 211, 211));
         btnMakeIce.setBounds(17, 240, BUTTON_WIDTH,BUTTON_HEIGHT);
         frame.getContentPane().add(btnMakeIce);
@@ -215,7 +216,7 @@ public class Window {
             }
         });
         btnMakeLiquid.setForeground(new Color(128, 0, 128));
-        btnMakeLiquid.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 10));
+        btnMakeLiquid.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 12));
         btnMakeLiquid.setBackground(new Color(211, 211, 211));
         btnMakeLiquid.setBounds(17, 327, BUTTON_WIDTH,BUTTON_HEIGHT);
         frame.getContentPane().add(btnMakeLiquid);
@@ -229,7 +230,7 @@ public class Window {
             }
         });
         btnMakeGas.setForeground(new Color(128, 0, 128));
-        btnMakeGas.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 11));
+        btnMakeGas.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 12));
         btnMakeGas.setBackground(new Color(211, 211, 211));
         btnMakeGas.setBounds(17, 416, BUTTON_WIDTH,BUTTON_HEIGHT);
         frame.getContentPane().add(btnMakeGas);
