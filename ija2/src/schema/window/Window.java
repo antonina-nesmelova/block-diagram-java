@@ -70,12 +70,14 @@ public class Window {
 
         JFormattedTextField MassField = new JFormattedTextField();
         MassField.setToolTipText("Mass");
+        MassField.setValue(0);
         MassField.setBounds(14, 40, 85, 20);
         panel.add(MassField);
         frame.setVisible(true);
 
         JFormattedTextField TemperatureField = new JFormattedTextField();
         TemperatureField.setToolTipText("Temperature");
+        MassField.setValue(0);
         TemperatureField.setBounds(14, 60, 85, 20);
         panel.add(TemperatureField);
         frame.setVisible(true);
