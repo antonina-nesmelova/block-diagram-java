@@ -14,6 +14,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
@@ -86,6 +87,7 @@ public class Window {
         TemperatureField.setBounds(14, 60, 85, 20);
         panel.add(TemperatureField);
         frame.setVisible(true);
+        
         TemperatureField.setValue(MassField.getText());
         TemperatureField.addActionListener(new ActionListener() {
     	    @Override
@@ -138,11 +140,11 @@ public class Window {
     		}
                 
     		JButton del_block = new JButton("Delete");
-                desktopPane.setLayer(del_block, 1);
-                del_block.setBounds((x + 27), (y + 75), 75, 23);
-                del_block.setToolTipText("Delete Block");
-                desktopPane.add(del_block);
-                frame.setVisible(true);
+            desktopPane.setLayer(del_block, 1);
+            del_block.setBounds((x + 27), (y + 75), 75, 23);
+            del_block.setToolTipText("Delete Block");
+            desktopPane.add(del_block);
+            frame.setVisible(true);
                 
     			JButton details = new JButton("X");
     			desktopPane.setLayer(details, 1);
@@ -194,24 +196,7 @@ public class Window {
                         desktopPane.revalidate();
                         desktopPane.repaint();
                     }
-                });
  }
-
-                    	/*JPanel panel = Data(x, y);
-                    	Movement mv = new Movement(panel);
-                    	
-                    	
-                    	if(panel != null) {
-                    		details.addActionListener(new ActionListener() {
-                                public void actionPerformed(ActionEvent arg0) {
-                                	desktopPane.remove(panel);
-                                	desktopPane.remove(warmblock);
-                                    desktopPane.remove(details);
-                                    desktopPane.revalidate();
-                                    desktopPane.repaint();
-                                }
-                            });
-                    	} */
     /**
      * Initialize the contents of the frame.
      */
