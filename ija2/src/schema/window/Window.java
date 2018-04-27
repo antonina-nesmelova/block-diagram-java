@@ -115,61 +115,26 @@ public class Window {
         block.add(jlabel);
         block.setBorder(new LineBorder(Color.BLACK));
             
-    		/*	Details Button */
-    		JButton details = new JButton("Details");
-            details.setToolTipText("Details");
-            block.add(details);
-            frame.setVisible(true);
-            
-            /*	Delete Block Button */
-    		JButton delete = new JButton("Delete");
-            delete.setToolTipText("Delete Block");
-            block.add(delete);
-            frame.setVisible(true);
-      
-    			details.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent arg0) {
-                    	JPanel panel = Data((x + 120), (y - 70));
-                    	JButton pnl_cls = new JButton("X");
-                        pnl_cls.setBounds((x + 230), (y - 70), 15, 15);
-                        pnl_cls.setToolTipText("Close");
-                        desktopPane.add(pnl_cls);
-                        frame.setVisible(true);
-                        
-                    	if (panel != null) {
-                    		delete.addActionListener(new ActionListener() {
-                                public void actionPerformed(ActionEvent arg0) {
-                                	desktopPane.remove(block);
-                                    desktopPane.remove(delete);
-                                    desktopPane.remove(details);
-                                    desktopPane.remove(panel);
-                                    desktopPane.remove(pnl_cls);
-                                    desktopPane.revalidate();
-                                    desktopPane.repaint();
-                                }
-                            });
-                    	}
-                        
-                        pnl_cls.addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent arg0) {
-                            	desktopPane.remove(panel);
-                                desktopPane.remove(pnl_cls);
-                                desktopPane.revalidate();
-                                desktopPane.repaint();
-                            }
-                        });
-                    }
-                });
+        /*	Choice Type */
+        Choice choice_1 = new Choice();
+        choice_1.setBounds(14, 10, 85, 20);
+        block.add(choice_1);
+        choice_1.add("Water");
+        choice_1.add("Alkohol");
+        choice_1.add("Energy");
+        
+        JButton delete = new JButton("Delete");
+        delete.setToolTipText("Delete Block");
+        block.add(delete);
+        frame.setVisible(true);
     			
-    			delete.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent arg0) {
-                    	desktopPane.remove(block);
-                        desktopPane.remove(delete);
-                        desktopPane.remove(details);
-                        desktopPane.revalidate();
-                        desktopPane.repaint();
-                    }
-    			 });
+    	delete.addActionListener(new ActionListener() {
+    		public void actionPerformed(ActionEvent arg0) {
+    			desktopPane.remove(block);
+            	desktopPane.revalidate();
+            	desktopPane.repaint();
+            }
+    	});
 
       Movement drag = new Movement(block);
  }
