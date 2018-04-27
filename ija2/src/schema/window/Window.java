@@ -1,30 +1,19 @@
 package schema.window;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.Random;
 
-import javax.swing.JButton;
-import javax.swing.JDesktopPane;
-import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.border.LineBorder;
+
+import static interfaces.Constants.*;
 
 public class Window {
 
     private JFrame frame;
     public static String NAME = "Block diagrams modeling physical processes";
     private JDesktopPane desktopPane;
-	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	int width = (int) screenSize.getWidth();
-	int height = (int) screenSize.getHeight();
 	
     /**
      * Launch the application.
@@ -98,15 +87,13 @@ public class Window {
         return panel;
     }
     
-    private void block_creator(int t) {    	
-    	Random rand = new Random();
-		int x = rand.nextInt(width - 500) + 100;
-		int y = rand.nextInt(height - 500) + 100;
+    private void block_creator(int t, int x, int y) {    			
 		JPanel block = new JPanel();
 		block.setBackground(new Color(255, 250, 240));
-        block.setBounds(x, y, 130, 115);
+        block.setBounds(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
         desktopPane.add(block);
         frame.setVisible(true);
+        
     		if(t == 0) {  
                 JLabel jlabel = new JLabel("Warm");
                 jlabel.setFont(new Font("Verdana",1,18));
@@ -137,36 +124,36 @@ public class Window {
                 block.add(jlabel);
                 block.setBorder(new LineBorder(Color.BLACK)); 
     		}
-                
-    		JButton del_block = new JButton("Delete");
-            desktopPane.setLayer(del_block, 1);
-            del_block.setBounds((x + 27), (y + 75), 75, 23);
-            del_block.setToolTipText("Delete Block");
-            desktopPane.add(del_block);
+    		
+    		/*	Details Button */
+    		JButton details = new JButton("Details");
+    		desktopPane.setLayer(details, 1);
+            details.setBounds((x + 1), y, 17, 17);
+            details.setToolTipText("Details");
+            block.add(details);
             frame.setVisible(true);
-                
-    			JButton details = new JButton("X");
-    			desktopPane.setLayer(details, 1);
-                details.setBounds((x + 113), y, 17, 17);
-                details.setToolTipText("Details");
-                desktopPane.add(details);
-                frame.setVisible(true);
-                
+            
+            /*	Delete Block Button */
+    		JButton delete = new JButton("Delete");
+            delete.setBounds(x, y, 75, 23);
+            delete.setToolTipText("Delete Block");
+            block.add(delete);
+            frame.setVisible(true);
+      
     			details.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent arg0) {
                     	JPanel panel = Data((x + 120), (y - 70));
                     	JButton pnl_cls = new JButton("X");
-                        desktopPane.setLayer(pnl_cls, 3);
                         pnl_cls.setBounds((x + 230), (y - 70), 15, 15);
                         pnl_cls.setToolTipText("Close");
                         desktopPane.add(pnl_cls);
                         frame.setVisible(true);
                         
                     	if (panel != null) {
-                    		del_block.addActionListener(new ActionListener() {
+                    		delete.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent arg0) {
                                 	desktopPane.remove(block);
-                                    desktopPane.remove(del_block);
+                                    desktopPane.remove(delete);
                                     desktopPane.remove(details);
                                     desktopPane.remove(panel);
                                     desktopPane.remove(pnl_cls);
@@ -187,95 +174,108 @@ public class Window {
                     }
                 });
     			
-    			del_block.addActionListener(new ActionListener() {
+    			delete.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent arg0) {
                     	desktopPane.remove(block);
-                        desktopPane.remove(del_block);
+                        desktopPane.remove(delete);
                         desktopPane.remove(details);
                         desktopPane.revalidate();
                         desktopPane.repaint();
                     }
     			 });
+
+      Movement drag = new Movement(block);
  }
     /**
      * Initialize the contents of the frame.
      */
     private void initialize() {
+    	Random rand = new Random();
     	
     	/*	Window	*/
         frame = new JFrame(NAME);
-        frame.setBounds(0, 0, width, height);
+        frame.setBounds(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null); 
         
         /*	Working area	*/        
         desktopPane = new JDesktopPane();
         desktopPane.setBackground(new Color(171, 171, 171));
-        desktopPane.setBounds(155, 28, (width - 200), (height - 150));
+        desktopPane.setBounds(155, 28, WORKING_AREA_WIDTH, WORKING_AREA_HEIGHT);
         frame.getContentPane().add(desktopPane);
 
         /*	Button Warm	 */        
         JButton btnWarm = new JButton("Warm");
     	btnWarm.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-            	block_creator(0);
-            }
+            	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
+        		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
+            	block_creator(0, x, y);
+        	}
         });
         btnWarm.setForeground(new Color(128, 0, 128));
         btnWarm.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 11));
         btnWarm.setBackground(new Color(211, 211, 211));
-        btnWarm.setBounds(12, 80, 109, 56);
+        btnWarm.setBounds(17, 80, BUTTON_WIDTH,BUTTON_HEIGHT);
         frame.getContentPane().add(btnWarm);
 
         /*	Button Freeze	 */
         JButton btnFreeze = new JButton("Freeze");
         btnFreeze.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {     	
-            	block_creator(1);
+            	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
+        		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
+            	block_creator(1, x, y);
             }
         });
         btnFreeze.setForeground(new Color(128, 0, 128));
         btnFreeze.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 11));
         btnFreeze.setBackground(new Color(211, 211, 211));
-        btnFreeze.setBounds(12, 158, 109, 56);
+        btnFreeze.setBounds(17, 158, BUTTON_WIDTH,BUTTON_HEIGHT);
         frame.getContentPane().add(btnFreeze);
         
         /*	Button Make Ice	 */
         JButton btnMakeIce = new JButton("Make Ice");
         btnMakeIce.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {     	
-            	block_creator(2);
+            	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
+        		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
+            	block_creator(2, x, y);
             }
         });
         btnMakeIce.setForeground(new Color(128, 0, 128));
         btnMakeIce.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 11));
         btnMakeIce.setBackground(new Color(211, 211, 211));
-        btnMakeIce.setBounds(12, 240, 109, 56);
+        btnMakeIce.setBounds(17, 240, BUTTON_WIDTH,BUTTON_HEIGHT);
         frame.getContentPane().add(btnMakeIce);
         
         /*	Button Make Liquid	 */
         JButton btnMakeLiquid = new JButton("Make Liquid");
         btnMakeLiquid.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {     	
-            	block_creator(3);
+            	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
+        		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
+            	block_creator(3, x, y);
             }
         });
         btnMakeLiquid.setForeground(new Color(128, 0, 128));
         btnMakeLiquid.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 10));
         btnMakeLiquid.setBackground(new Color(211, 211, 211));
-        btnMakeLiquid.setBounds(12, 327, 109, 56);
+        btnMakeLiquid.setBounds(17, 327, BUTTON_WIDTH,BUTTON_HEIGHT);
         frame.getContentPane().add(btnMakeLiquid);
 
         JButton btnMakeGas = new JButton("Make Gas");
         btnMakeGas.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {     	
-            	block_creator(4);
+            	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
+        		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
+            	block_creator(4, x, y);
             }
         });
         btnMakeGas.setForeground(new Color(128, 0, 128));
         btnMakeGas.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 11));
         btnMakeGas.setBackground(new Color(211, 211, 211));
-        btnMakeGas.setBounds(12, 416, 109, 56);
+        btnMakeGas.setBounds(17, 416, BUTTON_WIDTH,BUTTON_HEIGHT);
         frame.getContentPane().add(btnMakeGas);
 
         JMenuBar menuBar = new JMenuBar();
