@@ -117,15 +117,12 @@ public class Window {
             
     		/*	Details Button */
     		JButton details = new JButton("Details");
-    		desktopPane.setLayer(details, 1);
-            details.setBounds((x + 1), y, 17, 17);
             details.setToolTipText("Details");
             block.add(details);
             frame.setVisible(true);
             
             /*	Delete Block Button */
     		JButton delete = new JButton("Delete");
-            delete.setBounds(x, y, 75, 23);
             delete.setToolTipText("Delete Block");
             block.add(delete);
             frame.setVisible(true);
