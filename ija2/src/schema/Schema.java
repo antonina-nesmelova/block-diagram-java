@@ -44,6 +44,6 @@ public class Schema {
 	
 	public boolean setPortValue(Block block, Type.type type, int pId, double mass, double temp) {
 		
-		return block.setPortValue(pId, type);
+		return block.setPortValue(pId, type, mass, temp);
 	}
 }

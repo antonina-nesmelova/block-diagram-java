@@ -14,16 +14,7 @@ public abstract class Block {
 	public List<PortIn> portsIn = new ArrayList<PortIn>();
 	public List<PortOut> portsOut = new ArrayList<PortOut>();
 	public int maxInPorts;
-    public int maxOutPorts;
-
-	protected Block() {
-		this.number = 0;
-		for (int i = 0; i < maxInPorts; i++){
-			PortIn port = new PortIn();
-		}
-		PortOut port = new PortOut();
-		this.portsOut.add(port);
-	}
+	public int maxOutPorts;
 
 	public enum Operation {
 		WARM,
@@ -44,45 +35,51 @@ public abstract class Block {
 
 			throw new AssertionError("Unknown type: " + this);
 		}
+
+	}
+
+	protected Block(Block.Operation op) {
+		switch (op) {
+			case WARM:
+			case FREEZE:
+				this.maxInPorts = 2;
+				this.maxOutPorts = 1;
+				break;
+			case MKICE:
+			case MKGASS:
+			case MKLIQUID:
+				this.maxInPorts = 1;
+				this.maxOutPorts = 2;
+				break;
+		}
+
 	}
 
 	public abstract Block.Operation getOperation();
 
 	public abstract void resolve();
 
-	public int createPortIn() {
-		if (this.number < 2) {
-			PortIn port = new PortIn();
-			this.portsIn.add(port);
-			this.number += 1;
-			return (number-1);
-		} else {
-			return -1;
-		}
+	public void createPortIn() {
+
+		PortIn port = new PortIn();
+		this.portsIn.add(port);
 	}
 
-    public int createPortOut() {
-        if (this.number < 2) {
-            PortOut port = new PortOut();
-            this.portsOut.add(port);
-            this.number += 1;
-            return (number-1);
-        } else {
-            return -1;
-        }
-    }
+	public void createPortOut() {
 
-	public boolean setPortValue(int id, Type value) {
+		PortOut port = new PortOut();
+		this.portsOut.add(port);
+	}
 
-		if (!portsIn.contains(value)) {
-			this.portsIn.get(id).value = value;
-			return true;
-		} else {
-			return false;
-		}
+	public boolean setPortValue(int id, Type.type type, double mass, double temp) {
+
+        this.portsIn.get(id).setType(type, mass, temp);
+        return true;
+
 	}
 
 	public Type getPortValue(int id) {
 		return this.portsIn.get(id).value;
 	}
 }
+

@@ -29,6 +29,7 @@ public abstract class Port {
                 break;
             }
         }
+        this.free = false;
 
     }
 }

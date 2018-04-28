@@ -3,10 +3,15 @@ package schema.blocks.implementation.blocks;
 public class Warm extends Block {
 	
 	public Warm(int id) {
-		super();
+		super(Operation.WARM);
 		this.id = id;
-		this.createPort();
-		this.createPort();
+		for (int i = 0; i < this.maxInPorts; i++) {
+			this.createPortIn();
+		}
+
+		for (int i = 0; i < this.maxOutPorts; i++) {
+			this.createPortOut();
+		}
 	}
 
 	public void resolve() {  }
