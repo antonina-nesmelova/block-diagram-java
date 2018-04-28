@@ -6,6 +6,8 @@ import schema.blocks.implementation.blocks.Block;
 import schema.blocks.Type;
 import schema.blocks.implementation.blocks.Freeze;
 import schema.blocks.implementation.blocks.Warm;
+import schema.blocks.implementation.ports.PortIn;
+import schema.blocks.implementation.ports.PortOut;
 
 //import static schema.blocks.Type.type.WATER;
 
@@ -46,4 +48,10 @@ public class Schema {
 		
 		return block.setPortValue(pId, type, mass, temp);
 	}
+
+	public boolean createRelation(PortIn in, PortOut out) {
+        in.connect(out);
+        out.connect(in);
+	    return true;
+    }
 }
