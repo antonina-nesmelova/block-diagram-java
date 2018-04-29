@@ -50,8 +50,21 @@ public class Schema {
 	}
 
 	public boolean createRelation(PortIn in, PortOut out) {
-        in.connect(out);
-        out.connect(in);
-	    return true;
+		if (!findLoop(out.getBlock(), in.getBlock())) {
+			in.connect(out);
+			out.connect(in);
+			return true;
+		} else return false;
     }
+
+    public boolean findLoop(int out, int in) {
+		if (out == in) return true;
+		else {
+			for (PortOut outPort : this.blocks.get(in).portsOut) {
+				if (outPort.isFree()) continue;
+				else if (findLoop(out, outPort.getBlock())) return true;
+			}
+		}
+		return false;
+	}
 }

@@ -7,11 +7,13 @@ import schema.blocks.implementation.type.Water;
 
 public abstract class Port {
     public Type value;
-    public boolean free;
+    private boolean free;
+    private int block;
 
-    protected Port() {
+    protected Port(int blockId) {
         this.free = true;
         this.value = null;
+        this.block = blockId;
     }
 
     public void setType(Type.type type, double mass, double temp) {
@@ -31,5 +33,13 @@ public abstract class Port {
         }
         this.free = false;
 
+    }
+
+    public int getBlock() {
+        return block;
+    }
+
+    public boolean isFree() {
+        return free;
     }
 }

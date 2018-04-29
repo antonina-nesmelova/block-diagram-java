@@ -9,7 +9,7 @@ import java.util.List;
 
 public abstract class Block {
 
-	public int id;
+	private int id;
 
 	public List<PortIn> portsIn = new ArrayList<PortIn>();
 	public List<PortOut> portsOut = new ArrayList<PortOut>();
@@ -61,13 +61,13 @@ public abstract class Block {
 
 	public void createPortIn() {
 
-		PortIn port = new PortIn();
+		PortIn port = new PortIn(this.id);
 		this.portsIn.add(port);
 	}
 
 	public void createPortOut() {
 
-		PortOut port = new PortOut();
+		PortOut port = new PortOut(this.id);
 		this.portsOut.add(port);
 	}
 
@@ -80,6 +80,10 @@ public abstract class Block {
 
 	public Type getPortValue(int id) {
 		return this.portsIn.get(id).value;
+	}
+
+	public int getId() {
+		return this.id;
 	}
 }
 
