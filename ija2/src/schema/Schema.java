@@ -3,17 +3,16 @@ package schema;
 import java.util.*;
 
 import schema.blocks.implementation.blocks.Block;
-import schema.blocks.Type;
+import schema.blocks.implementation.type.Type;
 import schema.blocks.implementation.blocks.Freeze;
 import schema.blocks.implementation.blocks.Warm;
 import schema.blocks.implementation.ports.PortIn;
 import schema.blocks.implementation.ports.PortOut;
 
-//import static schema.blocks.Type.type.WATER;
+//import static schema.blocks.implementation.type.Type.type.WATER;
 
 public class Schema {
-	
-	//public List<Block> blocks = new ArrayList();
+
 	public List<Block> blocks = new ArrayList<Block>();
 	public int number;
 
@@ -46,7 +45,7 @@ public class Schema {
 	
 	public boolean setPortValue(Block block, Type.type type, int pId, double mass, double temp) {
 		
-		return block.setPortValue(pId, type, mass, temp);
+		return block.setPortInValue(pId, type, mass, temp);
 	}
 
 	public boolean createRelation(PortIn in, PortOut out) {
@@ -67,4 +66,19 @@ public class Schema {
 		}
 		return false;
 	}
+
+	public boolean resolveSchema() {
+	    boolean finish = true;
+	    for (Block block : this.blocks) {
+	        if (!block.isResolved()) {
+                if (block.isFull()) {
+                    block.resolve();
+                } else if (!block.isEmpty()){
+                    finish = false;
+                }
+            }
+        }
+        if(finish) return true;
+	    else return resolveSchema();
+    }
 }

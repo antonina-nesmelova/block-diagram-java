@@ -63,7 +63,7 @@ public class Tests {
 
         AbstractMaterial water = new Water();
         water.setValues(0.5, 30);
-        Energy energy = new Energy();
+        Energy energy = new Energy(2000, 100);
         energy.setJoule(1000);
 
         Assert.assertTrue("Set type Water to port of Warm block",schema.setPortValue(warm, water, 0));

@@ -1,12 +1,10 @@
 package schema.blocks.implementation.ports;
 
-import schema.blocks.Type;
-import schema.blocks.implementation.type.Alcohol;
-import schema.blocks.implementation.type.Energy;
-import schema.blocks.implementation.type.Water;
+import schema.blocks.implementation.type.Type;
 
 public abstract class Port {
     public Type value;
+    public Type.type type;
     private boolean free;
     private int block;
 
@@ -16,22 +14,10 @@ public abstract class Port {
         this.block = blockId;
     }
 
-    public void setType(Type.type type, double mass, double temp) {
-        switch (type) {
-            case WATER: {
-                value = new Water(mass, temp);
-                break;
-            }
-            case ALCOHOL: {
-                value = new Alcohol(mass, temp);
-                break;
-            }
-            case ENERGY: {
-                value = new Energy(mass, temp);
-                break;
-            }
-        }
+    public void setType(Type value) {
+        this.value = value;
         this.free = false;
+        this.type = this.value.getType();
 
     }
 
@@ -41,5 +27,18 @@ public abstract class Port {
 
     public boolean isFree() {
         return free;
+    }
+
+    public boolean hasValue() {
+        if (this.value == null) return false;
+        else return true;
+    }
+
+    public void setFree(boolean free) {
+        this.free = free;
+    }
+
+    public Type.type getType() {
+        return this.type;
     }
 }

@@ -1,7 +1,5 @@
 package schema.blocks.implementation.type;
 
-import schema.blocks.Type;
-
 public class Energy implements Type {
 	public double joule;
 	
@@ -9,10 +7,56 @@ public class Energy implements Type {
 		setJoule(mass);
 	}
 
+	@Override
+	public boolean isMaterial() {
+		return false;
+	}
+
+	public type getType() {
+		return type.ENERGY;
+	}
+
 	public void setJoule(double joule) {
 		this.joule = joule;
 	}
 
+	@Override
 	public double getJoule() { return this.joule; }
 
+	@Override
+	public double getMass() {
+		return 0;
+	}
+
+	@Override
+	public double getTemp() {
+		return 0;
+	}
+
+	public double getFreezeTemp() {
+		return 0;
+	}
+
+	public double getGasTemp() {
+		return 0;
+	}
+
+	public double getThermalConst() {
+		return 0;
+	}
+
+	public double getFusionConst() {
+		return 0;
+	}
+
+	public double getVaporisationConst() {
+		return 0;
+	}
+
+	public AbstractMaterial.State getState() {return null;}
+
+	@Override
+	public void setState(AbstractMaterial.State state) {
+
+	}
 }

@@ -1,14 +1,16 @@
 package schema.blocks.implementation.blocks;
 
+import schema.blocks.implementation.type.Type;
+
 public class Freeze extends Block{
     public Freeze(int id) {
-        super();
+        super(Operation.FREEZE);
         this.id = id;
-        this.createPort();
-        this.createPort();
     }
 
-    public void resolve() { }/* TODO
+    public Type calculate(Type material, Type energy) {
+        return material;
+    }/* TODO
         double delta = this.energy_in.joule / (this.material_in.thermal_c * this.material_in.kg);
         if(delta*(-1) > this.material_in.t) {
             double Q = this.material_in.thermal_c * this.material_in.kg * this.material_in.t;

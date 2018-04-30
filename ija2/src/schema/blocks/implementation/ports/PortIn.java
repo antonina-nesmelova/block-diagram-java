@@ -9,8 +9,8 @@ public class PortIn extends Port {
     }
 
     public boolean connect(PortOut out) {
-        if (this.free) {
-            this.free = false;
+        if (this.isFree()) {
+            this.setFree(false);
             this.out = out;
             return true;
         } else {

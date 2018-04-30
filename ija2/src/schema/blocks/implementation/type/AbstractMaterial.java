@@ -1,17 +1,16 @@
 package schema.blocks.implementation.type;
 
-import schema.blocks.Material;
-import schema.blocks.Type;
-
 public abstract class AbstractMaterial implements Material {
 	public double kg;
 	public double t;
 	public AbstractMaterial.State state;
-	public double thermal_c;
 	public double freeze_t;
-	public double gass_t;
-	public double gass_const;
-	public double melt_const;
+	public double gas_t;
+	public double thermal_const;
+	public double vaporisation_const;
+	public double fusion_const;
+
+	public double joule;
 
 	public enum State {
 		GASS,
@@ -32,11 +31,18 @@ public abstract class AbstractMaterial implements Material {
 
 	public AbstractMaterial(double mass, double temp) {
 		setValues(mass, temp);
+		setJoule(0);
+	}
+
+	@Override
+	public boolean isMaterial() {
+		return true;
 	}
 
 	public void setValues(double kg, double t) {
 		this.setMass(kg);
 		this.setTemp(t);
+		this.controlState();
 	}
 
 	public void setMass(double kg) {
@@ -45,15 +51,23 @@ public abstract class AbstractMaterial implements Material {
 
 	public void setTemp(double t) {
 		this.t = t;
-		this.controlState();
 	}
 
+	public void setJoule(double joule) { this.joule = joule; }
+
+	@Override
 	public double getMass() {
 		return this.kg;
 	}
 
+	@Override
 	public double getTemp() {
 		return this.t;
+	}
+
+	@Override
+	public double getJoule() {
+		return this.joule;
 	}
 
 	public AbstractMaterial.State getState() {
@@ -63,9 +77,29 @@ public abstract class AbstractMaterial implements Material {
 	public void controlState() {
 		if (this.t < this.freeze_t)
 			this.state = State.ICE;
-		else if (this.t < this.gass_t)
+		else if (this.t < this.gas_t)
 			this.state = State.LIQUID;
 		else
 			this.state = State.GASS;
+	}
+
+	public double getFreezeTemp() {
+		return this.freeze_t;
+	}
+
+	public double getGasTemp() {
+		return gas_t;
+	}
+
+	public double getThermalConst() {
+		return this.thermal_const;
+	}
+
+	public double getFusionConst() {
+		return this.fusion_const;
+	}
+
+	public double getVaporisationConst() {
+		return this.vaporisation_const;
 	}
 }
