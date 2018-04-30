@@ -3,8 +3,8 @@ package schema.blocks.implementation.ports;
 public class PortIn extends Port {
     public PortOut out;
 
-    public PortIn(int blockId) {
-        super(blockId);
+    public PortIn(int blockId, int portId) {
+        super(blockId, portId);
         this.out = null;
     }
 

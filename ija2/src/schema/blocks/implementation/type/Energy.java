@@ -32,6 +32,19 @@ public class Energy implements Type {
 	public double getTemp() {
 		return 0;
 	}
+	@Override
+	public void setMass(double mass) {
+		return;
+	}
+
+	@Override
+	public void setTemp(double temp) {
+		return;
+	}
+
+	public void setValues(double mass, double temp) {
+		this.setJoule(mass);
+		return;}
 
 	public double getFreezeTemp() {
 		return 0;

@@ -59,11 +59,11 @@ public abstract class Block {
 		}
 
         for (int i = 0; i < this.maxInPorts; i++) {
-            this.createPortIn();
+            this.createPortIn(i);
         }
 
         for (int i = 0; i < this.maxOutPorts; i++) {
-            this.createPortOut();
+            this.createPortOut(i);
         }
 
 	}
@@ -72,35 +72,35 @@ public abstract class Block {
 
 	public abstract Type calculate(Type material, Type energy);
 
-	public void createPortIn() {
+	public void createPortIn(int id) {
 
-		PortIn port = new PortIn(this.id);
+		PortIn port = new PortIn(this.id, id);
 		this.portsIn.add(port);
 	}
 
-	public void createPortOut() {
+	public void createPortOut(int id) {
 
-		PortOut port = new PortOut(this.id);
+		PortOut port = new PortOut(this.id, id);
 		this.portsOut.add(port);
 	}
 
-	public boolean setPortInValue(int inPortId, Type.type type, double mass, double temp) {
+	public boolean setPortInType(int inPortId, Type.type type) {
         Type value;
 	    switch (type) {
             case WATER: {
-                value = new Water(mass, temp);
+                value = new Water(0, 0);
                 break;
             }
             case ALCOHOL: {
-                value = new Alcohol(mass, temp);
+                value = new Alcohol(0, 0);
                 break;
             }
             case ENERGY: {
-                value = new Energy(mass, temp);
+                value = new Energy(0, 0);
                 break;
             }
             default:  {
-                value = new Energy(mass, temp);
+                value = new Energy(0, 0);
                 break;
             }
         }
@@ -114,6 +114,10 @@ public abstract class Block {
         return true;
 	}
 
+	public void setPortInValue(int inPortId, double mass, double temp) {
+		this.portsIn.get(inPortId).value.setValues(mass, temp);
+	}
+
 	public boolean resolve() {
 	    this.resolved = true;
 	    Type material = null;
@@ -125,7 +129,7 @@ public abstract class Block {
                 energy = port.value;
             }
         }
-	    this.calculate(material, energy);
+	    Type resultMaterial = this.calculate(material, energy);
 	    return true;
     }
 

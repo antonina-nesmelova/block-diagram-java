@@ -44,6 +44,10 @@ public interface Type {
 
     public void setTemp(double temp);
 
+    public void setMass(double mass);
+
     public void setJoule(double joule);
+
+    public void setValues(double mass, double temp);
 
 }

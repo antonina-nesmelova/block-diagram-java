@@ -44,15 +44,22 @@ public class Schema {
 	}
 	
 	public boolean setPortValue(Block block, Type.type type, int pId, double mass, double temp) {
-		
-		return block.setPortInValue(pId, type, mass, temp);
+		if(block.setPortInType(pId, type)) {
+			block.setPortInValue(pId, mass, temp);
+			return true;
+		}
+		return false;
 	}
 
 	public boolean createRelation(PortIn in, PortOut out) {
 		if (!findLoop(out.getBlock(), in.getBlock())) {
 			in.connect(out);
 			out.connect(in);
-			return true;
+			if (this.blocks.get(in.getBlock()).setPortInType(in.getId(), out.getType())) {
+                this.blocks.get(in.getBlock()).setPortInValue(in.getId(), out.getMass(), out.getTemp());
+                return true;
+            }
+            return false;
 		} else return false;
     }
 

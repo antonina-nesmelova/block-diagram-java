@@ -34,6 +34,10 @@ public abstract class AbstractMaterial implements Material {
 		setJoule(0);
 	}
 
+	public void setState(State state) {
+		this.state = state;
+	}
+
 	@Override
 	public boolean isMaterial() {
 		return true;
