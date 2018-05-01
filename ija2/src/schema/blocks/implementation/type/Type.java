@@ -18,7 +18,7 @@ public interface Type {
         }
     }
 
-    public boolean isMaterial();
+    public int isMaterial();
 
     public type getType();
 

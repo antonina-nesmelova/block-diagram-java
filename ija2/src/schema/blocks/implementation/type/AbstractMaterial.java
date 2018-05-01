@@ -29,9 +29,8 @@ public abstract class AbstractMaterial implements Material {
 		}
 	}
 
-	public AbstractMaterial(double mass, double temp) {
-		setValues(mass, temp);
-		setJoule(0);
+	public AbstractMaterial() {
+
 	}
 
 	public void setState(State state) {
@@ -39,8 +38,8 @@ public abstract class AbstractMaterial implements Material {
 	}
 
 	@Override
-	public boolean isMaterial() {
-		return true;
+	public int isMaterial() {
+		return 1;
 	}
 
 	public void setValues(double kg, double t) {

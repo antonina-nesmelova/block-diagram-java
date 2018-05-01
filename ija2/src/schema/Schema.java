@@ -9,15 +9,13 @@ import schema.blocks.implementation.blocks.Warm;
 import schema.blocks.implementation.ports.PortIn;
 import schema.blocks.implementation.ports.PortOut;
 
-//import static schema.blocks.implementation.type.Type.type.WATER;
-
 public class Schema {
 
 	public List<Block> blocks = new ArrayList<Block>();
 	public int number;
 
 	public Schema() {
-
+        this.number = 0;
 	}
 	
 	public Block createBlock(Block.Operation type) {
@@ -40,6 +38,7 @@ public class Schema {
 				break;
 			}
 		}
+		this.number += 1;
 		return b;
 	}
 	
@@ -52,14 +51,10 @@ public class Schema {
 	}
 
 	public boolean createRelation(PortIn in, PortOut out) {
-		if (!findLoop(out.getBlock(), in.getBlock())) {
-			in.connect(out);
-			out.connect(in);
-			if (this.blocks.get(in.getBlock()).setPortInType(in.getId(), out.getType())) {
-                this.blocks.get(in.getBlock()).setPortInValue(in.getId(), out.getMass(), out.getTemp());
-                return true;
-            }
-            return false;
+		if (!findLoop(out.getBlock().getId(), in.getBlock().getId())) {
+            in.connect(out);
+            out.connect(in);
+            return true;
 		} else return false;
     }
 
@@ -68,7 +63,7 @@ public class Schema {
 		else {
 			for (PortOut outPort : this.blocks.get(in).portsOut) {
 				if (outPort.isFree()) continue;
-				else if (findLoop(out, outPort.getBlock())) return true;
+				else if (findLoop(out, outPort.getBlock().getId())) return true;
 			}
 		}
 		return false;

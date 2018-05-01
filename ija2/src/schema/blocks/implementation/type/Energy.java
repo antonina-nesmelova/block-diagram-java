@@ -8,8 +8,8 @@ public class Energy implements Type {
 	}
 
 	@Override
-	public boolean isMaterial() {
-		return false;
+	public int isMaterial() {
+		return 2;
 	}
 
 	public type getType() {

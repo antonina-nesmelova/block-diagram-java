@@ -42,7 +42,8 @@ public abstract class Block {
 
 	}
 
-	protected Block(Block.Operation op) {
+	protected Block(Block.Operation op, int id) {
+		this.id = id;
 	    this.resolved = false;
 		switch (op) {
 			case WARM:
@@ -70,17 +71,17 @@ public abstract class Block {
 
 	public abstract Block.Operation getOperation();
 
-	public abstract Type calculate(Type material, Type energy);
+	public abstract void calculate(Type material, Type energy);
 
 	public void createPortIn(int id) {
 
-		PortIn port = new PortIn(this.id, id);
+		PortIn port = new PortIn(this, id);
 		this.portsIn.add(port);
 	}
 
 	public void createPortOut(int id) {
 
-		PortOut port = new PortOut(this.id, id);
+		PortOut port = new PortOut(this, id);
 		this.portsOut.add(port);
 	}
 
@@ -106,7 +107,7 @@ public abstract class Block {
         }
         // control if ports have different types
 	    for (int i = 0; i < maxInPorts; i++) {
-            if (i != inPortId & (this.portsIn.get(i).value.isMaterial() == value.isMaterial())) {
+            if (i != inPortId & (this.portsIn.get(i).isMaterial() == value.isMaterial())) {
                 return false;
             }
         }
@@ -118,24 +119,39 @@ public abstract class Block {
 		this.portsIn.get(inPortId).value.setValues(mass, temp);
 	}
 
+	public boolean setPortOutValue(int outPortId, Type type) {
+	    PortOut port = this.portsOut.get(outPortId);
+        port.setType(type);
+        if (!port.isFree()) {
+            if (port.in.getBlock().setPortInType(port.in.getId(), type.getType())) {
+                port.in.getBlock().setPortInValue(port.in.getId(), type.getMass(), type.getTemp());
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+	        return true;
+        }
+    }
+
 	public boolean resolve() {
 	    this.resolved = true;
 	    Type material = null;
 	    Type energy = null;
 	    for (PortIn port : this.portsIn) {
-	        if (port.value.isMaterial()) {
+	        if (port.value.isMaterial() == 1) {
 	            material = port.value;
             } else {
                 energy = port.value;
             }
         }
-	    Type resultMaterial = this.calculate(material, energy);
+	    this.calculate(material, energy);
 	    return true;
     }
 
-	public Type getPortValue(int portId) {
-		return this.portsIn.get(portId).value;
-	}
+//    public Type getPortValue(int portId) {
+//        return this.portsIn.get(portId).value;
+//    }
 
 	public int getId() {
 		return this.id;

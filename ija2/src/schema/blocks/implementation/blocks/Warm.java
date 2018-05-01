@@ -9,8 +9,7 @@ import static java.lang.Math.abs;
 public class Warm extends Block {
 	
 	public Warm(int id) {
-		super(Operation.WARM);
-		this.id = id;
+		super(Operation.WARM, id);
 	}
 
 	private Type processingLiquid(double energy, Type material) {
@@ -44,7 +43,7 @@ public class Warm extends Block {
         return material;
     }
 
-	public Type calculate(Type material, Type energy) {
+	public void calculate(Type material, Type energy) {
         TypesFactory factory = new TypesFactory();
 	    double joule = energy.getJoule() + material.getJoule(); //energie plus vnitrni teplota materialu
 
@@ -59,7 +58,9 @@ public class Warm extends Block {
                 if(delta < difference) {
                     // ohrame material a vratime
                     resultMaterial.setTemp(resultMaterial.getTemp() + delta);
-                    return resultMaterial;
+                    //return resultMaterial;
+                    this.setPortOutValue(portsOut.get(0).getId(), resultMaterial);
+                    return;
                 }
                 // odecteme energii pro ohrati materialu do teploty taveni
                 double energyForFusion = joule - material.getThermalConst()*material.getMass()*difference;
@@ -68,21 +69,29 @@ public class Warm extends Block {
                 double energyForWarming = energyForFusion - material.getFusionConst()*material.getMass();
                 if (energyForWarming >= 0) {
                     resultMaterial.setState(AbstractMaterial.State.LIQUID);
-                    return processingLiquid(energyForWarming, resultMaterial);
+                    resultMaterial = processingLiquid(energyForWarming, resultMaterial);
+                    this.setPortOutValue(portsOut.get(0).getId(), resultMaterial);
+                    return;
 
                 } else { // pokud energie nestaci na taveni - pricteme ji jako vnitrni energii
                     resultMaterial.setJoule(energyForWarming);
-                    return resultMaterial;
+                    this.setPortOutValue(portsOut.get(0).getId(), resultMaterial);
+                    return;
                 }
             }
             case LIQUID: {
-                return processingLiquid(joule, resultMaterial);
+                resultMaterial =  processingLiquid(joule, resultMaterial);
+                this.setPortOutValue(portsOut.get(0).getId(), resultMaterial);
+                return;
             }
             case GASS: {
-                return processingGas(joule, resultMaterial);
+                resultMaterial =  processingGas(joule, resultMaterial);
+                this.setPortOutValue(portsOut.get(0).getId(), resultMaterial);
+                return;
             }
             default: {
-                return resultMaterial;
+                this.setPortOutValue(portsOut.get(0).getId(), resultMaterial);
+                return;
             }
         }
 

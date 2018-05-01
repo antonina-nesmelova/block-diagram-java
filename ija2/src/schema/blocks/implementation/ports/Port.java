@@ -1,18 +1,19 @@
 package schema.blocks.implementation.ports;
 
+import schema.blocks.implementation.blocks.Block;
 import schema.blocks.implementation.type.Type;
 
 public abstract class Port {
     public Type value;
     public Type.type type;
     private boolean free;
-    private int block;
+    private Block block;
     private int id;
 
-    protected Port(int blockId, int portId) {
+    protected Port(Block block, int portId) {
         this.free = true;
         this.value = null;
-        this.block = blockId;
+        this.block = block;
         this.id = portId;
     }
 
@@ -25,8 +26,8 @@ public abstract class Port {
 
     public int getId() { return this.id; }
 
-    public int getBlock() {
-        return block;
+    public Block getBlock() {
+        return this.block;
     }
 
     public boolean isFree() {
@@ -49,4 +50,9 @@ public abstract class Port {
     public double getMass() { return  this.value.getMass();}
 
     public double getTemp() { return  this.value.getTemp();}
+
+    public int isMaterial() {
+        if (this.value == null) return 0;
+        else return this.value.isMaterial();
+    }
 }

@@ -1,10 +1,12 @@
 package schema.blocks.implementation.ports;
 
+import schema.blocks.implementation.blocks.Block;
+
 public class PortIn extends Port {
     public PortOut out;
 
-    public PortIn(int blockId, int portId) {
-        super(blockId, portId);
+    public PortIn(Block block, int portId) {
+        super(block, portId);
         this.out = null;
     }
 
