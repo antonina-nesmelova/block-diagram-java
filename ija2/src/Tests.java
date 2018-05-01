@@ -86,16 +86,20 @@ public class Tests {
     public  void connecting() {
         Block warm1 = schema.createBlock(Block.Operation.WARM);
         Block warm2 = schema.createBlock(Block.Operation.WARM);
+        Block warm3 = schema.createBlock(Block.Operation.WARM);
         Block freeze = schema.createBlock(Block.Operation.FREEZE);
 
-        schema.setPortValue(warm1, Type.type.WATER, 0, 50, 20);
         schema.setPortValue(warm1, Type.type.ENERGY, 1, 1000, 0);
         schema.setPortValue(warm2, Type.type.ENERGY, 1, 1500, 0);
+        schema.setPortValue(warm3, Type.type.ENERGY, 1, 1500, 0);
 
         schema.createRelation(warm2.portsIn.get(0), warm1.portsOut.get(0));
+        schema.createRelation(warm3.portsIn.get(0), warm2.portsOut.get(0));
+
+        Assert.assertFalse(schema.createRelation(warm1.portsIn.get(0), warm3.portsOut.get(0)));
 
         schema.resolveSchema();
 
-        Assert.assertEquals("Types of connected ports", warm2.portsIn.get(0).getType(), Type.type.WATER);
+//        Assert.assertEquals("Types of connected ports", warm2.portsIn.get(0).getType(), Type.type.WATER);
     }
 }

@@ -63,7 +63,7 @@ public class Schema {
 		else {
 			for (PortOut outPort : this.blocks.get(in).portsOut) {
 				if (outPort.isFree()) continue;
-				else if (findLoop(out, outPort.getBlock().getId())) return true;
+				else if (findLoop(out, outPort.in.getBlock().getId())) return true;
 			}
 		}
 		return false;

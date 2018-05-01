@@ -167,7 +167,7 @@ public abstract class Block {
     public boolean isEmpty() {
 	    boolean empty = false;
 	    for (PortIn port : portsIn) {
-	        if (port.isFree()) empty = true;
+	        if (!port.hasValue()) empty = true;
         }
         return empty;
     }
