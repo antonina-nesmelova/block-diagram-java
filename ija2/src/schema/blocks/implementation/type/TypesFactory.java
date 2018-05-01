@@ -9,7 +9,7 @@ public class TypesFactory {
     public Type createMaterial(Type.type type, double mass, double temp) {
         switch (type) {
             case WATER: {
-                return new Water(mass, temp);
+               return new Water(mass, temp);
             }
             case ALCOHOL: {
                 return new Alcohol(mass, temp);

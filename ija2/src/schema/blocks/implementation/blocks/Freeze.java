@@ -1,43 +1,102 @@
 package schema.blocks.implementation.blocks;
 
+import schema.blocks.implementation.type.AbstractMaterial;
 import schema.blocks.implementation.type.Type;
+import schema.blocks.implementation.type.TypesFactory;
+
+import static java.lang.Math.abs;
 
 public class Freeze extends Block{
     public Freeze(int id) {
         super(Operation.FREEZE, id);
     }
 
-    public void calculate(Type material, Type energy) {
-        return;
-    }/* TODO
-        double delta = this.energy_in.joule / (this.material_in.thermal_c * this.material_in.kg);
-        if(delta*(-1) > this.material_in.t) {
-            double Q = this.material_in.thermal_c * this.material_in.kg * this.material_in.t;
+    private Type processingLiquid(double energy, Type material) {
+        // pocet stupnu do teploty ledu
+        double difference = abs( material.getTemp() - material.getFreezeTemp());
+        //pocet stupnu na ktery muze se osudit material
+        double delta = energy / (material.getThermalConst()* material.getMass());
+        // pokud delta > dt - vyparovani
+        if(delta >= difference) {
+            double energyForFreezing = energy - material.getThermalConst()*material.getMass()*difference;
+            material.setTemp(material.getFreezeTemp());
 
-            if (Q == this.material_in.melt_const * this.material_in.kg) {	//Q=lambda*m
-                this.material_out.t = 0;
-                this.material_out.state = "liquid";
+            energy = energyForFreezing - material.getFusionConst()*material.getMass();
+            if (energy >= 0) {
+                material.setState(AbstractMaterial.State.ICE);
+                return processingIce(energy, material);
+            } else {
+                material.setState(AbstractMaterial.State.ICE);
+                material.setJoule(abs(energy));
+                return material;
+            }
+        } else { //jinak ostudime a vratime
+            material.setTemp(material.getTemp() - delta);
+            return material;
+        }
+
+    }
+
+    private Type processingIce(double energy, Type material) {
+        double delta = energy / (material.getThermalConst()* material.getMass());
+        material.setTemp(material.getTemp() - delta);
+        return material;
+    }
+
+    public void calculate(Type material, Type energy) {
+        TypesFactory factory = new TypesFactory();
+        double joule = energy.getJoule() + material.getJoule(); //energie plus vnitrni teplota materialu
+
+        Type resultMaterial = factory.createMaterial(material.getType(), material.getMass(), material.getTemp());
+
+        switch (material.getState()) {
+            case GASS: {
+                double delta = joule / (material.getThermalConst() * material.getMass()); //pocet stupnu na ktery muze se ohrat material
+                // pocet stupnu do teploty mrazu
+                double difference = abs(material.getTemp() - material.getGasTemp());
+                // pokud delta > dt
+                if (delta < difference) {
+                    // ostudime material a vratime
+                    resultMaterial.setTemp(resultMaterial.getTemp() - delta);
+                    //return resultMaterial;
+                    this.setPortOutValue(portsOut.get(0).getId(), resultMaterial);
+                    return;
+                }
+                // odecteme energii pro studeni materialu do teploty tekutiny
+                double energyForCondensation = joule - material.getThermalConst() * material.getMass() * difference;
+                resultMaterial.setTemp(material.getFreezeTemp());
+                // vypocitame energii ktera zustane po taveni
+                double energyForFreezing = energyForCondensation - material.getVaporisationConst() * material.getMass();
+                if (energyForFreezing >= 0) {
+                    resultMaterial.setState(AbstractMaterial.State.LIQUID);
+                    resultMaterial = processingLiquid(energyForFreezing, resultMaterial);
+                    this.setPortOutValue(portsOut.get(0).getId(), resultMaterial);
+                    return;
+
+                } else { // pokud energie nestaci na kondenzaci - pricteme ji k vnitrni energii
+                    resultMaterial.setState(AbstractMaterial.State.LIQUID);
+                    resultMaterial.setJoule(abs(energyForFreezing));
+                    this.setPortOutValue(portsOut.get(0).getId(), resultMaterial);
+                    return;
+                }
+            }
+            case LIQUID: {
+                resultMaterial = processingLiquid(joule, resultMaterial);
+                this.setPortOutValue(portsOut.get(0).getId(), resultMaterial);
                 return;
             }
-            else if (Q > this.material_in.melt_const * this.material_in.kg) {
-                Q = Q - this.material_in.melt_const * this.material_in.kg;
-                delta = Q / (this.material_in.thermal_c * this.material_in.kg);
-                this.material_out.t = delta;
-                this.material_out.state = "liquid";
+            case ICE: {
+                resultMaterial = processingIce(joule, resultMaterial);
+                this.setPortOutValue(portsOut.get(0).getId(), resultMaterial);
                 return;
             }
-            else {
-                this.material_out.t = 0;
+            default: {
+                this.setPortOutValue(portsOut.get(0).getId(), resultMaterial);
                 return;
             }
         }
-
-        this.material_out = this.material_in;
-        this.material_out = this.material_in;
-
-        this.material_out.t = this.material_in.t + delta;
     }
-*/
+
     public Block.Operation getOperation() {
         return Operation.FREEZE;
     }
