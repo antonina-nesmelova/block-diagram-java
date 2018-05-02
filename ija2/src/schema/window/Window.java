@@ -2,21 +2,33 @@ package schema.window;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.*;
 
 import javax.swing.*;
+
+import schema.FullSchema;
 import schema.Schema;
+import schema.SchemaShape;
 import schema.blocks.implementation.blocks.Block;
 import schema.blocks.implementation.blocks.Block.Operation;
+import schema.save.Saving;
 
 import static schema.window.Constants.*;
 
 public class Window {
 	public static Schema schema;
+    public static SchemaShape schemaShape;
+    public FullSchema full;
     private JFrame frame;
     public static String NAME = "Block diagrams modeling physical processes";
     protected static JDesktopPane desktopPane;
     private int number;
+    private int schemaid;
+    private static Saving saver;
+
 	
     /**
      * Launch the application.
@@ -40,9 +52,13 @@ public class Window {
      */
     public Window() {
     	this.number = 0;
+    	this.schemaid = 1;
         initialize();
-        Schema schema = new Schema();
-        this.schema = schema;
+        schemaShape = new SchemaShape();
+        schema = new Schema();
+        this.full = new FullSchema(schema, schemaShape);
+        Saving saver = new Saving();
+        this.saver = saver;
     }
     
     /**
@@ -70,7 +86,8 @@ public class Window {
             	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
     			int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
     			Block logicBlock = schema.createBlock(Operation.WARM);
-            	BlockShape block = new BlockShape(0, x, y, number, schema);
+            	BlockShape block = new BlockShape(0, x, y, number, schema, schemaShape);
+                schemaShape.addShape(block);
             	number += 1;
                 desktopPane.add(block.block_creator(0, x, y));
                 frame.setVisible(true);
@@ -91,7 +108,8 @@ public class Window {
             	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
         		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
         		Block logicBlock = schema.createBlock(Operation.FREEZE);
-        		BlockShape block = new BlockShape(1, x, y, number, schema);
+        		BlockShape block = new BlockShape(1, x, y, number, schema, schemaShape);
+                schemaShape.addShape(block);
             	number += 1;
                 desktopPane.add(block.block_creator(1, x, y));
                 frame.setVisible(true);
@@ -110,8 +128,9 @@ public class Window {
             	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
         		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
         		Block logicBlock = schema.createBlock(Operation.MKICE);
-        		BlockShape block = new BlockShape(2, x, y, number, schema);
-            	number += 1;
+        		BlockShape block = new BlockShape(2, x, y, number, schema, schemaShape);
+                schemaShape.addShape(block);
+                number += 1;
                 desktopPane.add(block.block_creator(2, x, y));
                 frame.setVisible(true);       		
             }
@@ -129,8 +148,9 @@ public class Window {
             	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
         		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
         		Block logicBlock = schema.createBlock(Operation.MKLIQUID);
-        		BlockShape block = new BlockShape(3, x, y, number, schema);
-            	number += 1;
+        		BlockShape block = new BlockShape(3, x, y, number, schema, schemaShape);
+                schemaShape.addShape(block);
+                number += 1;
                 desktopPane.add(block.block_creator(3, x, y));
                 frame.setVisible(true);
         	}
@@ -147,8 +167,9 @@ public class Window {
             	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
         		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
         		Block logicBlock = schema.createBlock(Operation.MKGASS);
-        		BlockShape block = new BlockShape(4, x, y, number, schema);
-            	number += 1;
+        		BlockShape block = new BlockShape(4, x, y, number, schema, schemaShape);
+                schemaShape.addShape(block);
+                number += 1;
                 desktopPane.add(block.block_creator(4, x, y));
                 frame.setVisible(true);
         	}
@@ -173,6 +194,13 @@ public class Window {
         save.setHorizontalAlignment(SwingConstants.LEFT);
         save.setForeground(new Color(128, 0, 128));
         Save.add(save);
+        save.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                System.out.println("Want to save");
+                saver.Save(schemaid, full);
+                schemaid +=1;
+            }
+        });
 
         JMenuItem saveas = new JMenuItem("Save As...");
         saveas.setHorizontalAlignment(SwingConstants.LEFT);
@@ -182,12 +210,16 @@ public class Window {
         JMenu Download = new JMenu("Download");
         Download.setForeground(new Color(128, 0, 128));
         menuBar.add(Download);
+        Download.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                System.out.println("Want to save");
+                saver.Save(schemaid, full);
+                schemaid +=1;
+            }
+        });
 
         JMenu Execute = new JMenu("Execute");
         Execute.setForeground(new Color(128, 0, 128));
         menuBar.add(Execute);
-    }
-    public static void remove_block(int id) {
-    	schema.removeBlock(id);
     }
 }

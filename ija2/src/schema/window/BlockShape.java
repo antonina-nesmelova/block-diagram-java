@@ -11,15 +11,18 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import schema.Schema;
+import schema.SchemaShape;
 import schema.blocks.implementation.blocks.Block;
 
 public class BlockShape {
 	private int id;
 	public Block block;
 	public Schema schema;
-	public BlockShape(int t, int x, int y, int id, Schema schema) {
+    public SchemaShape schemaShape;
+	public BlockShape(int t, int x, int y, int id, Schema schema, SchemaShape schemaShape) {
 		this.id = id;
 		this.schema = schema;
+		this.schemaShape = schemaShape;
 	}
 	
 	public JPanel Data(int p_t, int x, int y) {    
@@ -151,6 +154,7 @@ public class BlockShape {
     			Window.desktopPane.revalidate();
     			Window.desktopPane.repaint();
                 schema.removeBlock(id);
+                schemaShape.removeShape(id);
             }
     	});
         
@@ -207,5 +211,8 @@ public class BlockShape {
       Movement drag = new Movement(block);
       
       return block;
- }	
+ }
+ public int getId() {
+	    return this.id;
+ }
 }
