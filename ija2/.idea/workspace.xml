@@ -56,11 +56,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Window.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Window.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/schema/window/Window.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="218" column="59" selection-start-line="218" selection-start-column="59" selection-end-line="218" selection-end-column="59" />
+            <state relative-caret-position="478">
+              <caret line="234" lean-forward="true" selection-start-line="234" selection-end-line="234" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -95,10 +95,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BlockShape.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BlockShape.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/schema/window/BlockShape.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1199">
+            <state relative-caret-position="1829">
               <caret line="205" column="46" selection-start-line="205" selection-start-column="46" selection-end-line="205" selection-end-column="46" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -478,7 +478,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="144244000" />
+    <option name="totallyTimeSpent" value="144853000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="959" height="1052" extended-state="4" />
@@ -897,6 +897,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/schema/window/Window.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="478">
+          <caret line="234" lean-forward="true" selection-start-line="234" selection-end-line="234" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/schema/SchemaShape.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -912,22 +922,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/schema/window/BlockShape.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1199">
+        <state relative-caret-position="1829">
           <caret line="205" column="46" selection-start-line="205" selection-start-column="46" selection-end-line="205" selection-end-column="46" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#6830#6831#0" expanded="true" />
             <element signature="e#6853#6854#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/schema/window/Window.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="218" column="59" selection-start-line="218" selection-start-column="59" selection-end-line="218" selection-end-column="59" />
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
