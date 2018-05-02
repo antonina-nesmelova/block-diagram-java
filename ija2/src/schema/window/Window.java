@@ -9,7 +9,7 @@ import schema.Schema;
 import schema.blocks.implementation.blocks.Block;
 import schema.blocks.implementation.blocks.Block.Operation;
 
-import static interfaces.Constants.*;
+import static schema.window.Constants.*;
 
 public class Window {
 	public static Schema schema;
@@ -42,6 +42,7 @@ public class Window {
     	this.number = 0;
         initialize();
         Schema schema = new Schema();
+        this.schema = schema;
     }
     
     /**
@@ -68,8 +69,8 @@ public class Window {
             public void actionPerformed(ActionEvent arg0) {
             	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
     			int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
-    			//Block logicBlock = schema.createBlock(Operation.WARM);
-            	BlockShape block = new BlockShape(0, x, y, number);
+    			Block logicBlock = schema.createBlock(Operation.WARM);
+            	BlockShape block = new BlockShape(0, x, y, number, schema);
             	number += 1;
                 desktopPane.add(block.block_creator(0, x, y));
                 frame.setVisible(true);
@@ -89,8 +90,8 @@ public class Window {
             public void actionPerformed(ActionEvent arg0) {     	
             	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
         		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
-        		//Block logicBlock = schema.createBlock(Operation.FREEZE);
-        		BlockShape block = new BlockShape(1, x, y, number);
+        		Block logicBlock = schema.createBlock(Operation.FREEZE);
+        		BlockShape block = new BlockShape(1, x, y, number, schema);
             	number += 1;
                 desktopPane.add(block.block_creator(1, x, y));
                 frame.setVisible(true);
@@ -108,8 +109,8 @@ public class Window {
             public void actionPerformed(ActionEvent arg0) {     	
             	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
         		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
-        		//Block logicBlock = schema.createBlock(Operation.MKICE);
-        		BlockShape block = new BlockShape(2, x, y, number);
+        		Block logicBlock = schema.createBlock(Operation.MKICE);
+        		BlockShape block = new BlockShape(2, x, y, number, schema);
             	number += 1;
                 desktopPane.add(block.block_creator(2, x, y));
                 frame.setVisible(true);       		
@@ -127,8 +128,8 @@ public class Window {
             public void actionPerformed(ActionEvent arg0) {     	
             	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
         		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
-        		//Block logicBlock = schema.createBlock(Operation.MKLIQUID);
-        		BlockShape block = new BlockShape(3, x, y, number);
+        		Block logicBlock = schema.createBlock(Operation.MKLIQUID);
+        		BlockShape block = new BlockShape(3, x, y, number, schema);
             	number += 1;
                 desktopPane.add(block.block_creator(3, x, y));
                 frame.setVisible(true);
@@ -146,7 +147,7 @@ public class Window {
             	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
         		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
         		Block logicBlock = schema.createBlock(Operation.MKGASS);
-        		BlockShape block = new BlockShape(4, x, y, number);
+        		BlockShape block = new BlockShape(4, x, y, number, schema);
             	number += 1;
                 desktopPane.add(block.block_creator(4, x, y));
                 frame.setVisible(true);

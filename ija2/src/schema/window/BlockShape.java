@@ -1,7 +1,6 @@
 package schema.window;
 
-import static interfaces.Constants.BLOCK_HEIGHT;
-import static interfaces.Constants.BLOCK_WIDTH;
+import static schema.window.Constants.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,8 +17,9 @@ public class BlockShape {
 	private int id;
 	public Block block;
 	public Schema schema;
-	public BlockShape(int t, int x, int y, int id) {
+	public BlockShape(int t, int x, int y, int id, Schema schema) {
 		this.id = id;
+		this.schema = schema;
 	}
 	
 	public JPanel Data(int p_t, int x, int y) {    
@@ -150,7 +150,7 @@ public class BlockShape {
     			Window.desktopPane.remove(block);
     			Window.desktopPane.revalidate();
     			Window.desktopPane.repaint();
-    			Window.remove_block(id);
+                schema.removeBlock(id);
             }
     	});
         
