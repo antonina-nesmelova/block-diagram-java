@@ -1,6 +1,7 @@
 package schema;
 
 import java.beans.PropertyChangeListener;
+import java.io.Serializable;
 import java.util.*;
 
 import schema.blocks.implementation.blocks.Block;
@@ -12,7 +13,7 @@ import schema.blocks.implementation.ports.PortOut;
 
 import javax.swing.event.SwingPropertyChangeSupport;
 
-public class Schema {
+public class Schema implements Serializable {
 
     //private SwingPropertyChangeSupport propChange;
 
@@ -96,7 +97,8 @@ public class Schema {
     }
 
     public void removeBlock(int id) {
-        System.out.println("Block removed " + this.blocks.get(id).getId());
-        this.blocks.remove(id);
+        //System.out.println("Block removed " + this.blocks.get(id).getId());
+        boolean removed = this.blocks.removeIf(block -> (block.getId() == id));
+        if (removed) System.out.println("Removed block " + id);
 	}
 }
