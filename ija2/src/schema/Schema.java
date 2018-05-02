@@ -83,4 +83,8 @@ public class Schema {
         if(finish) return true;
 	    else return resolveSchema();
     }
+
+    public void removeBlock(int id) {
+		this.blocks.remove(id);
+	}
 }
