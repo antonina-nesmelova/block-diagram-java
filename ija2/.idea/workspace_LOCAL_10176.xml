@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
@@ -78,12 +77,6 @@
         <option value="$PROJECT_DIR$/src/schema/blocks/AbstractMaterial.java" />
         <option value="$PROJECT_DIR$/src/schema/blocks/Material.java" />
         <option value="$PROJECT_DIR$/src/schema/blocks/implementation/block/Warm.java" />
-        <option value="$PROJECT_DIR$/src/schema/blocks/Block.java" />
-        <option value="$PROJECT_DIR$/src/schema/blocks/Type.java" />
-        <option value="$PROJECT_DIR$/src/schema/blocks/implementation/type/Type.java" />
-        <option value="$PROJECT_DIR$/src/schema/blocks/implementation/type/Energy.java" />
-        <option value="$PROJECT_DIR$/src/schema/blocks/implementation/blocks/Warm.java" />
-        <option value="$PROJECT_DIR$/src/schema/blocks/implementation/type/AbstractMaterial.java" />
         <option value="$PROJECT_DIR$/src/schema/blocks/implementation/type/Water.java" />
         <option value="$PROJECT_DIR$/src/schema/blocks/implementation/blocks/Freeze.java" />
         <option value="$PROJECT_DIR$/src/schema/Schema.java" />
@@ -94,24 +87,14 @@
         <option value="$PROJECT_DIR$/src/schema/blocks/Block.java" />
         <option value="$PROJECT_DIR$/src/schema/blocks/implementation/blocks/Warm.java" />
         <option value="$PROJECT_DIR$/src/schema/blocks/implementation/blocks/Block.java" />
-        <option value="$PROJECT_DIR$/src/Tests.java" />
-        <option value="$PROJECT_DIR$/src/schema/blocks/implementation/blocks/Freeze.java" />
-        <option value="$PROJECT_DIR$/src/schema/blocks/implementation/blocks/MakeLiquid.kt" />
-        <option value="$PROJECT_DIR$/src/schema/blocks/implementation/type/TypesFactory.java" />
-        <option value="$PROJECT_DIR$/src/schema/blocks/implementation/blocks/MakeIce.java" />
-        <option value="$PROJECT_DIR$/src/schema/blocks/implementation/blocks/MakeGas.java" />
-        <option value="$PROJECT_DIR$/src/schema/blocks/implementation/blocks/MakeLiquid.java" />
-        <option value="$PROJECT_DIR$/src/schema/window/Constants.java" />
-        <option value="$PROJECT_DIR$/src/schema/window/Movement.java" />
-        <option value="$PROJECT_DIR$/src/schema/Schema.java" />
-        <option value="$PROJECT_DIR$/src/schema/window/BlockShape.java" />
-        <option value="$PROJECT_DIR$/src/schema/window/Window.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="4">
-    <option name="width" value="959" />
-    <option name="height" value="1052" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="379" />
+    <option name="y" value="102" />
+    <option name="width" value="1400" />
+    <option name="height" value="1000" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -147,42 +130,7 @@
               <item name="ija2" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="schema" type="462c0819:PsiDirectoryNode" />
-              <item name="blocks" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ija2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ija2" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="schema" type="462c0819:PsiDirectoryNode" />
-              <item name="blocks" type="462c0819:PsiDirectoryNode" />
-              <item name="implementation" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ija2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ija2" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="schema" type="462c0819:PsiDirectoryNode" />
-              <item name="blocks" type="462c0819:PsiDirectoryNode" />
-              <item name="implementation" type="462c0819:PsiDirectoryNode" />
-              <item name="blocks" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ija2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ija2" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="schema" type="462c0819:PsiDirectoryNode" />
-              <item name="blocks" type="462c0819:PsiDirectoryNode" />
-              <item name="implementation" type="462c0819:PsiDirectoryNode" />
-              <item name="ports" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ija2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ija2" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="schema" type="462c0819:PsiDirectoryNode" />
-              <item name="blocks" type="462c0819:PsiDirectoryNode" />
-              <item name="implementation" type="462c0819:PsiDirectoryNode" />
-              <item name="type" type="462c0819:PsiDirectoryNode" />
+              <item name="window" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -227,40 +175,6 @@
   <component name="RunManager" selected="JAR Application.junit-4.12.jar">
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-    </configuration>
-    <configuration name="Tests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ija2" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="Tests" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
-    </configuration>
-    <configuration name="Tests.testtypes" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ija2" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="Tests" />
-      <option name="METHOD_NAME" value="testtypes" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
     </configuration>
     <configuration name="Unnamed" type="JUnit" factoryName="JUnit">
       <module name="ija2" />
@@ -327,15 +241,9 @@
       <item itemvalue="JUnit.Unnamed" />
       <item itemvalue="JAR Application.hamcrest-core-1.3.jar" />
       <item itemvalue="JAR Application.junit-4.12.jar" />
-      <item itemvalue="JUnit.Tests" />
-      <item itemvalue="JUnit.Tests.testtypes" />
-      <item itemvalue="Application.Window" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Window" />
-        <item itemvalue="JUnit.Tests" />
-        <item itemvalue="JUnit.Tests.testtypes" />
         <item itemvalue="JAR Application.junit-4.12.jar" />
         <item itemvalue="JAR Application.hamcrest-core-1.3.jar" />
       </list>
@@ -356,40 +264,8 @@
     </task>
     <servers />
   </component>
-  <component name="TestHistory">
-    <history-entry file="Tests - 2018.05.01 at 11h 17m 06s.xml">
-      <configuration name="Tests" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Tests - 2018.05.01 at 11h 35m 30s.xml">
-      <configuration name="Tests" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Tests - 2018.05.01 at 11h 42m 44s.xml">
-      <configuration name="Tests" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Tests - 2018.05.01 at 11h 43m 25s.xml">
-      <configuration name="Tests" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Tests - 2018.05.01 at 11h 43m 27s.xml">
-      <configuration name="Tests" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Tests - 2018.05.01 at 12h 09m 18s.xml">
-      <configuration name="Tests" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Tests - 2018.05.01 at 12h 09m 23s.xml">
-      <configuration name="Tests" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Tests - 2018.05.01 at 12h 10m 38s.xml">
-      <configuration name="Tests" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Tests - 2018.05.01 at 12h 10m 42s.xml">
-      <configuration name="Tests" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Tests - 2018.05.01 at 12h 11m 03s.xml">
-      <configuration name="Tests" configurationId="JUnit" />
-    </history-entry>
-  </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="134966000" />
+    <option name="totallyTimeSpent" value="26921000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="959" height="1052" extended-state="4" />
@@ -440,8 +316,6 @@
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32947367" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.178125" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -466,19 +340,6 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/schema/blocks/implementation/blocks/Block.java</url>
-          <line>126</line>
-          <properties />
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="18" />
-    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/schema/blocks/implementation/type/Type.java">
@@ -748,8 +609,6 @@
           <caret line="46" column="35" selection-start-line="46" selection-start-column="35" selection-end-line="46" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#521#529#0" expanded="true" />
-            <element signature="e#580#589#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -768,12 +627,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/schema/window/BlocksFactory.java" />
-    <entry file="file://$PROJECT_DIR$/../xermak00 (2)/src/KlondikeTest.java" />
-    <entry file="file://$PROJECT_DIR$/src/schema/window/BlocksFactory.java" />
-    <entry file="file://$PROJECT_DIR$/src/Ukol2Test.java" />
-    <entry file="file://$PROJECT_DIR$/src/schema/blocks/implementation/Port.java" />
-    <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12.jar!/org/junit/runners/BlockJUnit4ClassRunner.class">
+    <entry file="file://$PROJECT_DIR$/src/schema/window/BlocksFactory.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="15" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="15" />
@@ -788,24 +642,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Ukol2Test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="31" column="1" lean-forward="true" selection-start-line="31" selection-start-column="1" selection-end-line="31" selection-end-column="1" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/schema/blocks/implementation/Port.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Ukol2Test.java" />
+    <entry file="file://$PROJECT_DIR$/src/schema/blocks/implementation/Port.java" />
     <entry file="file://$PROJECT_DIR$/src/Tests.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="465">
@@ -897,8 +735,6 @@
           <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#300#301#0" expanded="true" />
-            <element signature="e#332#333#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -909,8 +745,6 @@
           <caret line="74" column="1" selection-start-line="74" selection-start-column="1" selection-end-line="74" selection-end-column="1" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#521#529#0" expanded="true" />
-            <element signature="e#580#589#0" expanded="true" />
           </folding>
         </state>
       </provider>
