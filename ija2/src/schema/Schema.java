@@ -1,5 +1,6 @@
 package schema;
 
+import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import schema.blocks.implementation.blocks.Block;
@@ -9,14 +10,23 @@ import schema.blocks.implementation.blocks.Warm;
 import schema.blocks.implementation.ports.PortIn;
 import schema.blocks.implementation.ports.PortOut;
 
+import javax.swing.event.SwingPropertyChangeSupport;
+
 public class Schema {
+
+    private SwingPropertyChangeSupport propChange;
 
 	public List<Block> blocks = new ArrayList<Block>();
 	public int number;
 
 	public Schema() {
+	    propChange = new SwingPropertyChangeSupport(this);
         this.number = 0;
 	}
+
+	public void addListener(PropertyChangeListener prop) {
+	    propChange.addPropertyChangeListener(prop);
+    }
 	
 	public Block createBlock(Block.Operation type) {
 		
@@ -39,6 +49,7 @@ public class Schema {
 			}
 		}
 		this.number += 1;
+		System.out.println("Block created " + b.getId());
 		return b;
 	}
 	
@@ -85,6 +96,7 @@ public class Schema {
     }
 
     public void removeBlock(int id) {
-		this.blocks.remove(id);
+        System.out.println("Block removed " + this.blocks.get(id).getId());
+        this.blocks.remove(id);
 	}
 }
