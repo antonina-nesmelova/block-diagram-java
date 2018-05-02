@@ -19,9 +19,13 @@ import schema.save.Saving;
 import static schema.window.Constants.*;
 
 public class Window {
+<<<<<<< HEAD
+    public static Schema schema;
+=======
 	public static Schema schema;
     public static SchemaShape schemaShape;
     public static FullSchema full;
+>>>>>>> tonja
     private JFrame frame;
     public static String NAME = "Block diagrams modeling physical processes";
     protected static JDesktopPane desktopPane;
@@ -230,8 +234,5 @@ public class Window {
         JMenu Execute = new JMenu("Execute");
         Execute.setForeground(new Color(128, 0, 128));
         menuBar.add(Execute);
-    }
-    public static void remove_block(int id) {
-    	schema.removeBlock(id);
     }
 }
