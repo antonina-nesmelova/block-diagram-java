@@ -1,6 +1,6 @@
 package schema.blocks.implementation.type;
 
-public class Energy implements Type {
+public class Energy extends AbstractType {
 	public double joule;
 	
 	public Energy(double mass, double temp) {

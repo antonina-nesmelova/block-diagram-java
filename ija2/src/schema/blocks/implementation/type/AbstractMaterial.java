@@ -1,6 +1,6 @@
 package schema.blocks.implementation.type;
 
-public abstract class AbstractMaterial implements Material {
+public abstract class AbstractMaterial extends AbstractType {
 	public double kg;
 	public double t;
 	public AbstractMaterial.State state;

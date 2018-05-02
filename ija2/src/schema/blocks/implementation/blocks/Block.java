@@ -7,10 +7,11 @@ import schema.blocks.implementation.type.Alcohol;
 import schema.blocks.implementation.type.Energy;
 import schema.blocks.implementation.type.Water;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Block {
+public abstract class Block implements Serializable {
 
 	protected int id;
 

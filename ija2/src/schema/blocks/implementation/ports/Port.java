@@ -3,7 +3,9 @@ package schema.blocks.implementation.ports;
 import schema.blocks.implementation.blocks.Block;
 import schema.blocks.implementation.type.Type;
 
-public abstract class Port {
+import java.io.Serializable;
+
+public abstract class Port implements Serializable {
     public Type value;
     public Type.type type;
     private boolean free;
