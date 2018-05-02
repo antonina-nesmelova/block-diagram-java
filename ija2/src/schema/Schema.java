@@ -14,19 +14,19 @@ import javax.swing.event.SwingPropertyChangeSupport;
 
 public class Schema {
 
-    private SwingPropertyChangeSupport propChange;
+    //private SwingPropertyChangeSupport propChange;
 
 	public List<Block> blocks = new ArrayList<Block>();
 	public int number;
 
 	public Schema() {
-	    propChange = new SwingPropertyChangeSupport(this);
+	    //propChange = new SwingPropertyChangeSupport(this);
         this.number = 0;
 	}
 
-	public void addListener(PropertyChangeListener prop) {
+	/*public void addListener(PropertyChangeListener prop) {
 	    propChange.addPropertyChangeListener(prop);
-    }
+    }*/
 	
 	public Block createBlock(Block.Operation type) {
 		
