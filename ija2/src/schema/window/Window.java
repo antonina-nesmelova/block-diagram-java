@@ -2,28 +2,22 @@ package schema.window;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Random;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-
 import schema.Schema;
 import schema.blocks.implementation.blocks.Block;
 import schema.blocks.implementation.blocks.Block.Operation;
 
-import static schema.window.Constants.*;
-
+import static interfaces.Constants.*;
 
 public class Window {
-    public Schema schema;
+	public static Schema schema;
     private JFrame frame;
     public static String NAME = "Block diagrams modeling physical processes";
     protected static JDesktopPane desktopPane;
     private int number;
-
+	
     /**
      * Launch the application.
      */
@@ -38,52 +32,51 @@ public class Window {
                 }
             }
         });
-
+        
     }
 
-    /**
+	/**
      * Create the application.
      */
     public Window() {
-        this.number = 0;
+    	this.number = 0;
         initialize();
         Schema schema = new Schema();
-        this.schema = schema;
     }
-
+    
     /**
      * Initialize the contents of the frame.
      */
     private void initialize() {
-        Random rand = new Random();
-
-        /*	Window	*/
+    	Random rand = new Random();
+    	
+    	/*	Window	*/
         frame = new JFrame(NAME);
         frame.setBounds(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(null);
-
-        /*	Working area	*/
+        frame.getContentPane().setLayout(null); 
+        
+        /*	Working area	*/        
         desktopPane = new JDesktopPane();
         desktopPane.setBackground(new Color(171, 171, 171));
         desktopPane.setBounds(155, 28, WORKING_AREA_WIDTH, WORKING_AREA_HEIGHT);
         frame.getContentPane().add(desktopPane);
 
-        /*	Button Warm	 */
+        /*	Button Warm	 */        
         JButton btnWarm = new JButton("Warm");
-        btnWarm.addActionListener(new ActionListener() {
+    	btnWarm.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
-                int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
-                Block logicBlock = schema.createBlock(Operation.WARM);
-                BlockShape block = new BlockShape(0, x, y, number, schema);
-                number += 1;
+            	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
+    			int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
+    			//Block logicBlock = schema.createBlock(Operation.WARM);
+            	BlockShape block = new BlockShape(0, x, y, number);
+            	number += 1;
                 desktopPane.add(block.block_creator(0, x, y));
                 frame.setVisible(true);
-            }
+        	}
         });
-
-
+    	
+    	
         btnWarm.setForeground(new Color(128, 0, 128));
         btnWarm.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 12));
         btnWarm.setBackground(new Color(211, 211, 211));
@@ -93,33 +86,33 @@ public class Window {
         /*	Button Freeze	 */
         JButton btnFreeze = new JButton("Freeze");
         btnFreeze.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
-                int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
-                Block logicBlock = schema.createBlock(Operation.FREEZE);
-                BlockShape block = new BlockShape(1, x, y, number, schema);
-                number += 1;
+            public void actionPerformed(ActionEvent arg0) {     	
+            	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
+        		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
+        		//Block logicBlock = schema.createBlock(Operation.FREEZE);
+        		BlockShape block = new BlockShape(1, x, y, number);
+            	number += 1;
                 desktopPane.add(block.block_creator(1, x, y));
                 frame.setVisible(true);
-            }
+        	}
         });
         btnFreeze.setForeground(new Color(128, 0, 128));
         btnFreeze.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 12));
         btnFreeze.setBackground(new Color(211, 211, 211));
         btnFreeze.setBounds(17, 158, BUTTON_WIDTH,BUTTON_HEIGHT);
         frame.getContentPane().add(btnFreeze);
-
+        
         /*	Button Make Ice	 */
         JButton btnMakeIce = new JButton("Make Ice");
         btnMakeIce.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
-                int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
-                Block logicBlock = schema.createBlock(Operation.MKICE);
-                BlockShape block = new BlockShape(2, x, y, number, schema);
-                number += 1;
+            public void actionPerformed(ActionEvent arg0) {     	
+            	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
+        		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
+        		//Block logicBlock = schema.createBlock(Operation.MKICE);
+        		BlockShape block = new BlockShape(2, x, y, number);
+            	number += 1;
                 desktopPane.add(block.block_creator(2, x, y));
-                frame.setVisible(true);
+                frame.setVisible(true);       		
             }
         });
         btnMakeIce.setForeground(new Color(128, 0, 128));
@@ -127,19 +120,19 @@ public class Window {
         btnMakeIce.setBackground(new Color(211, 211, 211));
         btnMakeIce.setBounds(17, 240, BUTTON_WIDTH,BUTTON_HEIGHT);
         frame.getContentPane().add(btnMakeIce);
-
+        
         /*	Button Make Liquid	 */
         JButton btnMakeLiquid = new JButton("Make Liquid");
         btnMakeLiquid.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
-                int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
-                Block logicBlock = schema.createBlock(Operation.MKLIQUID);
-                BlockShape block = new BlockShape(3, x, y, number, schema);
-                number += 1;
+            public void actionPerformed(ActionEvent arg0) {     	
+            	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
+        		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
+        		//Block logicBlock = schema.createBlock(Operation.MKLIQUID);
+        		BlockShape block = new BlockShape(3, x, y, number);
+            	number += 1;
                 desktopPane.add(block.block_creator(3, x, y));
                 frame.setVisible(true);
-            }
+        	}
         });
         btnMakeLiquid.setForeground(new Color(128, 0, 128));
         btnMakeLiquid.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 12));
@@ -149,15 +142,15 @@ public class Window {
 
         JButton btnMakeGas = new JButton("Make Gas");
         btnMakeGas.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
-                int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
-                Block logicBlock = schema.createBlock(Operation.MKGASS);
-                BlockShape block = new BlockShape(4, x, y, number, schema);
-                number += 1;
+            public void actionPerformed(ActionEvent arg0) {     	
+            	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
+        		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
+        		Block logicBlock = schema.createBlock(Operation.MKGASS);
+        		BlockShape block = new BlockShape(4, x, y, number);
+            	number += 1;
                 desktopPane.add(block.block_creator(4, x, y));
                 frame.setVisible(true);
-            }
+        	}
         });
         btnMakeGas.setForeground(new Color(128, 0, 128));
         btnMakeGas.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 12));
@@ -192,5 +185,8 @@ public class Window {
         JMenu Execute = new JMenu("Execute");
         Execute.setForeground(new Color(128, 0, 128));
         menuBar.add(Execute);
+    }
+    public static void remove_block(int id) {
+    	schema.removeBlock(id);
     }
 }
