@@ -1,8 +1,10 @@
 package schema;
 
-public class FullSchema {
-    Schema schema;
-    SchemaShape shape;
+import java.io.Serializable;
+
+public class FullSchema implements Serializable {
+    public SchemaShape shape;
+    public Schema schema;
 
     public FullSchema(Schema schema, SchemaShape shape){
         this.schema = schema;

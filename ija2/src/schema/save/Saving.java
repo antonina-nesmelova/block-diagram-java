@@ -24,8 +24,9 @@ public class Saving {
         }
     }
 
-    public void Download(String name) {
-        Schema schema = null;
+    public FullSchema Download(String name) {
+        System.out.println("Want to download");
+        FullSchema schema = null;
         FileInputStream fis = null;
         ObjectInputStream in = null;
 
@@ -33,7 +34,7 @@ public class Saving {
 
             fis = new FileInputStream(name);
             in = new ObjectInputStream(fis);
-            schema = (Schema) in.readObject();
+            schema = (FullSchema) in.readObject();
             in.close();
         }
         catch(IOException ex)
@@ -44,5 +45,6 @@ public class Saving {
         {
             ex.printStackTrace();
         }
+        return schema;
     }
 }

@@ -5,6 +5,7 @@ import static schema.window.Constants.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -14,15 +15,21 @@ import schema.Schema;
 import schema.SchemaShape;
 import schema.blocks.implementation.blocks.Block;
 
-public class BlockShape {
+public class BlockShape implements Serializable {
 	private int id;
 	public Block block;
 	public Schema schema;
     public SchemaShape schemaShape;
+    public int x;
+    public int y;
+    public int type;
 	public BlockShape(int t, int x, int y, int id, Schema schema, SchemaShape schemaShape) {
 		this.id = id;
 		this.schema = schema;
 		this.schemaShape = schemaShape;
+		this.x = x;
+		this.y = y;
+		this.type = t;
 	}
 	
 	public JPanel Data(int p_t, int x, int y) {    
@@ -90,7 +97,7 @@ public class BlockShape {
         return panel; 
     }
 	
-	JPanel block_creator(int t, int x, int y) {   
+	JPanel block_creator() {
 		JPanel block;
 		JLabel blockType = null;
         JPanel blockData;
@@ -108,7 +115,7 @@ public class BlockShape {
         DelPan = new JPanel();
         DelPan.setLayout(layout);
 
-    		switch (t) {  
+    		switch (this.type) {
     			case 0: {
     				blockType = new JLabel("Warm", JLabel.CENTER );
     				break;

@@ -21,7 +21,7 @@ import static schema.window.Constants.*;
 public class Window {
 	public static Schema schema;
     public static SchemaShape schemaShape;
-    public FullSchema full;
+    public static FullSchema full;
     private JFrame frame;
     public static String NAME = "Block diagrams modeling physical processes";
     protected static JDesktopPane desktopPane;
@@ -89,7 +89,7 @@ public class Window {
             	BlockShape block = new BlockShape(0, x, y, number, schema, schemaShape);
                 schemaShape.addShape(block);
             	number += 1;
-                desktopPane.add(block.block_creator(0, x, y));
+                desktopPane.add(block.block_creator());
                 frame.setVisible(true);
         	}
         });
@@ -111,7 +111,7 @@ public class Window {
         		BlockShape block = new BlockShape(1, x, y, number, schema, schemaShape);
                 schemaShape.addShape(block);
             	number += 1;
-                desktopPane.add(block.block_creator(1, x, y));
+                desktopPane.add(block.block_creator());
                 frame.setVisible(true);
         	}
         });
@@ -131,7 +131,7 @@ public class Window {
         		BlockShape block = new BlockShape(2, x, y, number, schema, schemaShape);
                 schemaShape.addShape(block);
                 number += 1;
-                desktopPane.add(block.block_creator(2, x, y));
+                desktopPane.add(block.block_creator());
                 frame.setVisible(true);       		
             }
         });
@@ -151,7 +151,7 @@ public class Window {
         		BlockShape block = new BlockShape(3, x, y, number, schema, schemaShape);
                 schemaShape.addShape(block);
                 number += 1;
-                desktopPane.add(block.block_creator(3, x, y));
+                desktopPane.add(block.block_creator());
                 frame.setVisible(true);
         	}
         });
@@ -170,7 +170,7 @@ public class Window {
         		BlockShape block = new BlockShape(4, x, y, number, schema, schemaShape);
                 schemaShape.addShape(block);
                 number += 1;
-                desktopPane.add(block.block_creator(4, x, y));
+                desktopPane.add(block.block_creator());
                 frame.setVisible(true);
         	}
         });
@@ -210,13 +210,22 @@ public class Window {
         JMenu Download = new JMenu("Download");
         Download.setForeground(new Color(128, 0, 128));
         menuBar.add(Download);
-        Download.addActionListener(new ActionListener() {
+
+        JMenuItem download = new JMenuItem("Download");
+        download.setHorizontalAlignment(SwingConstants.LEFT);
+        download.setForeground(new Color(128, 0, 128));
+        Download.add(download);
+        download.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                System.out.println("Want to save");
-                saver.Save(schemaid, full);
-                schemaid +=1;
+                full = saver.Download("schema1.ser");
+                /* TODO clean desctopPane */
+                for (BlockShape shape : full.shape.blocksShape) {
+                    desktopPane.add(shape.block_creator());
+                }
+                frame.setVisible(true);
             }
         });
+
 
         JMenu Execute = new JMenu("Execute");
         Execute.setForeground(new Color(128, 0, 128));

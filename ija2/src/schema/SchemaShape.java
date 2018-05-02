@@ -2,11 +2,12 @@ package schema;
 
 import schema.window.BlockShape;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SchemaShape {
-    private  List<BlockShape> blocksShape = new ArrayList<BlockShape>();
+public class SchemaShape implements Serializable {
+    public  List<BlockShape> blocksShape = new ArrayList<BlockShape>();
 
     public SchemaShape() {
 
