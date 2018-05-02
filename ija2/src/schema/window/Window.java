@@ -12,7 +12,7 @@ import schema.blocks.implementation.blocks.Block.Operation;
 import static schema.window.Constants.*;
 
 public class Window {
-	public static Schema schema;
+    public static Schema schema;
     private JFrame frame;
     public static String NAME = "Block diagrams modeling physical processes";
     protected static JDesktopPane desktopPane;

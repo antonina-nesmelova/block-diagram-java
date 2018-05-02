@@ -1,0 +1,149 @@
+package schema.blocks.implementation.blocks;
+
+import schema.blocks.implementation.type.AbstractMaterial;
+<<<<<<< HEAD
+import schema.blocks.implementation.type.Type;
+import schema.blocks.implementation.type.TypesFactory;
+
+import static java.lang.Math.abs;
+
+public class Freeze extends Block{
+    public Freeze(int id) {
+        super(Operation.FREEZE, id);
+    }
+
+    private Type processingLiquid(double energy, Type material) {
+        // pocet stupnu do teploty ledu
+        double difference = abs( material.getTemp() - material.getFreezeTemp());
+        //pocet stupnu na ktery muze se osudit material
+        double delta = energy / (material.getThermalConst()* material.getMass());
+        // pokud delta > dt - vyparovani
+        if(delta >= difference) {
+            double energyForFreezing = energy - material.getThermalConst()*material.getMass()*difference;
+            material.setTemp(material.getFreezeTemp());
+
+            energy = energyForFreezing - material.getFusionConst()*material.getMass();
+            if (energy >= 0) {
+                material.setState(AbstractMaterial.State.ICE);
+                return processingIce(energy, material);
+            } else {
+                material.setState(AbstractMaterial.State.ICE);
+                material.setJoule(abs(energy));
+                return material;
+            }
+        } else { //jinak ostudime a vratime
+            material.setTemp(material.getTemp() - delta);
+            return material;
+        }
+
+    }
+
+    private Type processingIce(double energy, Type material) {
+        double delta = energy / (material.getThermalConst()* material.getMass());
+        material.setTemp(material.getTemp() - delta);
+        return material;
+    }
+
+    public void calculate(Type material, Type energy) {
+        TypesFactory factory = new TypesFactory();
+        double joule = energy.getJoule() + material.getJoule(); //energie plus vnitrni teplota materialu
+
+        Type resultMaterial = factory.createMaterial(material.getType(), material.getMass(), material.getTemp());
+
+        switch (material.getState()) {
+            case GASS: {
+                double delta = joule / (material.getThermalConst() * material.getMass()); //pocet stupnu na ktery muze se ohrat material
+                // pocet stupnu do teploty mrazu
+                double difference = abs(material.getTemp() - material.getGasTemp());
+                // pokud delta > dt
+                if (delta < difference) {
+                    // ostudime material a vratime
+                    resultMaterial.setTemp(resultMaterial.getTemp() - delta);
+                    //return resultMaterial;
+                    this.setPortOutValue(portsOut.get(0).getId(), resultMaterial);
+                    return;
+                }
+                // odecteme energii pro studeni materialu do teploty tekutiny
+                double energyForCondensation = joule - material.getThermalConst() * material.getMass() * difference;
+                resultMaterial.setTemp(material.getFreezeTemp());
+                // vypocitame energii ktera zustane po taveni
+                double energyForFreezing = energyForCondensation - material.getVaporisationConst() * material.getMass();
+                if (energyForFreezing >= 0) {
+                    resultMaterial.setState(AbstractMaterial.State.LIQUID);
+                    resultMaterial = processingLiquid(energyForFreezing, resultMaterial);
+                    this.setPortOutValue(portsOut.get(0).getId(), resultMaterial);
+                    return;
+
+                } else { // pokud energie nestaci na kondenzaci - pricteme ji k vnitrni energii
+                    resultMaterial.setState(AbstractMaterial.State.LIQUID);
+                    resultMaterial.setJoule(abs(energyForFreezing));
+                    this.setPortOutValue(portsOut.get(0).getId(), resultMaterial);
+                    return;
+                }
+            }
+            case LIQUID: {
+                resultMaterial = processingLiquid(joule, resultMaterial);
+                this.setPortOutValue(portsOut.get(0).getId(), resultMaterial);
+                return;
+            }
+            case ICE: {
+                resultMaterial = processingIce(joule, resultMaterial);
+                this.setPortOutValue(portsOut.get(0).getId(), resultMaterial);
+                return;
+            }
+            default: {
+                this.setPortOutValue(portsOut.get(0).getId(), resultMaterial);
+                return;
+            }
+        }
+=======
+import schema.blocks.implementation.type.Energy;
+
+public class Freeze extends Block {
+    public Freeze(int id) {
+        super();
+        this.id = id;
+        this.createPort();
+        this.createPort();
+    }
+
+    public void resolve() { 
+
+    	if (this.portsIn.get(0).value instanceof Energy) {
+    		this.portsIn.get(0).value = Energy.setJoule();
+    	}	
+			
+		else if (this.portsIn.get(0).value instanceof AbstractMaterial) {
+			this.portsIn.get(0).value = AbstractMaterial.setValues();
+		}
+    	
+        double delta = this.portsIn.joule / (this.portsIn.thermal_c * this.portsIn.kg);
+        if(delta*(-1) > this.portsIn.t) {
+            double Q = this.portsIn.thermal_c * this.portsIn.kg * this.portsIn.t;
+            if (Q == this.portsIn.melt_const * this.portsIn.kg) {	//Q=lambda*m
+                this.portsIn.t = 0;
+                this.portsIn.state = "liquid";
+                return;
+            }
+            else if (Q > this.portsIn.melt_const * this.portsIn.kg) {
+                Q = Q - this.portsIn.melt_const * this.portsIn.kg;
+                delta = Q / (this.portsIn.hermal_c * this.portsIn.kg);
+                this.portsIn.t = delta;
+                this.portsIn.state = "liquid";
+                return;
+            }
+            else {
+                this.portsOut.t = 0;
+                return;
+            }
+        }
+        this.portsOut = this.portsIn;
+        this.portsOut = this.portsIn;
+        this.portsOut.t = this.portsIn.t + delta;
+>>>>>>> nina
+    }
+
+    public Block.Operation getOperation() {
+        return Operation.FREEZE;
+    }
+}
