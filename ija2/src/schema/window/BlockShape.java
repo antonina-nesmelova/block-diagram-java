@@ -6,6 +6,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -23,6 +26,10 @@ public class BlockShape implements Serializable {
     public int x;
     public int y;
     public int type;
+
+    public List<PortInShape> portsInShape = new ArrayList<PortInShape>();
+    public List<PortOutShape> portsOutShape = new ArrayList<PortOutShape>();
+
 	public BlockShape(int t, int x, int y, int id, Schema schema, SchemaShape schemaShape) {
 		this.id = id;
 		this.schema = schema;
@@ -66,14 +73,14 @@ public class BlockShape implements Serializable {
             panel.setVisible(true); 
     		
             /* Input 1 */
-            JFormattedTextField FirstField = new JFormattedTextField();
+            JFormattedTextField FirstField = new JFormattedTextField(new DecimalFormat("####.##"));
             FirstField.setToolTipText("Mass");
             FirstField.setValue(0);
             FirstField.setBounds(14, 40, 70, 20);
             panel.add(FirstField);
             
             /* Input 2 */
-            JFormattedTextField SecondField = new JFormattedTextField();
+            JFormattedTextField SecondField = new JFormattedTextField(new DecimalFormat("####.##"));
             SecondField.setToolTipText("Temperature");
             SecondField.setValue(0);
             SecondField.setBounds(14, 60, 70, 20);
@@ -137,10 +144,10 @@ public class BlockShape implements Serializable {
 	    			break;
 	    		}
     		}
-            block.add(blockType);
-            block.add(blockData);
-            block.add(DelPan);
-            block.setVisible(true); 
+        block.add(blockType);
+        block.add(blockData);
+        block.add(DelPan);
+        block.setVisible(true);
     		
     	/*	Name of the block	*/
         blockType.setFont(new Font("Verdana", 1, 14));
@@ -164,58 +171,89 @@ public class BlockShape implements Serializable {
                 schemaShape.removeShape(id);
             }
     	});
-        
-        /*	In1 Button */
-        JButton In1 = new JButton("In1");
-        In1.setToolTipText("Insert Mass");
-        blockData.add(In1);
-        In1.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
-        In1.setBorder(new EmptyBorder(0, 0, 0, 0));
-        In1.setBorder(new LineBorder(Color.BLACK));
-        In1.addActionListener(new ActionListener() {
-    		public void actionPerformed(ActionEvent arg0) {
-    			JPanel panel = Data(1, x, y);
-    		}
-        });	
-        /*	In2 Button */
-        JButton In2 = new JButton("In2");
-        In2.setToolTipText("Insert Mass");
-        blockData.add(In2);
-        In2.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
-        In2.setBorder(new EmptyBorder(0, 0, 0, 0));
-        In2.setBorder(new LineBorder(Color.BLACK));
-        In2.addActionListener(new ActionListener() {
-    		public void actionPerformed(ActionEvent arg0) {
-    			JPanel panel = Data(1, x+105, y-25);
-    		}
-        });	
-        /*	Out Button */
-        JButton Out = new JButton("Out");
-        Out.setToolTipText("Insert Mass");
-        blockData.add(Out);
-        Out.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
-        Out.setBorder(new EmptyBorder(0, 0, 0, 0));
-        Out.setBorder(new LineBorder(Color.BLACK));
-        Out.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent arg0) {
-        		JPanel panel = Data(0, x, y);
-    		
+        if (this.type == 0 |this.type == 1){
+            /*	In1 Button */
+
+            JButton In1 = new JButton("In1");
+            In1.setToolTipText("Insert Mass");
+            blockData.add(In1);
+            In1.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
+            In1.setBorder(new EmptyBorder(0, 0, 0, 0));
+            In1.setBorder(new LineBorder(Color.BLACK));
+            In1.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent arg0) {
+                    JPanel panel = Data(1, x, y);
+                }
+            });
+            /*	In2 Button */
+            JButton In2 = new JButton("In2");
+            In2.setToolTipText("Insert Mass");
+            blockData.add(In2);
+            In2.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
+            In2.setBorder(new EmptyBorder(0, 0, 0, 0));
+            In2.setBorder(new LineBorder(Color.BLACK));
+            In2.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent arg0) {
+                    JPanel panel = Data(1, x+105, y-25);
+                }
+            });
+            /*	Out Button */
+            JButton Out = new JButton("Out");
+            Out.setToolTipText("Insert Mass");
+            blockData.add(Out);
+            Out.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
+            Out.setBorder(new EmptyBorder(0, 0, 0, 0));
+            Out.setBorder(new LineBorder(Color.BLACK));
+            Out.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent arg0) {
+                    JPanel panel = Data(0, x, y);
+
     			/*JPanel panel = new JPanel();
     			panel.setBounds((x+125), (y-BLOCK_HEIGHT+55), 100, 85);
     			panel.setBackground(new Color(245, 222, 179));
     			Window.desktopPane.add(panel);
     			panel.setLayout(null);
     	        panel.setBorder(new LineBorder(Color.BLACK));
-    	        
-    	        /* Output 
+
+    	        /* Output
     	        JFormattedTextField OutputField = new JFormattedTextField();
     	        OutputField.setValue(0);
     	        OutputField.setBounds(14, 40, 70, 20);
     	        panel.add(OutputField);*/
-    		}
-        });	    	
+                }
+            });
+        } else {
+            /*	In1 Button */
+            JButton In1 = new JButton("In1");
+            In1.setToolTipText("Insert Mass");
+            blockData.add(In1);
+            In1.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
+            In1.setBorder(new EmptyBorder(0, 0, 0, 0));
+            In1.setBorder(new LineBorder(Color.BLACK));
+            In1.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent arg0) {
+                    JPanel panel = Data(1, x, y);
+                }
+            });
 
-      Movement drag = new Movement(block);
+            /*	Out1 Button */
+            JButton Out1 = new JButton("Out1");
+            Out1.setToolTipText("Insert Mass");
+            blockData.add(Out1);
+            Out1.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
+            Out1.setBorder(new EmptyBorder(0, 0, 0, 0));
+            Out1.setBorder(new LineBorder(Color.BLACK));
+
+            /*	Out2 Button */
+            JButton Out2 = new JButton("Out2");
+            Out2.setToolTipText("Insert Mass");
+            blockData.add(Out2);
+            Out2.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
+            Out2.setBorder(new EmptyBorder(0, 0, 0, 0));
+            Out2.setBorder(new LineBorder(Color.BLACK));
+        }
+
+        Movement drag = new Movement(block);
       
       return block;
  }
