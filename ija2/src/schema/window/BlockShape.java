@@ -6,13 +6,9 @@ import static interfaces.Constants.BLOCK_WIDTH;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.util.Scanner;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
+import javax.swing.border.*;
 
 import schema.Schema;
 import schema.blocks.implementation.blocks.Block;
@@ -33,14 +29,21 @@ public class BlockShape {
 	
 	public JPanel Data(int p_t, int x, int y) {    
 		panel = new JPanel();
+		Window.desktopPane.add(panel);
+		panel.setLayout(null);
+		panel.setBorder(new LineBorder(Color.BLACK));
+    	panel.setBackground(new Color(245, 222, 179));
+    	JFormattedTextField FirstField = new JFormattedTextField();
+        FirstField.setToolTipText("Mass");
+        panel.add(FirstField);
+        JFormattedTextField SecondField = new JFormattedTextField();
+        SecondField.setToolTipText("Temperature");
+        SecondField.setValue(temp);
+        panel.add(SecondField); 
         
 		/*	Output Button	*/
 		if(p_t == 0) {
         	panel.setBounds((x+125), (y-BLOCK_HEIGHT+55), 100, 85);
-        	panel.setBackground(new Color(245, 222, 179));
-			Window.desktopPane.add(panel);
-			panel.setLayout(null);
-			panel.setBorder(new LineBorder(Color.BLACK));
 	        
 			/* Output */
             JFormattedTextField Type = new JFormattedTextField();
@@ -48,30 +51,15 @@ public class BlockShape {
             Type.setText(sel_ch);
             Type.setBounds(14, 15, 70, 20);
             panel.add(Type);
-			
 			/* Mass */
-            JFormattedTextField FirstField = new JFormattedTextField();
-            FirstField.setToolTipText("Mass");
             FirstField.setBounds(14, 35, 70, 20);
-            FirstField.setValue(mass);
-            panel.add(FirstField);
-            
+            FirstField.setValue(mass); 
             /* Temperature */
-            JFormattedTextField SecondField = new JFormattedTextField();
-            SecondField.setToolTipText("Temperature");
-            SecondField.setBounds(14, 55, 70, 20);
-            SecondField.setValue(temp);
-            panel.add(SecondField); 
-	        
+            SecondField.setBounds(14, 55, 70, 20);	        
         }
 		/*	Input Buttons	*/
         else {
     		panel.setBounds((x-BLOCK_WIDTH+35), (y-BLOCK_HEIGHT+55), 100, 100);
-    		panel.setBackground(new Color(245, 222, 179));
-    		Window.desktopPane.add(panel);
-    		panel.setLayout(null);
-            panel.setBorder(new LineBorder(Color.BLACK));
-    		
             JButton enter = new JButton("Enter");
             enter.setBorder(new EmptyBorder(0, 0, 0, 0));
             enter.setBorder(new LineBorder(Color.BLACK));
@@ -80,25 +68,16 @@ public class BlockShape {
             
     		/*	Choice Type */
             Choice ch = new Choice();
-    	
             /* Mass */
-            JTextField FirstField = new JTextField();
             FirstField.setToolTipText("Mass");
             FirstField.setBounds(13, 33, 70, 20);
-            panel.add(FirstField);
-	        
             enter.addActionListener(new ActionListener(){
 	            public void actionPerformed(ActionEvent ae){
 	            	mass = Integer.parseInt(FirstField.getText());
 	            }
 	        });
-            
             /* Temperature */
-            JFormattedTextField SecondField = new JFormattedTextField();
-            SecondField.setToolTipText("Temperature");
             SecondField.setBounds(13, 52, 70, 20);
-            panel.add(SecondField); 
-            
             enter.addActionListener(new ActionListener(){
 	            public void actionPerformed(ActionEvent ae){
 	            	temp = Integer.parseInt(SecondField.getText());
@@ -132,11 +111,9 @@ public class BlockShape {
         block  = new JPanel(); 
 		block.setBackground(new Color(255, 250, 240));
         block.setBounds(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
-
         blockData = new JPanel();
         layout = new GridLayout(0,3);
         blockData.setLayout(layout); 
-        
         DelPan = new JPanel();
         DelPan.setLayout(layout);
 
@@ -194,12 +171,10 @@ public class BlockShape {
         blockData.add(In1);
         In1.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
         In1.setBorder(new EmptyBorder(0, 0, 0, 0));
-        In1.setBorder(new LineBorder(Color.BLACK));
-        
+        In1.setBorder(new LineBorder(Color.BLACK)); 
         In1.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent arg0) {
-    			JPanel panel = Data(1, x, y);
-    			
+    			JPanel panel = Data(1, x, y);	
     		}
         });	
         /*	In2 Button */
@@ -207,12 +182,10 @@ public class BlockShape {
         blockData.add(In2);
         In2.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
         In2.setBorder(new EmptyBorder(0, 0, 0, 0));
-        In2.setBorder(new LineBorder(Color.BLACK));
-                
+        In2.setBorder(new LineBorder(Color.BLACK));          
         In2.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent arg0) {
-    			JPanel panel = Data(1, x+110, y-35);
-    			
+    			JPanel panel = Data(1, x+110, y-35);	
     		}
         });	
         /*	Out Button */
@@ -225,11 +198,7 @@ public class BlockShape {
         	public void actionPerformed(ActionEvent arg0) {
         		JPanel panel = Data(0, x, y);
     		}
-        });	    	
-        
-        //Line l1 = new Line(In1);
-        //Line l2 = new Line(Out); 
-        
+        });	    	        
         Movement drag = new Movement(block);
       
       return block;
