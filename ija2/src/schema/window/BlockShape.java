@@ -8,8 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -29,7 +27,8 @@ public class BlockShape implements Serializable {
     public int y;
     public int type;
 
-	public BlockShape(int t, int x, int y, int id, Schema schema, SchemaShape schemaShape) {
+	public BlockShape(int t, int x, int y, int id, Schema schema, SchemaShape schemaShape, Block block) {
+	    this.block = block;
 		this.id = id;
 		this.schema = schema;
 		this.schemaShape = schemaShape;
@@ -38,7 +37,7 @@ public class BlockShape implements Serializable {
 		this.type = t;
 	}
 	
-	public JPanel Data(int p_t, int x, int y) {    
+	public JPanel Data(int p_t, int x, int y, int idOfPort) {
 		JPanel panel = new JPanel();
         
 		if(p_t == 0) {
@@ -98,6 +97,11 @@ public class BlockShape implements Serializable {
                     double mass = abs(Double.parseDouble(FirstField.getText()));
                     double temp = abs(Double.parseDouble(SecondField.getText()));
                     System.out.println("In set, mass " + mass + ", temp " + temp + ", type " + type);
+                    if (!schema.setPortValue(block, Type.type.valueOf(type), idOfPort, mass, temp)) {
+                        /* TODO всплывающее окно *или что угодно* информирующее, что такой тип нельза задать
+                           что-то вроде "This type can't be chosen"
+                         */
+                    }
                 }
             });
 
@@ -200,7 +204,7 @@ public class BlockShape implements Serializable {
             In1.setBorder(new LineBorder(Color.BLACK));
             In1.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
-                    JPanel panel = Data(1, x, y);
+                    JPanel panel = Data(1, x, y, 0);
                 }
             });
             /*	In2 Button */
@@ -212,7 +216,7 @@ public class BlockShape implements Serializable {
             In2.setBorder(new LineBorder(Color.BLACK));
             In2.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
-                    JPanel panel = Data(1, x+105, y-25);
+                    JPanel panel = Data(1, x+105, y-25, 1);
                 }
             });
             /*	Out Button */
@@ -224,7 +228,7 @@ public class BlockShape implements Serializable {
             Out.setBorder(new LineBorder(Color.BLACK));
             Out.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
-                    JPanel panel = Data(0, x, y);
+                    JPanel panel = Data(0, x, y, 0);
 
     			/*JPanel panel = new JPanel();
     			panel.setBounds((x+125), (y-BLOCK_HEIGHT+55), 100, 85);
@@ -250,7 +254,7 @@ public class BlockShape implements Serializable {
             In1.setBorder(new LineBorder(Color.BLACK));
             In1.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
-                    JPanel panel = Data(1, x, y);
+                    JPanel panel = Data(1, x, y, 0);
                 }
             });
 
@@ -261,6 +265,11 @@ public class BlockShape implements Serializable {
             Out1.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
             Out1.setBorder(new EmptyBorder(0, 0, 0, 0));
             Out1.setBorder(new LineBorder(Color.BLACK));
+            Out1.addActionListener(new ActionListener() {
+              public void actionPerformed(ActionEvent arg0) {
+                  JPanel panel = Data(0, x, y, 0);
+              }
+            });
 
             /*	Out2 Button */
             JButton Out2 = new JButton("Out2");
@@ -269,6 +278,11 @@ public class BlockShape implements Serializable {
             Out2.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
             Out2.setBorder(new EmptyBorder(0, 0, 0, 0));
             Out2.setBorder(new LineBorder(Color.BLACK));
+            Out2.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent arg0) {
+                    JPanel panel = Data(0, x, y, 1);
+                }
+            });
         }
 
         Movement drag = new Movement(block);

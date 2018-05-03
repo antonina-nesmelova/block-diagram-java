@@ -9,9 +9,9 @@ public interface Type {
         @Override
         public String toString() {
             switch (this) {
-                case WATER:    return "water";
-                case ALCOHOL: return "alcohol";
-                case ENERGY:   return "energy";
+                case WATER:    return "WATER";
+                case ALCOHOL: return "ALCOHOL";
+                case ENERGY:   return "ENERGY";
             }
 
             throw new AssertionError("Unknown type: " + this);
