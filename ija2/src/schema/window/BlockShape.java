@@ -6,6 +6,7 @@ import static interfaces.Constants.BLOCK_WIDTH;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Scanner;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -18,8 +19,9 @@ public class BlockShape {
 	private int id;
 	public Block block;
 	public Schema schema;
-	public BlockShape(int t, int x, int y, int id) {
+	public BlockShape(int t, int x, int y, int id, Schema schema) {
 		this.id = id;
+		this.schema = schema;
 	}
 	
 	public JPanel Data(int p_t, int x, int y) {    
@@ -33,57 +35,71 @@ public class BlockShape {
 			panel.setLayout(null);
 			panel.setBorder(new LineBorder(Color.BLACK));
 	        
-			/* Mass */
+			/* Output */
             JFormattedTextField Type = new JFormattedTextField();
             Type.setToolTipText("Type");
-            Type.setValue(0);
+            Type.setValue(1);
             Type.setBounds(14, 15, 70, 20);
             panel.add(Type);
 			
 			/* Mass */
             JFormattedTextField FirstField = new JFormattedTextField();
             FirstField.setToolTipText("Mass");
-            FirstField.setValue(0);
             FirstField.setBounds(14, 40, 70, 20);
             panel.add(FirstField);
             
             /* Temperature */
             JFormattedTextField SecondField = new JFormattedTextField();
             SecondField.setToolTipText("Temperature");
-            SecondField.setValue(0);
             SecondField.setBounds(14, 60, 70, 20);
             panel.add(SecondField); 
 	        
         }
         else {
-    		panel.setBounds((x-BLOCK_WIDTH+35), (y-BLOCK_HEIGHT+55), 100, 85);
+    		panel.setBounds((x-BLOCK_WIDTH+35), (y-BLOCK_HEIGHT+55), 100, 100);
     		panel.setBackground(new Color(245, 222, 179));
     		Window.desktopPane.add(panel);
     		panel.setLayout(null);
             panel.setBorder(new LineBorder(Color.BLACK));
     		
+            JButton enter = new JButton("Enter");
+            enter.setBorder(new EmptyBorder(0, 0, 0, 0));
+            enter.setBorder(new LineBorder(Color.BLACK));
+            enter.setBounds(13, 72, 70, 18);
+            panel.add(enter);
+            
     		/*	Choice Type */
             Choice type_choice = new Choice();
             panel.add(type_choice);
-            type_choice.setBounds(14, 15, 69, 25);
+            type_choice.setBounds(13, 12, 69, 25);
             type_choice.add("Water");
             type_choice.add("Alkohol");
             type_choice.add("Energy");
             panel.setVisible(true); 
     		
             /* Mass */
-            JFormattedTextField FirstField = new JFormattedTextField();
+            JTextField FirstField = new JTextField();
             FirstField.setToolTipText("Mass");
-            FirstField.setValue(0);
-            FirstField.setBounds(14, 40, 70, 20);
+            FirstField.setBounds(13, 33, 70, 20);
             panel.add(FirstField);
+            enter.addActionListener(new ActionListener(){
+            	   public void actionPerformed(ActionEvent ae){
+            	      String m = FirstField.getText();
+            	      int mass = Integer.parseInt(m);
+            	   }
+            	});
             
             /* Temperature */
             JFormattedTextField SecondField = new JFormattedTextField();
             SecondField.setToolTipText("Temperature");
-            SecondField.setValue(0);
-            SecondField.setBounds(14, 60, 70, 20);
+            SecondField.setBounds(13, 52, 70, 20);
             panel.add(SecondField); 
+            enter.addActionListener(new ActionListener(){
+         	   public void actionPerformed(ActionEvent ae){
+         	      String t = SecondField.getText();
+        	      int temp = Integer.parseInt(t);
+         	   }
+         	});
         }
 		/*	Close Button	*/
         JButton close = new JButton("X");
@@ -166,7 +182,7 @@ public class BlockShape {
     			Window.desktopPane.remove(block);
     			Window.desktopPane.revalidate();
     			Window.desktopPane.repaint();
-    			Window.remove_block(id);
+    			schema.removeBlock(id);
             }
     	});
         
@@ -176,9 +192,11 @@ public class BlockShape {
         In1.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
         In1.setBorder(new EmptyBorder(0, 0, 0, 0));
         In1.setBorder(new LineBorder(Color.BLACK));
+        
         In1.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent arg0) {
     			JPanel panel = Data(1, x, y);
+    			
     		}
         });	
         /*	In2 Button */
@@ -187,9 +205,11 @@ public class BlockShape {
         In2.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
         In2.setBorder(new EmptyBorder(0, 0, 0, 0));
         In2.setBorder(new LineBorder(Color.BLACK));
+                
         In2.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent arg0) {
-    			JPanel panel = Data(1, x+105, y-25);
+    			JPanel panel = Data(1, x+110, y-35);
+    			
     		}
         });	
         /*	Out Button */
@@ -204,7 +224,10 @@ public class BlockShape {
     		}
         });	    	
         
-      Movement drag = new Movement(block);
+        //Line l1 = new Line(In1);
+        //Line l2 = new Line(Out); 
+        
+        Movement drag = new Movement(block);
       
       return block;
  }	
