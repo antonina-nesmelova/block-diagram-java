@@ -8,7 +8,8 @@ public class Alcohol extends AbstractMaterial {
 		this.thermal_const = 2500;
 		this.vaporisation_const = 840000;
 		this.fusion_const = 105000;
-		this.setJoule(mass);
+		this.setValues(mass, temp);
+		this.setJoule(0);
 	}
 
 	public type getType() {

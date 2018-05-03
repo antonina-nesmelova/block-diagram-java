@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
@@ -41,17 +42,49 @@ public class BlockShape implements Serializable {
 		JPanel panel = new JPanel();
         
 		if(p_t == 0) {
+            Dimension labelSize = new Dimension(80, 80);
+            Border solidBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
         	panel.setBounds((x+125), (y-BLOCK_HEIGHT+55), 100, 85);
         	panel.setBackground(new Color(245, 222, 179));
 			Window.desktopPane.add(panel);
 			panel.setLayout(null);
 			panel.setBorder(new LineBorder(Color.BLACK));
-	        
+			/*switch (block.portsOut.get(idOfPort).getType()) {
+                case WATER: {
+                    System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
+                    System.out.println("Mass of out " + block.portsOut.get(idOfPort).getMass());
+                    System.out.println("Temperature of out " + block.portsOut.get(idOfPort).getTemp());
+                }
+                case ALCOHOL:{
+                    System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
+                    System.out.println("Mass of out " + block.portsOut.get(idOfPort).getMass());
+                    System.out.println("Temperature of out " + block.portsOut.get(idOfPort).getTemp());
+                }
+                case ENERGY: {
+                    System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
+                    System.out.println("Joule of out " + block.portsOut.get(idOfPort).getJoule());
+                }
+                default: {
+                    System.out.println(0);
+                }
+            }*/
+            if (block.portsOut.get(idOfPort).hasValue()) { // важно проверять наличие value потому что иначе кидается ошибка
+                System.out.println(idOfPort);
+                System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
+                System.out.println("Mass of out " + block.portsOut.get(idOfPort).getMass());
+                System.out.println("Temperature of out " + block.portsOut.get(idOfPort).getTemp());
+                System.out.println("Joule of out " + block.portsOut.get(idOfPort).getJoule());
+            }
+
 	        /* Output */
-	        JFormattedTextField OutputField = new JFormattedTextField();
-	        OutputField.setValue(0);
-	        OutputField.setBounds(14, 40, 70, 20);
-	        panel.add(OutputField);
+            /* TODO сверху выписываются информации и порте, нужно их как-то выписать как лейбл или как угодно, пример снизу, но он почему-то не отображается */
+	        JLabel label = new JLabel();    
+//            label.setText("Type: " + block.portsOut.get(idOfPort).getType().toString() + " \n"); // присвоение значения нужно делать при условии наличия value, как в примере сверху
+            label.setVerticalAlignment(JLabel.CENTER);
+            label.setHorizontalAlignment(JLabel.CENTER);
+            label.setPreferredSize(labelSize);
+            label.setBorder(solidBorder);
+	        panel.add(label);
 	        
         }
         else {
@@ -95,12 +128,13 @@ public class BlockShape implements Serializable {
                 public void actionPerformed(ActionEvent arg0) {
                     String type = type_choice.getSelectedItem();
                     double mass = abs(Double.parseDouble(FirstField.getText()));
-                    double temp = abs(Double.parseDouble(SecondField.getText()));
+                    double temp = Double.parseDouble(SecondField.getText());
                     System.out.println("In set, mass " + mass + ", temp " + temp + ", type " + type);
                     if (!schema.setPortValue(block, Type.type.valueOf(type), idOfPort, mass, temp)) {
                         /* TODO всплывающее окно *или что угодно* информирующее, что такой тип нельза задать
                            что-то вроде "This type can't be chosen"
                          */
+                        System.out.println("Cant set this type");
                     }
                 }
             });

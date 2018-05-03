@@ -1,6 +1,7 @@
 package schema.blocks.implementation.ports;
 
 import schema.blocks.implementation.blocks.Block;
+import schema.blocks.implementation.type.AbstractMaterial;
 import schema.blocks.implementation.type.Type;
 
 import java.io.Serializable;
@@ -52,6 +53,9 @@ public abstract class Port implements Serializable {
     public double getMass() { return  this.value.getMass();}
 
     public double getTemp() { return  this.value.getTemp();}
+
+    public double getJoule() { return  this.value.getJoule();}
+    public AbstractMaterial.State getState() { return  this.value.getState();}
 
     public int isMaterial() {
         if (this.value == null) return 0;

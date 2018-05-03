@@ -48,8 +48,11 @@ public class MakeIce extends Block {
 
     @Override
     public void calculate(Type material, Type energy) {
+        System.out.println("In calculate Ice");
         TypesFactory factory = new TypesFactory();
+        System.out.println("In calc mkcice " + material.getMass());
         Type resultMaterial = factory.createMaterial(material.getType(), material.getMass(), material.getTemp());
+        System.out.println("In calc mkcice " + resultMaterial.getMass());
         Type resultEnergy = factory.createMaterial(Type.type.ENERGY, 0, 0);
 
         switch (material.getState()) {

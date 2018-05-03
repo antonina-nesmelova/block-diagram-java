@@ -230,5 +230,16 @@ public class Window {
         JMenu Execute = new JMenu("Execute");
         Execute.setForeground(new Color(128, 0, 128));
         menuBar.add(Execute);
-    }
+
+        JMenuItem execute = new JMenuItem("Execute");
+        execute.setHorizontalAlignment(SwingConstants.LEFT);
+        execute.setForeground(new Color(128, 0, 128));
+        Execute.add(execute);
+        execute.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                schema.resolveSchema();
+            }
+        });
+
+}
 }

@@ -4,10 +4,8 @@ import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.*;
 
-import schema.blocks.implementation.blocks.Block;
+import schema.blocks.implementation.blocks.*;
 import schema.blocks.implementation.type.Type;
-import schema.blocks.implementation.blocks.Freeze;
-import schema.blocks.implementation.blocks.Warm;
 import schema.blocks.implementation.ports.PortIn;
 import schema.blocks.implementation.ports.PortOut;
 
@@ -40,6 +38,21 @@ public class Schema implements Serializable {
 			}
 			case FREEZE: {
 				b = new Freeze(number);
+				blocks.add(b);
+				break;
+			}
+			case MKICE: {
+				b = new MakeIce(number);
+				blocks.add(b);
+				break;
+			}
+			case MKLIQUID: {
+				b = new MakeLiquid(number);
+				blocks.add(b);
+				break;
+			}
+			case MKGASS: {
+				b = new MakeGas(number);
 				blocks.add(b);
 				break;
 			}

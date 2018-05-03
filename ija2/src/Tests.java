@@ -84,8 +84,12 @@ public class Tests {
     @Test
 
     public  void connecting() {
-        Block warm1 = schema.createBlock(Block.Operation.WARM);
-        Block warm2 = schema.createBlock(Block.Operation.WARM);
+        Block mkice = schema.createBlock(Block.Operation.MKICE);
+        schema.setPortValue(mkice, Type.type.ALCOHOL, 0, 1, 50);
+        schema.resolveSchema();
+        System.out.println(mkice.portsOut.get(0).getMass() + mkice.portsOut.get(0).getState().toString() + mkice.portsOut.get(0).getTemp());
+        System.out.println(mkice.portsOut.get(1).getType().toString() + mkice.portsOut.get(1).getJoule());
+       /* Block warm2 = schema.createBlock(Block.Operation.WARM);
         Block warm3 = schema.createBlock(Block.Operation.WARM);
         Block freeze = schema.createBlock(Block.Operation.FREEZE);
 
@@ -100,6 +104,6 @@ public class Tests {
 
         schema.resolveSchema();
 
-//        Assert.assertEquals("Types of connected ports", warm2.portsIn.get(0).getType(), Type.type.WATER);
+//        Assert.assertEquals("Types of connected ports", warm2.portsIn.get(0).getType(), Type.type.WATER);*/
     }
 }

@@ -121,6 +121,7 @@ public abstract class Block implements Serializable {
 	}
 
 	public boolean setPortOutValue(int outPortId, Type type) {
+	    System.out.println("In setPortOutValue " + outPortId);
 	    PortOut port = this.portsOut.get(outPortId);
         port.setType(type);
         if (!port.isFree()) {
