@@ -7,9 +7,9 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 public class Choice extends JPanel implements ItemListener {
-	  public Choice(JPanel panel) {
+	  public Choice() {
 		  JComboBox type_choice = new JComboBox(); 
-	      panel.add(type_choice);
+	      BlockShape.panel.add(type_choice);
 	      type_choice.setBounds(13, 12, 70, 22);
 	      type_choice.addItem("Water"); 
 	      type_choice.addItem("Alkohol"); 
