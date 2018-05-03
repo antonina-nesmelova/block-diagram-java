@@ -96,8 +96,21 @@ public class Schema implements Serializable {
 	    else return resolveSchema();
     }
 
+    public boolean stepOfResolve() {
+		boolean finish = true;
+		for (Block block : this.blocks) {
+			if (block.isResolved() | block.isEmpty()) {
+				continue;
+			} else if (block.isFull()) {
+				block.resolve();
+				finish = false;
+				return finish;
+			}
+		}
+		return finish;
+	}
+
     public void removeBlock(int id) {
-        //System.out.println("Block removed " + this.blocks.get(id).getId());
         boolean removed = this.blocks.removeIf(block -> (block.getId() == id));
         if (removed) System.out.println("Removed block " + id);
 	}
