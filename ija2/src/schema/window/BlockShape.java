@@ -1,5 +1,6 @@
 package schema.window;
 
+import static java.lang.Math.abs;
 import static schema.window.Constants.*;
 
 import java.awt.*;
@@ -17,6 +18,7 @@ import javax.swing.border.LineBorder;
 import schema.Schema;
 import schema.SchemaShape;
 import schema.blocks.implementation.blocks.Block;
+import schema.blocks.implementation.type.Type;
 
 public class BlockShape implements Serializable {
 	private int id;
@@ -26,9 +28,6 @@ public class BlockShape implements Serializable {
     public int x;
     public int y;
     public int type;
-
-    public List<PortInShape> portsInShape = new ArrayList<PortInShape>();
-    public List<PortOutShape> portsOutShape = new ArrayList<PortOutShape>();
 
 	public BlockShape(int t, int x, int y, int id, Schema schema, SchemaShape schemaShape) {
 		this.id = id;
@@ -67,24 +66,42 @@ public class BlockShape implements Serializable {
             Choice type_choice = new Choice();
             panel.add(type_choice);
             type_choice.setBounds(14, 15, 69, 25);
-            type_choice.add("Water");
-            type_choice.add("Alkohol");
-            type_choice.add("Energy");
-            panel.setVisible(true); 
-    		
+            type_choice.add(Type.type.WATER.toString());
+            type_choice.add(Type.type.ALCOHOL.toString());
+            type_choice.add(Type.type.ENERGY.toString());
+            panel.setVisible(true);
+
             /* Input 1 */
             JFormattedTextField FirstField = new JFormattedTextField(new DecimalFormat("####.##"));
-            FirstField.setToolTipText("Mass");
+            FirstField.setToolTipText("Mass, kg");
             FirstField.setValue(0);
             FirstField.setBounds(14, 40, 70, 20);
             panel.add(FirstField);
-            
+
             /* Input 2 */
             JFormattedTextField SecondField = new JFormattedTextField(new DecimalFormat("####.##"));
-            SecondField.setToolTipText("Temperature");
+            SecondField.setToolTipText("Temperature, C");
             SecondField.setValue(0);
             SecondField.setBounds(14, 60, 70, 20);
-            panel.add(SecondField); 
+            panel.add(SecondField);
+
+            /*	Set Button TODO чтобы норм выглядело */
+            JButton set = new JButton("Set");
+            set.setBorder(new EmptyBorder(0, 0, 0, 0));
+            panel.setToolTipText("Add values");
+            set.setBounds(87, 1, 12, 12);
+            panel.setLayout(new BorderLayout());
+            panel.add(set);
+            set.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent arg0) {
+                    String type = type_choice.getSelectedItem();
+                    double mass = abs(Double.parseDouble(FirstField.getText()));
+                    double temp = abs(Double.parseDouble(SecondField.getText()));
+                    System.out.println("In set, mass " + mass + ", temp " + temp + ", type " + type);
+                }
+            });
+
+
         }
 		/*	Close Button	*/
         JButton close = new JButton("X");
@@ -98,6 +115,7 @@ public class BlockShape implements Serializable {
     			Window.desktopPane.remove(panel);
     			Window.desktopPane.revalidate();
     			Window.desktopPane.repaint();
+
             }
     	});
         
@@ -175,7 +193,7 @@ public class BlockShape implements Serializable {
             /*	In1 Button */
 
             JButton In1 = new JButton("In1");
-            In1.setToolTipText("Insert Mass");
+            In1.setToolTipText("Insert Values");
             blockData.add(In1);
             In1.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
             In1.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -187,7 +205,7 @@ public class BlockShape implements Serializable {
             });
             /*	In2 Button */
             JButton In2 = new JButton("In2");
-            In2.setToolTipText("Insert Mass");
+            In2.setToolTipText("Insert Values");
             blockData.add(In2);
             In2.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
             In2.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -199,7 +217,7 @@ public class BlockShape implements Serializable {
             });
             /*	Out Button */
             JButton Out = new JButton("Out");
-            Out.setToolTipText("Insert Mass");
+            Out.setToolTipText("Insert Values");
             blockData.add(Out);
             Out.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
             Out.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -225,7 +243,7 @@ public class BlockShape implements Serializable {
         } else {
             /*	In1 Button */
             JButton In1 = new JButton("In1");
-            In1.setToolTipText("Insert Mass");
+            In1.setToolTipText("Insert Values");
             blockData.add(In1);
             In1.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
             In1.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -238,7 +256,7 @@ public class BlockShape implements Serializable {
 
             /*	Out1 Button */
             JButton Out1 = new JButton("Out1");
-            Out1.setToolTipText("Insert Mass");
+            Out1.setToolTipText("Values");
             blockData.add(Out1);
             Out1.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
             Out1.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -246,7 +264,7 @@ public class BlockShape implements Serializable {
 
             /*	Out2 Button */
             JButton Out2 = new JButton("Out2");
-            Out2.setToolTipText("Insert Mass");
+            Out2.setToolTipText("Values");
             blockData.add(Out2);
             Out2.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
             Out2.setBorder(new EmptyBorder(0, 0, 0, 0));
