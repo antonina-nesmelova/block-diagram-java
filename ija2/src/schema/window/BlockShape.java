@@ -21,6 +21,7 @@ public class BlockShape {
 	private int id;
 	public Block block;
 	public Schema schema;
+	protected static JPanel panel;
 	private int mass = 0;
 	private int temp = 0;
 	protected static String sel_ch;
@@ -31,7 +32,7 @@ public class BlockShape {
 	}
 	
 	public JPanel Data(int p_t, int x, int y) {    
-		JPanel panel = new JPanel();
+		panel = new JPanel();
         
 		/*	Output Button	*/
 		if(p_t == 0) {
@@ -78,7 +79,7 @@ public class BlockShape {
             panel.add(enter);
             
     		/*	Choice Type */
-            Choice ch = new Choice(panel);
+            Choice ch = new Choice();
     	
             /* Mass */
             JTextField FirstField = new JTextField();
