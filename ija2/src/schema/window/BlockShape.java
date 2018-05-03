@@ -6,6 +6,8 @@ import static interfaces.Constants.BLOCK_WIDTH;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Scanner;
 
 import javax.swing.*;
@@ -16,11 +18,13 @@ import schema.Schema;
 import schema.blocks.implementation.blocks.Block;
 
 public class BlockShape {
-	private int mass = 0;
-	private int temp = 0;
 	private int id;
 	public Block block;
 	public Schema schema;
+	private int mass = 0;
+	private int temp = 0;
+	protected static String sel_ch;
+	
 	public BlockShape(int t, int x, int y, int id, Schema schema) {
 		this.id = id;
 		this.schema = schema;
@@ -40,21 +44,21 @@ public class BlockShape {
 			/* Output */
             JFormattedTextField Type = new JFormattedTextField();
             Type.setToolTipText("Type");
-            Type.setValue(1);
+            Type.setText(sel_ch);
             Type.setBounds(14, 15, 70, 20);
             panel.add(Type);
 			
 			/* Mass */
             JFormattedTextField FirstField = new JFormattedTextField();
             FirstField.setToolTipText("Mass");
-            FirstField.setBounds(14, 40, 70, 20);
+            FirstField.setBounds(14, 35, 70, 20);
             FirstField.setValue(mass);
             panel.add(FirstField);
             
             /* Temperature */
             JFormattedTextField SecondField = new JFormattedTextField();
             SecondField.setToolTipText("Temperature");
-            SecondField.setBounds(14, 60, 70, 20);
+            SecondField.setBounds(14, 55, 70, 20);
             SecondField.setValue(temp);
             panel.add(SecondField); 
 	        
@@ -74,38 +78,32 @@ public class BlockShape {
             panel.add(enter);
             
     		/*	Choice Type */
-            Choice type_choice = new Choice();
-            panel.add(type_choice);
-            type_choice.setBounds(13, 12, 69, 25);
-            type_choice.add("Water");
-            type_choice.add("Alkohol");
-            type_choice.add("Energy");
-            panel.setVisible(true); 
-    		
+            Choice ch = new Choice(panel);
+    	
             /* Mass */
             JTextField FirstField = new JTextField();
             FirstField.setToolTipText("Mass");
             FirstField.setBounds(13, 33, 70, 20);
             panel.add(FirstField);
+	        
             enter.addActionListener(new ActionListener(){
-            	public void actionPerformed(ActionEvent ae){
-            		String m = FirstField.getText();
-            	    mass = Integer.parseInt(m);
-            	   }
-            	});
+	            public void actionPerformed(ActionEvent ae){
+	            	mass = Integer.parseInt(FirstField.getText());
+	            }
+	        });
             
             /* Temperature */
             JFormattedTextField SecondField = new JFormattedTextField();
             SecondField.setToolTipText("Temperature");
             SecondField.setBounds(13, 52, 70, 20);
             panel.add(SecondField); 
+            
             enter.addActionListener(new ActionListener(){
-         	   public void actionPerformed(ActionEvent ae){
-         	      String t = SecondField.getText();
-        	      temp = Integer.parseInt(t);
-         	   }
-         	});
-        }
+	            public void actionPerformed(ActionEvent ae){
+	            	temp = Integer.parseInt(SecondField.getText());
+	            }
+	        });
+        }    
 		/*	Close Button	*/
         JButton close = new JButton("X");
         close.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -122,8 +120,7 @@ public class BlockShape {
     	});
         
         return panel; 
-    }
-	
+}	
 	JPanel block_creator(int t, int x, int y) {   
 		JPanel block;
 		JLabel blockType = null;
