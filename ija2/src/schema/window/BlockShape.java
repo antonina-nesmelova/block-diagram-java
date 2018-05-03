@@ -16,6 +16,8 @@ import schema.Schema;
 import schema.blocks.implementation.blocks.Block;
 
 public class BlockShape {
+	private int mass = 0;
+	private int temp = 0;
 	private int id;
 	public Block block;
 	public Schema schema;
@@ -46,15 +48,18 @@ public class BlockShape {
             JFormattedTextField FirstField = new JFormattedTextField();
             FirstField.setToolTipText("Mass");
             FirstField.setBounds(14, 40, 70, 20);
+            FirstField.setValue(mass);
             panel.add(FirstField);
             
             /* Temperature */
             JFormattedTextField SecondField = new JFormattedTextField();
             SecondField.setToolTipText("Temperature");
             SecondField.setBounds(14, 60, 70, 20);
+            SecondField.setValue(temp);
             panel.add(SecondField); 
 	        
         }
+		/*	Input Buttons	*/
         else {
     		panel.setBounds((x-BLOCK_WIDTH+35), (y-BLOCK_HEIGHT+55), 100, 100);
     		panel.setBackground(new Color(245, 222, 179));
@@ -83,9 +88,9 @@ public class BlockShape {
             FirstField.setBounds(13, 33, 70, 20);
             panel.add(FirstField);
             enter.addActionListener(new ActionListener(){
-            	   public void actionPerformed(ActionEvent ae){
-            	      String m = FirstField.getText();
-            	      int mass = Integer.parseInt(m);
+            	public void actionPerformed(ActionEvent ae){
+            		String m = FirstField.getText();
+            	    mass = Integer.parseInt(m);
             	   }
             	});
             
@@ -97,7 +102,7 @@ public class BlockShape {
             enter.addActionListener(new ActionListener(){
          	   public void actionPerformed(ActionEvent ae){
          	      String t = SecondField.getText();
-        	      int temp = Integer.parseInt(t);
+        	      temp = Integer.parseInt(t);
          	   }
          	});
         }
