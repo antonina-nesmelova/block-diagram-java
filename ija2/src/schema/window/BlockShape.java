@@ -70,7 +70,7 @@ public class BlockShape implements Serializable {
                     System.out.println(0);
                 }
             }*/
-            if (block.portsOut.get(idOfPort).hasValue()) { // важно проверять наличие value потому что иначе кидается ошибка
+            /*if (block.portsOut.get(idOfPort).hasValue()) { 
                 System.out.println(idOfPort);
                 System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
                 System.out.println("Mass of out " + block.portsOut.get(idOfPort).getMass());
@@ -78,10 +78,10 @@ public class BlockShape implements Serializable {
                 System.out.println("Joule of out " + block.portsOut.get(idOfPort).getJoule());
             }
             /* Output */
-            /* TODO сверху выписываются информации и порте, нужно их как-то выписать как лейбл или как угодно, пример снизу, но он почему-то не отображается */
-	        JLabel label = new JLabel();   
+             
+             /*JLabel label = new JLabel("Out");   
 	        if (block.portsOut.get(idOfPort).hasValue()) {
-	        	label.setText("Type: " + block.portsOut.get(idOfPort).getType().toString() + " \n"); 
+	        	//label.setText("Type: " + block.portsOut.get(idOfPort).getType().toString() + " \n"); 
 	            label.setVerticalAlignment(JLabel.CENTER);
 	            label.setHorizontalAlignment(JLabel.CENTER);
 	            label.setPreferredSize(labelSize);
@@ -89,7 +89,7 @@ public class BlockShape implements Serializable {
 		        panel.add(label);
 		        label.setBounds(0, 0, 69, 25);
 	        }
-//          label.setText("Type: " + block.portsOut.get(idOfPort).getType().toString() + " \n"); // присвоение значения нужно делать при условии наличия value, как в примере сверху
+//          label.setText("Type: " + block.portsOut.get(idOfPort).getType().toString() + " \n"); 
 
 	        
         }
@@ -117,7 +117,7 @@ public class BlockShape implements Serializable {
             JFormattedTextField SecondField = new JFormattedTextField(new DecimalFormat("####.##"));
             SecondField.setToolTipText("Temperature, C");
             SecondField.setValue(0);
-            SecondField.setBounds(13, 52, 70, 20);
+            SecondField.setBounds(13, 50, 70, 20);
             panel.add(SecondField);
 
             /*	Button Set	*/
@@ -143,20 +143,17 @@ public class BlockShape implements Serializable {
 
         }
 		/*	Close Button	*/
-        JButton close = new JButton("X");
+		JButton close = new JButton("X");
         close.setBorder(new EmptyBorder(0, 0, 0, 0));
         close.setToolTipText("Close");
         close.setBounds(87, 1, 12, 12);
-        panel.add(close);
-        
+        panel.add(close);   
         close.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent arg0) {
     			Window.desktopPane.remove(panel);
-    			Window.desktopPane.revalidate();
     			Window.desktopPane.repaint();
             }
-    	});
-        
+    	}); 
         return panel; 
     }
 	
@@ -220,7 +217,6 @@ public class BlockShape implements Serializable {
     	delete.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent arg0) {
     			Window.desktopPane.remove(block);
-    			Window.desktopPane.revalidate();
     			Window.desktopPane.repaint();
                 schema.removeBlock(id);
                 schemaShape.removeShape(id);
@@ -237,6 +233,12 @@ public class BlockShape implements Serializable {
             In1.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
                     JPanel panel = Data(1, x, y, 0);
+                    delete.addActionListener(new ActionListener() {
+                		public void actionPerformed(ActionEvent arg0) {
+                			Window.desktopPane.remove(panel);
+                			Window.desktopPane.repaint();
+                        }
+                	});
                 }
             });
             /*	In2 Button */
@@ -248,7 +250,13 @@ public class BlockShape implements Serializable {
             In2.setBorder(new LineBorder(Color.BLACK));
             In2.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
-                    JPanel panel = Data(1, x+105, y-25, 1);
+                    JPanel panel = Data(1, x+105, y-35, 1);
+                    delete.addActionListener(new ActionListener() {
+                		public void actionPerformed(ActionEvent arg0) {
+                			Window.desktopPane.remove(panel);
+                			Window.desktopPane.repaint();
+                        }
+                	});
                 }
             });
             /*	Out Button */
@@ -261,7 +269,12 @@ public class BlockShape implements Serializable {
             Out.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
                     JPanel panel = Data(0, x, y, 0);
-
+                    delete.addActionListener(new ActionListener() {
+                		public void actionPerformed(ActionEvent arg0) {
+                			Window.desktopPane.remove(panel);
+                			Window.desktopPane.repaint();
+                        }
+                	});
     			/*JPanel panel = new JPanel();
     			panel.setBounds((x+125), (y-BLOCK_HEIGHT+55), 100, 85);
     			panel.setBackground(new Color(245, 222, 179));
@@ -287,9 +300,14 @@ public class BlockShape implements Serializable {
             In1.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
                     JPanel panel = Data(1, x, y, 0);
+                    delete.addActionListener(new ActionListener() {
+                		public void actionPerformed(ActionEvent arg0) {
+                			Window.desktopPane.remove(panel);
+                			Window.desktopPane.repaint();
+                        }
+                	});
                 }
             });
-
             /*	Out1 Button */
             JButton Out1 = new JButton("Out1");
             Out1.setToolTipText("Values");
@@ -300,9 +318,14 @@ public class BlockShape implements Serializable {
             Out1.addActionListener(new ActionListener() {
               public void actionPerformed(ActionEvent arg0) {
                   JPanel panel = Data(0, x-105, y-25, 0);
+                  delete.addActionListener(new ActionListener() {
+              		public void actionPerformed(ActionEvent arg0) {
+              			Window.desktopPane.remove(panel);
+              			Window.desktopPane.repaint();
+                      }
+              	});
               }
             });
-
             /*	Out2 Button */
             JButton Out2 = new JButton("Out2");
             Out2.setToolTipText("Values");
@@ -313,6 +336,12 @@ public class BlockShape implements Serializable {
             Out2.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
                     JPanel panel = Data(0, x, y, 1);
+                    delete.addActionListener(new ActionListener() {
+                		public void actionPerformed(ActionEvent arg0) {
+                			Window.desktopPane.remove(panel);
+                			Window.desktopPane.repaint();
+                        }
+                	});
                 }
             });
         }
