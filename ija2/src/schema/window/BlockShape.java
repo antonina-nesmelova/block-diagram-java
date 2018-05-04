@@ -44,7 +44,7 @@ public class BlockShape implements Serializable {
 		panel.setBorder(new LineBorder(Color.BLACK));
     	panel.setBackground(new Color(245, 222, 179));
 		panel.setLayout(null);
-		
+		/* 		Out panel	*/
 		if(p_t == 0) {
             if (block.portsOut.get(idOfPort).hasValue()) {
             	JLabel label = new JLabel("<html>"  + "Type: " + block.portsOut.get(idOfPort).getType().toString() +  "<br/>" 
@@ -57,27 +57,7 @@ public class BlockShape implements Serializable {
                 panel.add(label);
             	panel.setBounds((x+125), (y-BLOCK_HEIGHT+55), 125, 105);
     			Window.desktopPane.add(panel);
-            }
-            
-			/*switch (block.portsOut.get(idOfPort).getType()) {
-                case WATER: {
-                    System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
-                    System.out.println("Mass of out " + block.portsOut.get(idOfPort).getMass());
-                    System.out.println("Temperature of out " + block.portsOut.get(idOfPort).getTemp());
-                }
-                case ALCOHOL:{
-                    System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
-                    System.out.println("Mass of out " + block.portsOut.get(idOfPort).getMass());
-                    System.out.println("Temperature of out " + block.portsOut.get(idOfPort).getTemp());
-                }
-                case ENERGY: {
-                    System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
-                    System.out.println("Joule of out " + block.portsOut.get(idOfPort).getJoule());
-                }
-                default: {
-                    System.out.println(0);
-                }
-            }*/   
+            } 
             /*	Close Button	*/
     		JButton close = new JButton("X");
             close.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -238,6 +218,7 @@ public class BlockShape implements Serializable {
                 	});
                 }
             });
+            Line l = new Line(In1);
             /*	In2 Button */
             JButton In2 = new JButton("In2");
             In2.setToolTipText("Insert Values");
@@ -272,18 +253,6 @@ public class BlockShape implements Serializable {
                 			Window.desktopPane.repaint();
                         }
                 	});
-    			/*JPanel panel = new JPanel();
-    			panel.setBounds((x+125), (y-BLOCK_HEIGHT+55), 100, 85);
-    			panel.setBackground(new Color(245, 222, 179));
-    			Window.desktopPane.add(panel);
-    			panel.setLayout(null);
-    	        panel.setBorder(new LineBorder(Color.BLACK));
-
-    	        /* Output
-    	        JFormattedTextField OutputField = new JFormattedTextField();
-    	        OutputField.setValue(0);
-    	        OutputField.setBounds(14, 40, 70, 20);
-    	        panel.add(OutputField);*/
                 }
             });
         } else {
