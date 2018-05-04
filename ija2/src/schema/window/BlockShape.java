@@ -1,89 +1,146 @@
 package schema.window;
 
-import static interfaces.Constants.BLOCK_HEIGHT;
-import static interfaces.Constants.BLOCK_WIDTH;
+import static java.lang.Math.abs;
+import static schema.window.Constants.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
+import java.text.DecimalFormat;
 
 import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import schema.Schema;
+import schema.SchemaShape;
 import schema.blocks.implementation.blocks.Block;
+import schema.blocks.implementation.type.Type;
 
-public class BlockShape {
+public class BlockShape implements Serializable {
 	private int id;
 	public Block block;
 	public Schema schema;
-	protected static JPanel panel;
-	private int mass = 0;
-	private int temp = 0;
-	protected static String sel_ch;
-	
-	public BlockShape(int t, int x, int y, int id, Schema schema) {
+    public SchemaShape schemaShape;
+    public int x;
+    public int y;
+    public int type;
+
+	public BlockShape(int t, int x, int y, int id, Schema schema, SchemaShape schemaShape, Block block) {
+	    this.block = block;
 		this.id = id;
 		this.schema = schema;
+		this.schemaShape = schemaShape;
+		this.x = x;
+		this.y = y;
+		this.type = t;
 	}
 	
-	public JPanel Data(int p_t, int x, int y) {    
-		panel = new JPanel();
-		Window.desktopPane.add(panel);
-		panel.setLayout(null);
+	public JPanel Data(int p_t, int x, int y, int idOfPort) {
+		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(Color.BLACK));
     	panel.setBackground(new Color(245, 222, 179));
-    	JFormattedTextField FirstField = new JFormattedTextField();
-        FirstField.setToolTipText("Mass");
-        panel.add(FirstField);
-        JFormattedTextField SecondField = new JFormattedTextField();
-        SecondField.setToolTipText("Temperature");
-        SecondField.setValue(temp);
-        panel.add(SecondField); 
-        
-		/*	Output Button	*/
+		panel.setLayout(null);
+		
 		if(p_t == 0) {
+            Dimension labelSize = new Dimension(80, 80);
+            Border solidBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
         	panel.setBounds((x+125), (y-BLOCK_HEIGHT+55), 100, 85);
+			Window.desktopPane.add(panel);
+			
+			/*switch (block.portsOut.get(idOfPort).getType()) {
+                case WATER: {
+                    System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
+                    System.out.println("Mass of out " + block.portsOut.get(idOfPort).getMass());
+                    System.out.println("Temperature of out " + block.portsOut.get(idOfPort).getTemp());
+                }
+                case ALCOHOL:{
+                    System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
+                    System.out.println("Mass of out " + block.portsOut.get(idOfPort).getMass());
+                    System.out.println("Temperature of out " + block.portsOut.get(idOfPort).getTemp());
+                }
+                case ENERGY: {
+                    System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
+                    System.out.println("Joule of out " + block.portsOut.get(idOfPort).getJoule());
+                }
+                default: {
+                    System.out.println(0);
+                }
+            }*/
+            if (block.portsOut.get(idOfPort).hasValue()) { // важно проверять наличие value потому что иначе кидается ошибка
+                System.out.println(idOfPort);
+                System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
+                System.out.println("Mass of out " + block.portsOut.get(idOfPort).getMass());
+                System.out.println("Temperature of out " + block.portsOut.get(idOfPort).getTemp());
+                System.out.println("Joule of out " + block.portsOut.get(idOfPort).getJoule());
+            }
+            /* Output */
+            /* TODO сверху выписываются информации и порте, нужно их как-то выписать как лейбл или как угодно, пример снизу, но он почему-то не отображается */
+	        JLabel label = new JLabel();   
+	        if (block.portsOut.get(idOfPort).hasValue()) {
+	        	label.setText("Type: " + block.portsOut.get(idOfPort).getType().toString() + " \n"); 
+	            label.setVerticalAlignment(JLabel.CENTER);
+	            label.setHorizontalAlignment(JLabel.CENTER);
+	            label.setPreferredSize(labelSize);
+	            label.setBorder(solidBorder);
+		        panel.add(label);
+		        label.setBounds(0, 0, 69, 25);
+	        }
+//          label.setText("Type: " + block.portsOut.get(idOfPort).getType().toString() + " \n"); // присвоение значения нужно делать при условии наличия value, как в примере сверху
+
 	        
-			/* Output */
-            JFormattedTextField Type = new JFormattedTextField();
-            Type.setToolTipText("Type");
-            Type.setText(sel_ch);
-            Type.setBounds(14, 15, 70, 20);
-            panel.add(Type);
-			/* Mass */
-            FirstField.setBounds(14, 35, 70, 20);
-            FirstField.setValue(mass); 
-            /* Temperature */
-            SecondField.setBounds(14, 55, 70, 20);	        
         }
-		/*	Input Buttons	*/
         else {
     		panel.setBounds((x-BLOCK_WIDTH+35), (y-BLOCK_HEIGHT+55), 100, 100);
-            JButton enter = new JButton("Enter");
-            enter.setBorder(new EmptyBorder(0, 0, 0, 0));
-            enter.setBorder(new LineBorder(Color.BLACK));
-            enter.setBounds(13, 72, 70, 18);
-            panel.add(enter);
-            
+    		Window.desktopPane.add(panel);
+    		
     		/*	Choice Type */
-            Choice ch = new Choice();
-            /* Mass */
-            FirstField.setToolTipText("Mass");
+            Choice type_choice = new Choice();
+            panel.add(type_choice);
+            type_choice.setBounds(13, 11, 69, 25);
+            type_choice.add(Type.type.WATER.toString());
+            type_choice.add(Type.type.ALCOHOL.toString());
+            type_choice.add(Type.type.ENERGY.toString());
+            panel.setVisible(true);
+
+            /* Input 1 */
+            JFormattedTextField FirstField = new JFormattedTextField(new DecimalFormat("####.##"));
+            FirstField.setToolTipText("Mass, kg");
+            FirstField.setValue(0);
             FirstField.setBounds(13, 33, 70, 20);
-            enter.addActionListener(new ActionListener(){
-	            public void actionPerformed(ActionEvent ae){
-	            	mass = Integer.parseInt(FirstField.getText());
-	            }
-	        });
-            /* Temperature */
+            panel.add(FirstField);
+
+            /* Input 2 */
+            JFormattedTextField SecondField = new JFormattedTextField(new DecimalFormat("####.##"));
+            SecondField.setToolTipText("Temperature, C");
+            SecondField.setValue(0);
             SecondField.setBounds(13, 52, 70, 20);
-            enter.addActionListener(new ActionListener(){
-	            public void actionPerformed(ActionEvent ae){
-	            	temp = Integer.parseInt(SecondField.getText());
-	            }
-	        });
-        }    
+            panel.add(SecondField);
+
+            /*	Button Set	*/
+            JButton set = new JButton("Set");
+            set.setBorder(new EmptyBorder(0, 0, 0, 0));
+            panel.setToolTipText("Add values");
+            set.setBounds(13, 72, 70, 18);
+            set.setBorder(new LineBorder(Color.BLACK));
+            panel.setLayout(new BorderLayout());
+            panel.add(set);
+            set.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent arg0) {
+                    String type = type_choice.getSelectedItem();
+                    double mass = abs(Double.parseDouble(FirstField.getText()));
+                    double temp = Double.parseDouble(SecondField.getText());
+                    System.out.println("In set, mass " + mass + ", temp " + temp + ", type " + type);
+                    if (!schema.setPortValue(block, Type.type.valueOf(type), idOfPort, mass, temp)) {
+                    	JOptionPane.showMessageDialog(Window.frame, "This type can't be chosen");
+                    }
+                }
+            });
+
+
+        }
 		/*	Close Button	*/
         JButton close = new JButton("X");
         close.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -100,8 +157,9 @@ public class BlockShape {
     	});
         
         return panel; 
-}	
-	JPanel block_creator(int t, int x, int y) {   
+    }
+	
+	JPanel block_creator() {
 		JPanel block;
 		JLabel blockType = null;
         JPanel blockData;
@@ -111,13 +169,15 @@ public class BlockShape {
         block  = new JPanel(); 
 		block.setBackground(new Color(255, 250, 240));
         block.setBounds(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
+
         blockData = new JPanel();
         layout = new GridLayout(0,3);
         blockData.setLayout(layout); 
+        
         DelPan = new JPanel();
         DelPan.setLayout(layout);
 
-    		switch (t) {  
+    		switch (this.type) {
     			case 0: {
     				blockType = new JLabel("Warm", JLabel.CENTER );
     				break;
@@ -139,10 +199,10 @@ public class BlockShape {
 	    			break;
 	    		}
     		}
-            block.add(blockType);
-            block.add(blockData);
-            block.add(DelPan);
-            block.setVisible(true); 
+        block.add(blockType);
+        block.add(blockData);
+        block.add(DelPan);
+        block.setVisible(true);
     		
     	/*	Name of the block	*/
         blockType.setFont(new Font("Verdana", 1, 14));
@@ -162,45 +222,106 @@ public class BlockShape {
     			Window.desktopPane.remove(block);
     			Window.desktopPane.revalidate();
     			Window.desktopPane.repaint();
-    			schema.removeBlock(id);
+                schema.removeBlock(id);
+                schemaShape.removeShape(id);
             }
     	});
-        
-        /*	In1 Button */
-        JButton In1 = new JButton("In1");
-        blockData.add(In1);
-        In1.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
-        In1.setBorder(new EmptyBorder(0, 0, 0, 0));
-        In1.setBorder(new LineBorder(Color.BLACK)); 
-        In1.addActionListener(new ActionListener() {
-    		public void actionPerformed(ActionEvent arg0) {
-    			JPanel panel = Data(1, x, y);	
-    		}
-        });	
-        /*	In2 Button */
-        JButton In2 = new JButton("In2");
-        blockData.add(In2);
-        In2.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
-        In2.setBorder(new EmptyBorder(0, 0, 0, 0));
-        In2.setBorder(new LineBorder(Color.BLACK));          
-        In2.addActionListener(new ActionListener() {
-    		public void actionPerformed(ActionEvent arg0) {
-    			JPanel panel = Data(1, x+110, y-35);	
-    		}
-        });	
-        /*	Out Button */
-        JButton Out = new JButton("Out");
-        blockData.add(Out);
-        Out.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
-        Out.setBorder(new EmptyBorder(0, 0, 0, 0));
-        Out.setBorder(new LineBorder(Color.BLACK));
-        Out.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent arg0) {
-        		JPanel panel = Data(0, x, y);
-    		}
-        });	    	        
+        if (this.type == 0 |this.type == 1) {
+            /*	In1 Button */
+            JButton In1 = new JButton("In1");
+            In1.setToolTipText("Insert Values");
+            blockData.add(In1);
+            In1.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
+            In1.setBorder(new EmptyBorder(0, 0, 0, 0));
+            In1.setBorder(new LineBorder(Color.BLACK));
+            In1.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent arg0) {
+                    JPanel panel = Data(1, x, y, 0);
+                }
+            });
+            /*	In2 Button */
+            JButton In2 = new JButton("In2");
+            In2.setToolTipText("Insert Values");
+            blockData.add(In2);
+            In2.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
+            In2.setBorder(new EmptyBorder(0, 0, 0, 0));
+            In2.setBorder(new LineBorder(Color.BLACK));
+            In2.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent arg0) {
+                    JPanel panel = Data(1, x+105, y-25, 1);
+                }
+            });
+            /*	Out Button */
+            JButton Out = new JButton("Out");
+            Out.setToolTipText("Insert Values");
+            blockData.add(Out);
+            Out.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
+            Out.setBorder(new EmptyBorder(0, 0, 0, 0));
+            Out.setBorder(new LineBorder(Color.BLACK));
+            Out.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent arg0) {
+                    JPanel panel = Data(0, x, y, 0);
+
+    			/*JPanel panel = new JPanel();
+    			panel.setBounds((x+125), (y-BLOCK_HEIGHT+55), 100, 85);
+    			panel.setBackground(new Color(245, 222, 179));
+    			Window.desktopPane.add(panel);
+    			panel.setLayout(null);
+    	        panel.setBorder(new LineBorder(Color.BLACK));
+
+    	        /* Output
+    	        JFormattedTextField OutputField = new JFormattedTextField();
+    	        OutputField.setValue(0);
+    	        OutputField.setBounds(14, 40, 70, 20);
+    	        panel.add(OutputField);*/
+                }
+            });
+        } else {
+            /*	In1 Button */
+            JButton In1 = new JButton("In1");
+            In1.setToolTipText("Insert Values");
+            blockData.add(In1);
+            In1.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
+            In1.setBorder(new EmptyBorder(0, 0, 0, 0));
+            In1.setBorder(new LineBorder(Color.BLACK));
+            In1.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent arg0) {
+                    JPanel panel = Data(1, x, y, 0);
+                }
+            });
+
+            /*	Out1 Button */
+            JButton Out1 = new JButton("Out1");
+            Out1.setToolTipText("Values");
+            blockData.add(Out1);
+            Out1.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
+            Out1.setBorder(new EmptyBorder(0, 0, 0, 0));
+            Out1.setBorder(new LineBorder(Color.BLACK));
+            Out1.addActionListener(new ActionListener() {
+              public void actionPerformed(ActionEvent arg0) {
+                  JPanel panel = Data(0, x-105, y-25, 0);
+              }
+            });
+
+            /*	Out2 Button */
+            JButton Out2 = new JButton("Out2");
+            Out2.setToolTipText("Values");
+            blockData.add(Out2);
+            Out2.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
+            Out2.setBorder(new EmptyBorder(0, 0, 0, 0));
+            Out2.setBorder(new LineBorder(Color.BLACK));
+            Out2.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent arg0) {
+                    JPanel panel = Data(0, x, y, 1);
+                }
+            });
+        }
+
         Movement drag = new Movement(block);
       
       return block;
- }	
+ }
+ public int getId() {
+	    return this.id;
+ }
 }
