@@ -71,6 +71,7 @@ public class Window {
         frame.setBounds(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null); 
+        frame.setResizable(false);
         
         /*	Working area	*/        
         desktopPane = new JDesktopPane();
@@ -106,6 +107,10 @@ public class Window {
         		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
         		Block logicBlock = schema.createBlock(Operation.FREEZE);
         		BlockShape block = new BlockShape(1, x, y, number, schema, schemaShape, logicBlock);
+                schemaShape.addShape(block);
+            	number += 1;
+                desktopPane.add(block.block_creator());
+                frame.setVisible(true);
         	}
         });
         btnFreeze.setForeground(new Color(128, 0, 128));
@@ -247,6 +252,5 @@ public class Window {
                 }
             }
         });
-
 }
 }
