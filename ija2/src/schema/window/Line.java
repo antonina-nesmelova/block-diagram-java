@@ -7,6 +7,8 @@ import java.util.*;
 
 public class Line extends JFrame implements MouseMotionListener, MouseListener {
 	Point start;
+	int x, y;
+	int start_X, start_Y;
 	
 	public Line(Component... pns) {
     	for(Component frame : pns) {
@@ -18,10 +20,9 @@ public class Line extends JFrame implements MouseMotionListener, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		  if(e.getButton() == MouseEvent.BUTTON3) {
-			  start = e.getPoint();
-			  System.out.println(start);
-			  //rg.add(this);
-			  //getParent().repaint();
+			  start_X = e.getX();
+			  start_Y = e.getY();
+			  System.out.println(start_X);
 		  }
 	 }
 
@@ -51,8 +52,13 @@ public class Line extends JFrame implements MouseMotionListener, MouseListener {
 	 public void mouseDragged(MouseEvent e)		{
 		 Point end = e.getPoint();
 		 Point p = getLocation();
-		 setLocation(end.x - start.x + p.x, end.y - start.y + p.y);
-		 getParent().repaint();
+		 x = end.x - start.x + p.x;
+		 y = end.y - start.y + p.y;
+		 setLocation(x, y);
+		 System.out.println(x);
 	 }
+	 public void paint(Graphics g) {
+		 g.drawLine(start_X,x,start_Y,y);
+	}
 
 }
