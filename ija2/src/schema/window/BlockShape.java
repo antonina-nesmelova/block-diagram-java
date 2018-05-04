@@ -21,7 +21,7 @@ import schema.blocks.implementation.type.Type;
 
 public class BlockShape implements Serializable {
 	private int id;
-	public Block block;
+	public static Block block;
 	public Schema schema;
     public SchemaShape schemaShape;
     public int x;
@@ -218,7 +218,6 @@ public class BlockShape implements Serializable {
                 	});
                 }
             });
-            Line l = new Line(In1);
             /*	In2 Button */
             JButton In2 = new JButton("In2");
             In2.setToolTipText("Insert Values");
@@ -313,7 +312,7 @@ public class BlockShape implements Serializable {
         }
 
         Movement drag = new Movement(block);
-      
+        Line l = new Line(Window.frame);
       return block;
  }
  public int getId() {
