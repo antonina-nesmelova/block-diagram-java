@@ -203,11 +203,6 @@ public class Window {
             }
         });
 
-        JMenuItem saveas = new JMenuItem("Save As...");
-        saveas.setHorizontalAlignment(SwingConstants.LEFT);
-        saveas.setForeground(new Color(128, 0, 128));
-        Save.add(saveas);
-
         JMenu Download = new JMenu("Download");
         Download.setForeground(new Color(128, 0, 128));
         menuBar.add(Download);
@@ -260,6 +255,5 @@ public class Window {
                 }
             }
         });
-
 }
 }
