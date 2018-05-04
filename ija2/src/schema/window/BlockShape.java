@@ -50,9 +50,10 @@ public class BlockShape implements Serializable {
             	JLabel label = new JLabel("<html>"  + "Type: " + block.portsOut.get(idOfPort).getType().toString() +  "<br/>" 
             										+ "Mass of out: " + block.portsOut.get(idOfPort).getMass() + "<br/>" 
             										+  "Out temp: " + block.portsOut.get(idOfPort).getTemp() + "<br/>"
+            										+ "State: " + block.portsOut.get(idOfPort).getState().toString() + "<br/>"
             										+ "Joules: " + block.portsOut.get(idOfPort).getJoule() + "</html>"); 
-            	
-                label.setBounds(0, 0, BLOCK_WIDTH, BLOCK_HEIGHT);
+                label.setBounds(10, -5, BLOCK_WIDTH, BLOCK_HEIGHT);
+                label.setFont(new Font("Courier New", Font.ITALIC, 12));
                 panel.add(label);
             	panel.setBounds((x+125), (y-BLOCK_HEIGHT+55), 125, 105);
     			Window.desktopPane.add(panel);
