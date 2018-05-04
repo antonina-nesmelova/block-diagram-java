@@ -1,23 +1,31 @@
 package schema;
 
+import java.beans.PropertyChangeListener;
+import java.io.Serializable;
 import java.util.*;
 
-import schema.blocks.implementation.blocks.Block;
-import schema.blocks.Type;
-import schema.blocks.implementation.blocks.Freeze;
-import schema.blocks.implementation.blocks.Warm;
+import schema.blocks.implementation.blocks.*;
+import schema.blocks.implementation.type.Type;
+import schema.blocks.implementation.ports.PortIn;
+import schema.blocks.implementation.ports.PortOut;
 
-//import static schema.blocks.Type.type.WATER;
+import javax.swing.event.SwingPropertyChangeSupport;
 
-public class Schema {
-	
-	//public List<Block> blocks = new ArrayList();
+public class Schema implements Serializable {
+
+    //private SwingPropertyChangeSupport propChange;
+
 	public List<Block> blocks = new ArrayList<Block>();
 	public int number;
 
 	public Schema() {
-
+	    //propChange = new SwingPropertyChangeSupport(this);
+        this.number = 0;
 	}
+
+	/*public void addListener(PropertyChangeListener prop) {
+	    propChange.addPropertyChangeListener(prop);
+    }*/
 	
 	public Block createBlock(Block.Operation type) {
 		
@@ -33,55 +41,90 @@ public class Schema {
 				blocks.add(b);
 				break;
 			}
+			case MKICE: {
+				b = new MakeIce(number);
+				blocks.add(b);
+				break;
+			}
+			case MKLIQUID: {
+				b = new MakeLiquid(number);
+				blocks.add(b);
+				break;
+			}
+			case MKGASS: {
+				b = new MakeGas(number);
+				blocks.add(b);
+				break;
+			}
 			default: {
 				b = new Warm(number);
 				blocks.add(b);
 				break;
 			}
 		}
+		this.number += 1;
+		System.out.println("Block created " + b.getId());
 		return b;
 	}
 	
-	public boolean setPortType(Block block, Type.type type, int pId) {
-		if (block instanceof Warm || block instanceof Freeze) {
-			if (type == Type.type.WATER)
+	public boolean setPortValue(Block block, Type.type type, int pId, double mass, double temp) {
+		if(block.setPortInType(pId, type)) {
+			block.setPortInValue(pId, mass, temp);
+			return true;
 		}
-		else {
-		/* ... */
-		}
-	}
-	
-	/*public Type getValue(int blockId, boolean in, boolean material) {
-		if (in) {
-			if (material) return this.blocks.get(blockId).material_in;
-			else return this.blocks.get(blockId).energy_in;
-		} else {
-			if (material) return this.blocks.get(blockId).material_out;
-			else return this.blocks.get(blockId).energy_out;
-		}
-	}
-	
-	public void makeRelation(Type in, Type free_out, int idIn, int idOut) {
-		if (in instanceof AbstractMaterial && free_out instanceof AbstractMaterial) {
-			if ((this.blocks.get(idIn).is_free_m_in < 0) && this.blocks.get(idOut).is_free_m_out) {
-				this.blocks.get(idOut).is_free_m_out = false;
-				this.blocks.get(idIn).is_free_m_in = idOut;
-			}
-		} else {
-			if ((this.blocks.get(idIn).is_free_e_in < 0) && this.blocks.get(idOut).is_free_e_out) {
-				this.blocks.get(idOut).is_free_e_out = false;
-				this.blocks.get(idIn).is_free_e_in = idOut;
-			}
-		}
+		return false;
 	}
 
-	public void deleteRelation(int idIn, boolean material) {
-		if (material) {
-			this.blocks.get(this.blocks.get(idIn).is_free_m_in).is_free_m_out = true;
-			this.blocks.get(idIn).is_free_m_in = -1;
-		} else {
-			this.blocks.get(this.blocks.get(idIn).is_free_e_in).is_free_e_out = true;
-			this.blocks.get(idIn).is_free_e_in = -1;
+	public boolean createRelation(PortIn in, PortOut out) {
+		if (!findLoop(out.getBlock().getId(), in.getBlock().getId())) {
+            in.connect(out);
+            out.connect(in);
+            return true;
+		} else return false;
+    }
+
+    public boolean findLoop(int out, int in) {
+		if (out == in) return true;
+		else {
+			for (PortOut outPort : this.blocks.get(in).portsOut) {
+				if (outPort.isFree()) continue;
+				else if (findLoop(out, outPort.in.getBlock().getId())) return true;
+			}
 		}
-	}*/
+		return false;
+	}
+
+	public boolean resolveSchema() {
+	    boolean finish = true;
+	    for (Block block : this.blocks) {
+	        if (!block.isResolved()) {
+                if (block.isFull()) {
+                    block.resolve();
+                } else if (!block.isEmpty()){
+                    finish = false;
+                }
+            }
+        }
+        if(finish) return true;
+	    else return resolveSchema();
+    }
+
+    public Block stepOfResolve() {
+		//boolean finish = true;
+		for (Block block : this.blocks) {
+			if (block.isResolved() | block.isEmpty()) {
+				continue;
+			} else if (block.isFull()) {
+				block.resolve();
+				//finish = false;
+				return block;
+			}
+		}
+		return null;
+	}
+
+    public void removeBlock(int id) {
+        boolean removed = this.blocks.removeIf(block -> (block.getId() == id));
+        if (removed) System.out.println("Removed block " + id);
+	}
 }
