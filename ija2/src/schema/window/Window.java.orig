@@ -23,13 +23,20 @@ public class Window {
 	public static Schema schema;
     public static SchemaShape schemaShape;
     public static FullSchema full;
+<<<<<<< HEAD
+    private JFrame frame;
+=======
     protected static JFrame frame;
+>>>>>>> nina
     public static String NAME = "Block diagrams modeling physical processes";
     protected static JDesktopPane desktopPane;
     private int number;
     private int schemaid;
     private static Saving saver;
+<<<<<<< HEAD
 
+=======
+>>>>>>> nina
 	
     /**
      * Launch the application.
@@ -44,7 +51,12 @@ public class Window {
                     e.printStackTrace();
                 }
             }
+<<<<<<< HEAD
+        });
+        
+=======
         });     
+>>>>>>> nina
     }
 
 	/**
@@ -92,7 +104,13 @@ public class Window {
                 desktopPane.add(block.block_creator());
                 frame.setVisible(true);
         	}
+<<<<<<< HEAD
+        });
+    	
+    	
+=======
         });	
+>>>>>>> nina
         btnWarm.setForeground(new Color(128, 0, 128));
         btnWarm.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 12));
         btnWarm.setBackground(new Color(211, 211, 211));
@@ -107,10 +125,13 @@ public class Window {
         		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
         		Block logicBlock = schema.createBlock(Operation.FREEZE);
         		BlockShape block = new BlockShape(1, x, y, number, schema, schemaShape, logicBlock);
+<<<<<<< HEAD
                 schemaShape.addShape(block);
             	number += 1;
                 desktopPane.add(block.block_creator());
                 frame.setVisible(true);
+=======
+>>>>>>> nina
         	}
         });
         btnFreeze.setForeground(new Color(128, 0, 128));
@@ -200,11 +221,14 @@ public class Window {
             }
         });
 
+<<<<<<< HEAD
         JMenuItem saveas = new JMenuItem("Save As...");
         saveas.setHorizontalAlignment(SwingConstants.LEFT);
         saveas.setForeground(new Color(128, 0, 128));
         Save.add(saveas);
 
+=======
+>>>>>>> nina
         JMenu Download = new JMenu("Download");
         Download.setForeground(new Color(128, 0, 128));
         menuBar.add(Download);
@@ -259,4 +283,8 @@ public class Window {
         });
 
 }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> nina
