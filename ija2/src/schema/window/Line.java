@@ -6,59 +6,64 @@ import javax.swing.*;
 import java.util.*;
 
 public class Line extends JFrame implements MouseMotionListener, MouseListener {
-	Point start;
-	int x, y;
-	int start_X, start_Y;
-	
+	private int x,y,x2,y2,a=1;
+    private int count=0;
+
 	public Line(Component... pns) {
     	for(Component frame : pns) {
     		frame.addMouseListener(this);
-    		frame.addMouseMotionListener(this);
     	}    	
     }
-	
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		  if(e.getButton() == MouseEvent.BUTTON3) {
-			  start_X = e.getX();
-			  start_Y = e.getY();
-			  System.out.println(start_X);
-		  }
-	 }
+	public void paint(Graphics g){
 
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-	public void mouseMoved(MouseEvent e)	{
-		 start = e.getPoint();
-	 }
-	 public void mouseDragged(MouseEvent e)		{
-		 Point end = e.getPoint();
-		 Point p = getLocation();
-		 x = end.x - start.x + p.x;
-		 y = end.y - start.y + p.y;
-		 setLocation(x, y);
-		 System.out.println(x);
-	 }
-	 public void paint(Graphics g) {
-		 g.drawLine(start_X,x,start_Y,y);
-	}
+        if(count==2){
+            g.drawLine(x, y, x2, y2);
 
+            count=0;
+            x=0;
+            y=0;
+            x2=0;
+            y2=0;
+        }
+    }
+	public void mouseClicked(MouseEvent mouse){   
+
+        count++;
+
+        if(count==1){
+            x=mouse.getX();
+            y=mouse.getY();
+        }
+
+        if(count==2){
+            x2 = mouse.getX();
+            y2 = mouse.getY();
+        }
+
+        repaint();
+        }
+
+    public void mouseEntered(MouseEvent mouse){ }   
+    public void mouseExited(MouseEvent mouse){ }
+    public void mousePressed(MouseEvent mouse){ }
+    public void mouseReleased(MouseEvent mouse){ }
+
+    public static void main(String arg[]){
+       
+    }
+
+    public void actionPerformed(ActionEvent arg0) {
+        // TODO Auto-generated method stub
+
+    }
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 }
