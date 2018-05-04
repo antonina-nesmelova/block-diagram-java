@@ -46,10 +46,27 @@ public class BlockShape implements Serializable {
 		panel.setLayout(null);
 		
 		if(p_t == 0) {
-            Dimension labelSize = new Dimension(80, 80);
-            Border solidBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
-        	panel.setBounds((x+125), (y-BLOCK_HEIGHT+55), 100, 85);
-			Window.desktopPane.add(panel);
+            
+            if (block.portsOut.get(idOfPort).hasValue()) {
+            	String Type = "Type: " + block.portsOut.get(idOfPort).getType().toString() + " \n";
+            	String Mass = "Mass of out " + block.portsOut.get(idOfPort).getMass() + " \n"; 
+            	String Temperature = "Temperature of out " + block.portsOut.get(idOfPort).getTemp();
+            	String Joule = "Joule of out " + block.portsOut.get(idOfPort).getJoule();
+            	JLabel label = new JLabel(Type + " \n" + Mass + " \n" + Temperature  + " \n" + Joule); 
+                label.setBounds(0, 0, BLOCK_WIDTH, BLOCK_HEIGHT);
+                panel.add(label);
+            	
+            	Dimension labelSize = new Dimension(80, 80);
+                Border solidBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
+                label.setVerticalAlignment(JLabel.CENTER);
+                label.setHorizontalAlignment(JLabel.CENTER);
+                label.setPreferredSize(labelSize);
+                label.setBorder(solidBorder);
+    	        panel.add(label);
+            	panel.setBounds((x+125), (y-BLOCK_HEIGHT+55), 100, 85);
+    			Window.desktopPane.add(panel);
+            }
+            
 			
 			/*switch (block.portsOut.get(idOfPort).getType()) {
                 case WATER: {
@@ -69,29 +86,7 @@ public class BlockShape implements Serializable {
                 default: {
                     System.out.println(0);
                 }
-            }*/
-            /*if (block.portsOut.get(idOfPort).hasValue()) { 
-                System.out.println(idOfPort);
-                System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
-                System.out.println("Mass of out " + block.portsOut.get(idOfPort).getMass());
-                System.out.println("Temperature of out " + block.portsOut.get(idOfPort).getTemp());
-                System.out.println("Joule of out " + block.portsOut.get(idOfPort).getJoule());
-            }
-            /* Output */
-             
-             /*JLabel label = new JLabel("Out");   
-	        if (block.portsOut.get(idOfPort).hasValue()) {
-	        	//label.setText("Type: " + block.portsOut.get(idOfPort).getType().toString() + " \n"); 
-	            label.setVerticalAlignment(JLabel.CENTER);
-	            label.setHorizontalAlignment(JLabel.CENTER);
-	            label.setPreferredSize(labelSize);
-	            label.setBorder(solidBorder);
-		        panel.add(label);
-		        label.setBounds(0, 0, 69, 25);
-	        }
-//          label.setText("Type: " + block.portsOut.get(idOfPort).getType().toString() + " \n"); 
-
-	    */    
+            }*/   
         }
         else {
     		panel.setBounds((x-BLOCK_WIDTH+35), (y-BLOCK_HEIGHT+55), 100, 100);
