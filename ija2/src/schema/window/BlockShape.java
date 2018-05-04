@@ -27,6 +27,7 @@ public class BlockShape implements Serializable {
     public int x;
     public int y;
     public int type;
+    public JPanel shape;
 
 	public BlockShape(int t, int x, int y, int id, Schema schema, SchemaShape schemaShape, Block block) {
 	    this.block = block;
@@ -38,143 +39,22 @@ public class BlockShape implements Serializable {
 		this.type = t;
 	}
 	
-	public JPanel Data(int p_t, int x, int y, int idOfPort) {
-		JPanel panel = new JPanel();
-        
-		if(p_t == 0) {
-            Dimension labelSize = new Dimension(80, 80);
-            Border solidBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
-        	panel.setBounds((x+125), (y-BLOCK_HEIGHT+55), 100, 85);
-        	panel.setBackground(new Color(245, 222, 179));
-			Window.desktopPane.add(panel);
-			panel.setLayout(null);
-			panel.setBorder(new LineBorder(Color.BLACK));
-			/*switch (block.portsOut.get(idOfPort).getType()) {
-                case WATER: {
-                    System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
-                    System.out.println("Mass of out " + block.portsOut.get(idOfPort).getMass());
-                    System.out.println("Temperature of out " + block.portsOut.get(idOfPort).getTemp());
-                }
-                case ALCOHOL:{
-                    System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
-                    System.out.println("Mass of out " + block.portsOut.get(idOfPort).getMass());
-                    System.out.println("Temperature of out " + block.portsOut.get(idOfPort).getTemp());
-                }
-                case ENERGY: {
-                    System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
-                    System.out.println("Joule of out " + block.portsOut.get(idOfPort).getJoule());
-                }
-                default: {
-                    System.out.println(0);
-                }
-            }*/
-            if (block.portsOut.get(idOfPort).hasValue()) { // важно проверять наличие value потому что иначе кидается ошибка
-                System.out.println(idOfPort);
-                System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
-                System.out.println("Mass of out " + block.portsOut.get(idOfPort).getMass());
-                System.out.println("Temperature of out " + block.portsOut.get(idOfPort).getTemp());
-                System.out.println("Joule of out " + block.portsOut.get(idOfPort).getJoule());
-            }
-
-	        /* Output */
-            /* TODO сверху выписываются информации и порте, нужно их как-то выписать как лейбл или как угодно, пример снизу, но он почему-то не отображается */
-	        JLabel label = new JLabel();    
-//            label.setText("Type: " + block.portsOut.get(idOfPort).getType().toString() + " \n"); // присвоение значения нужно делать при условии наличия value, как в примере сверху
-            label.setVerticalAlignment(JLabel.CENTER);
-            label.setHorizontalAlignment(JLabel.CENTER);
-            label.setPreferredSize(labelSize);
-            label.setBorder(solidBorder);
-	        panel.add(label);
-	        
-        }
-        else {
-    		panel.setBounds((x-BLOCK_WIDTH+35), (y-BLOCK_HEIGHT+55), 100, 85);
-    		panel.setBackground(new Color(245, 222, 179));
-    		Window.desktopPane.add(panel);
-    		panel.setLayout(null);
-            panel.setBorder(new LineBorder(Color.BLACK));
-    		
-    		/*	Choice Type */
-            Choice type_choice = new Choice();
-            panel.add(type_choice);
-            type_choice.setBounds(14, 15, 69, 25);
-            type_choice.add(Type.type.WATER.toString());
-            type_choice.add(Type.type.ALCOHOL.toString());
-            type_choice.add(Type.type.ENERGY.toString());
-            panel.setVisible(true);
-
-            /* Input 1 */
-            JFormattedTextField FirstField = new JFormattedTextField(new DecimalFormat("####.##"));
-            FirstField.setToolTipText("Mass, kg");
-            FirstField.setValue(0);
-            FirstField.setBounds(14, 40, 70, 20);
-            panel.add(FirstField);
-
-            /* Input 2 */
-            JFormattedTextField SecondField = new JFormattedTextField(new DecimalFormat("####.##"));
-            SecondField.setToolTipText("Temperature, C");
-            SecondField.setValue(0);
-            SecondField.setBounds(14, 60, 70, 20);
-            panel.add(SecondField);
-
-            /*	Set Button TODO чтобы норм выглядело */
-            JButton set = new JButton("Set");
-            set.setBorder(new EmptyBorder(0, 0, 0, 0));
-            panel.setToolTipText("Add values");
-            set.setBounds(87, 1, 12, 12);
-            panel.setLayout(new BorderLayout());
-            panel.add(set);
-            set.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent arg0) {
-                    String type = type_choice.getSelectedItem();
-                    double mass = abs(Double.parseDouble(FirstField.getText()));
-                    double temp = Double.parseDouble(SecondField.getText());
-                    System.out.println("In set, mass " + mass + ", temp " + temp + ", type " + type);
-                    if (!schema.setPortValue(block, Type.type.valueOf(type), idOfPort, mass, temp)) {
-                        /* TODO всплывающее окно *или что угодно* информирующее, что такой тип нельза задать
-                           что-то вроде "This type can't be chosen"
-                         */
-                        System.out.println("Cant set this type");
-                    }
-                }
-            });
-
-
-        }
-		/*	Close Button	*/
-        JButton close = new JButton("X");
-        close.setBorder(new EmptyBorder(0, 0, 0, 0));
-        close.setToolTipText("Close");
-        close.setBounds(87, 1, 12, 12);
-        panel.add(close);
-        
-        close.addActionListener(new ActionListener() {
-    		public void actionPerformed(ActionEvent arg0) {
-    			Window.desktopPane.remove(panel);
-    			Window.desktopPane.revalidate();
-    			Window.desktopPane.repaint();
-
-            }
-    	});
-        
-        return panel; 
-    }
-	
 	JPanel block_creator() {
 		JPanel block;
 		JLabel blockType = null;
         JPanel blockData;
         JPanel DelPan;
         GridLayout layout;
-        
-        block  = new JPanel(); 
-		block.setBackground(new Color(255, 250, 240));
+
+        block  = new JPanel();
+        block.setBackground(new Color(255, 250, 240));
         block.setBounds(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
+        this.shape = block;
 
         blockData = new JPanel();
         layout = new GridLayout(0,3);
-        blockData.setLayout(layout); 
-        
+        blockData.setLayout(layout);
+
         DelPan = new JPanel();
         DelPan.setLayout(layout);
 
@@ -183,12 +63,12 @@ public class BlockShape implements Serializable {
     				blockType = new JLabel("Warm", JLabel.CENTER );
     				break;
     			}
-    			case 1: { 
+    			case 1: {
     				blockType = new JLabel("Freeze", JLabel.CENTER );
     				break;
     			}
     			case 2: {
-	    			blockType = new JLabel("Make Ice", JLabel.CENTER ); 
+	    			blockType = new JLabel("Make Ice", JLabel.CENTER );
 	    			break;
 	    		}
     			case 3: {
@@ -196,7 +76,7 @@ public class BlockShape implements Serializable {
 	    			break;
 	    		}
     			case 4 : {
-	    			blockType = new JLabel("Make Gas", JLabel.CENTER ); 
+	    			blockType = new JLabel("Make Gas", JLabel.CENTER );
 	    			break;
 	    		}
     		}
@@ -204,20 +84,20 @@ public class BlockShape implements Serializable {
         block.add(blockData);
         block.add(DelPan);
         block.setVisible(true);
-    		
+
     	/*	Name of the block	*/
         blockType.setFont(new Font("Verdana", 1, 14));
         blockType.setSize(BLOCK_WIDTH,BLOCK_HEIGHT);
         block.add(blockType);
         block.setBorder(new LineBorder(Color.BLACK));
         block.setLayout(new GridLayout(3, 1));
-        
+
         /*	Delete Button */
         JButton delete = new JButton("Delete");
         DelPan.setToolTipText("Delete Block");
         DelPan.setLayout(new BorderLayout());
         DelPan.add(delete);
-        
+
     	delete.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent arg0) {
     			Window.desktopPane.remove(block);
@@ -320,10 +200,132 @@ public class BlockShape implements Serializable {
         }
 
         Movement drag = new Movement(block);
-      
+
       return block;
  }
- public int getId() {
+
+    public JPanel Data(int p_t, int x, int y, int idOfPort) {
+        JPanel panel = new JPanel();
+
+        if(p_t == 0) {
+            Dimension labelSize = new Dimension(80, 80);
+            Border solidBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
+            panel.setBounds((x+125), (y-BLOCK_HEIGHT+55), 100, 85);
+            panel.setBackground(new Color(245, 222, 179));
+            Window.desktopPane.add(panel);
+            panel.setLayout(null);
+            panel.setBorder(new LineBorder(Color.BLACK));
+			/*switch (block.portsOut.get(idOfPort).getType()) {
+                case WATER: {
+                    System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
+                    System.out.println("Mass of out " + block.portsOut.get(idOfPort).getMass());
+                    System.out.println("Temperature of out " + block.portsOut.get(idOfPort).getTemp());
+                }
+                case ALCOHOL:{
+                    System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
+                    System.out.println("Mass of out " + block.portsOut.get(idOfPort).getMass());
+                    System.out.println("Temperature of out " + block.portsOut.get(idOfPort).getTemp());
+                }
+                case ENERGY: {
+                    System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
+                    System.out.println("Joule of out " + block.portsOut.get(idOfPort).getJoule());
+                }
+                default: {
+                    System.out.println(0);
+                }
+            }*/
+            if (block.portsOut.get(idOfPort).hasValue()) { // важно проверять наличие value потому что иначе кидается ошибка
+                System.out.println(idOfPort);
+                System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
+                System.out.println("Mass of out " + block.portsOut.get(idOfPort).getMass());
+                System.out.println("Temperature of out " + block.portsOut.get(idOfPort).getTemp());
+                System.out.println("Joule of out " + block.portsOut.get(idOfPort).getJoule());
+            }
+
+            /* Output */
+            /* TODO сверху выписываются информации и порте, нужно их как-то выписать как лейбл или как угодно, пример снизу, но он почему-то не отображается */
+            JLabel label = new JLabel();
+//            label.setText("Type: " + block.portsOut.get(idOfPort).getType().toString() + " \n"); // присвоение значения нужно делать при условии наличия value, как в примере сверху
+            label.setVerticalAlignment(JLabel.CENTER);
+            label.setHorizontalAlignment(JLabel.CENTER);
+            label.setPreferredSize(labelSize);
+            label.setBorder(solidBorder);
+            panel.add(label);
+
+        }
+        else {
+            panel.setBounds((x-BLOCK_WIDTH+35), (y-BLOCK_HEIGHT+55), 100, 85);
+            panel.setBackground(new Color(245, 222, 179));
+            Window.desktopPane.add(panel);
+            panel.setLayout(null);
+            panel.setBorder(new LineBorder(Color.BLACK));
+
+            /*	Choice Type */
+            Choice type_choice = new Choice();
+            panel.add(type_choice);
+            type_choice.setBounds(14, 15, 69, 25);
+            type_choice.add(Type.type.WATER.toString());
+            type_choice.add(Type.type.ALCOHOL.toString());
+            type_choice.add(Type.type.ENERGY.toString());
+            panel.setVisible(true);
+
+            /* Input 1 */
+            JFormattedTextField FirstField = new JFormattedTextField(new DecimalFormat("####.##"));
+            FirstField.setToolTipText("Mass, kg");
+            FirstField.setValue(0);
+            FirstField.setBounds(14, 40, 70, 20);
+            panel.add(FirstField);
+
+            /* Input 2 */
+            JFormattedTextField SecondField = new JFormattedTextField(new DecimalFormat("####.##"));
+            SecondField.setToolTipText("Temperature, C");
+            SecondField.setValue(0);
+            SecondField.setBounds(14, 60, 70, 20);
+            panel.add(SecondField);
+
+            /*	Set Button TODO чтобы норм выглядело */
+            JButton set = new JButton("Set");
+            set.setBorder(new EmptyBorder(0, 0, 0, 0));
+            panel.setToolTipText("Add values");
+            set.setBounds(87, 1, 12, 12);
+            panel.setLayout(new BorderLayout());
+            panel.add(set);
+            set.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent arg0) {
+                    String type = type_choice.getSelectedItem();
+                    double mass = abs(Double.parseDouble(FirstField.getText()));
+                    double temp = Double.parseDouble(SecondField.getText());
+                    System.out.println("In set, mass " + mass + ", temp " + temp + ", type " + type);
+                    if (!schema.setPortValue(block, Type.type.valueOf(type), idOfPort, mass, temp)) {
+                        /* TODO всплывающее окно *или что угодно* информирующее, что такой тип нельза задать
+                           что-то вроде "This type can't be chosen"
+                         */
+                        System.out.println("Cant set this type");
+                    }
+                }
+            });
+
+
+        }
+        /*	Close Button	*/
+        JButton close = new JButton("X");
+        close.setBorder(new EmptyBorder(0, 0, 0, 0));
+        close.setToolTipText("Close");
+        close.setBounds(87, 1, 12, 12);
+        panel.add(close);
+
+        close.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                Window.desktopPane.remove(panel);
+                Window.desktopPane.revalidate();
+                Window.desktopPane.repaint();
+
+            }
+        });
+
+        return panel;
+    }
+    public int getId() {
 	    return this.id;
  }
 }

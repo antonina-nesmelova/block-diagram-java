@@ -109,18 +109,18 @@ public class Schema implements Serializable {
 	    else return resolveSchema();
     }
 
-    public boolean stepOfResolve() {
-		boolean finish = true;
+    public Block stepOfResolve() {
+		//boolean finish = true;
 		for (Block block : this.blocks) {
 			if (block.isResolved() | block.isEmpty()) {
 				continue;
 			} else if (block.isFull()) {
 				block.resolve();
-				finish = false;
-				return finish;
+				//finish = false;
+				return block;
 			}
 		}
-		return finish;
+		return null;
 	}
 
     public void removeBlock(int id) {

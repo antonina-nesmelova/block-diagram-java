@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.*;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 import schema.FullSchema;
 import schema.Schema;
@@ -231,13 +232,32 @@ public class Window {
         Execute.setForeground(new Color(128, 0, 128));
         menuBar.add(Execute);
 
-        JMenuItem execute = new JMenuItem("Execute");
+        JMenuItem execute = new JMenuItem("Execute all");
         execute.setHorizontalAlignment(SwingConstants.LEFT);
         execute.setForeground(new Color(128, 0, 128));
         Execute.add(execute);
         execute.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 schema.resolveSchema();
+            }
+        });
+
+        JMenuItem step = new JMenuItem("Execute one block");
+        step.setHorizontalAlignment(SwingConstants.LEFT);
+        step.setForeground(new Color(128, 0, 128));
+        Execute.add(step);
+        step.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                Block block = schema.stepOfResolve();
+                if (block != null) {
+                    for (BlockShape shape : full.shape.blocksShape) {
+                        if (shape.getId() == block.getId()) {
+                            shape.shape.setBorder(new LineBorder(Color.GREEN));
+                        } else {
+                            shape.shape.setBorder(new LineBorder(Color.BLACK));
+                        }
+                    }
+                }
             }
         });
 

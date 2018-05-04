@@ -84,7 +84,7 @@ public class Tests {
     @Test
 
     public  void connecting() {
-        Block mkice = schema.createBlock(Block.Operation.MKICE);
+        Block mkice = schema.createBlock(Block.Operation.MKGASS);
         schema.setPortValue(mkice, Type.type.ALCOHOL, 0, 1, 50);
         schema.resolveSchema();
         System.out.println(mkice.portsOut.get(0).getMass() + mkice.portsOut.get(0).getState().toString() + mkice.portsOut.get(0).getTemp());
