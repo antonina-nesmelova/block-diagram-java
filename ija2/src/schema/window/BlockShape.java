@@ -47,8 +47,6 @@ public class BlockShape implements Serializable {
 		
 		if(p_t == 0) {
             if (block.portsOut.get(idOfPort).hasValue()) {
-            	String Temperature = "Temperature of out " + block.portsOut.get(idOfPort).getTemp();
-            	String Joule = "Joule of out " + block.portsOut.get(idOfPort).getJoule();
             	JLabel label = new JLabel("<html>"  + "Type: " + block.portsOut.get(idOfPort).getType().toString() +  "<br/>" 
             										+ "Mass of out: " + block.portsOut.get(idOfPort).getMass() + "<br/>" 
             										+  "Out temp: " + block.portsOut.get(idOfPort).getTemp() + "<br/>"
