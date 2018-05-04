@@ -70,7 +70,7 @@ public class BlockShape implements Serializable {
                     System.out.println(0);
                 }
             }*/
-            if (block.portsOut.get(idOfPort).hasValue()) { // РІР°Р¶РЅРѕ РїСЂРѕРІРµСЂСЏС‚СЊ РЅР°Р»РёС‡РёРµ value РїРѕС‚РѕРјСѓ С‡С‚Рѕ РёРЅР°С‡Рµ РєРёРґР°РµС‚СЃСЏ РѕС€РёР±РєР°
+            if (block.portsOut.get(idOfPort).hasValue()) { // важно проверять наличие value потому что иначе кидается ошибка
                 System.out.println(idOfPort);
                 System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
                 System.out.println("Mass of out " + block.portsOut.get(idOfPort).getMass());
@@ -78,7 +78,7 @@ public class BlockShape implements Serializable {
                 System.out.println("Joule of out " + block.portsOut.get(idOfPort).getJoule());
             }
             /* Output */
-            /* TODO СЃРІРµСЂС…Сѓ РІС‹РїРёСЃС‹РІР°СЋС‚СЃСЏ РёРЅС„РѕСЂРјР°С†РёРё Рё РїРѕСЂС‚Рµ, РЅСѓР¶РЅРѕ РёС… РєР°Рє-С‚Рѕ РІС‹РїРёСЃР°С‚СЊ РєР°Рє Р»РµР№Р±Р» РёР»Рё РєР°Рє СѓРіРѕРґРЅРѕ, РїСЂРёРјРµСЂ СЃРЅРёР·Сѓ, РЅРѕ РѕРЅ РїРѕС‡РµРјСѓ-С‚Рѕ РЅРµ РѕС‚РѕР±СЂР°Р¶Р°РµС‚СЃСЏ */
+            /* TODO сверху выписываются информации и порте, нужно их как-то выписать как лейбл или как угодно, пример снизу, но он почему-то не отображается */
 	        JLabel label = new JLabel();   
 	        if (block.portsOut.get(idOfPort).hasValue()) {
 	        	label.setText("Type: " + block.portsOut.get(idOfPort).getType().toString() + " \n"); 
@@ -89,7 +89,7 @@ public class BlockShape implements Serializable {
 		        panel.add(label);
 		        label.setBounds(0, 0, 69, 25);
 	        }
-//          label.setText("Type: " + block.portsOut.get(idOfPort).getType().toString() + " \n"); // РїСЂРёСЃРІРѕРµРЅРёРµ Р·РЅР°С‡РµРЅРёСЏ РЅСѓР¶РЅРѕ РґРµР»Р°С‚СЊ РїСЂРё СѓСЃР»РѕРІРёРё РЅР°Р»РёС‡РёСЏ value, РєР°Рє РІ РїСЂРёРјРµСЂРµ СЃРІРµСЂС…Сѓ
+//          label.setText("Type: " + block.portsOut.get(idOfPort).getType().toString() + " \n"); // присвоение значения нужно делать при условии наличия value, как в примере сверху
 
 	        
         }

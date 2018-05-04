@@ -22,4 +22,5 @@ public interface Constants {
     final static int SRC_Y = INDENT;
     final static int DST_X = SRC_X + BLOCK_WIDTH + INDENT;
     final static int DST_Y = SRC_Y + SCREEN_HEIGHT + INDENT;
+
 }

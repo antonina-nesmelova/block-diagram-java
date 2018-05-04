@@ -29,7 +29,6 @@ public class Window {
     private int number;
     private int schemaid;
     private static Saving saver;
-
 	
     /**
      * Launch the application.
@@ -44,8 +43,7 @@ public class Window {
                     e.printStackTrace();
                 }
             }
-        });
-        
+        });     
     }
 
 	/**
@@ -93,9 +91,7 @@ public class Window {
                 desktopPane.add(block.block_creator());
                 frame.setVisible(true);
         	}
-        });
-    	
-    	
+        });	
         btnWarm.setForeground(new Color(128, 0, 128));
         btnWarm.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 12));
         btnWarm.setBackground(new Color(211, 211, 211));
@@ -110,10 +106,6 @@ public class Window {
         		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
         		Block logicBlock = schema.createBlock(Operation.FREEZE);
         		BlockShape block = new BlockShape(1, x, y, number, schema, schemaShape, logicBlock);
-                schemaShape.addShape(block);
-            	number += 1;
-                desktopPane.add(block.block_creator());
-                frame.setVisible(true);
         	}
         });
         btnFreeze.setForeground(new Color(128, 0, 128));
@@ -255,5 +247,6 @@ public class Window {
                 }
             }
         });
+
 }
 }

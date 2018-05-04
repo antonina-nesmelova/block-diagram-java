@@ -1,25 +1,25 @@
 package schema.blocks.implementation.blocks;
 
-import schema.blocks.Type;
+import schema.blocks.implementation.type.Type;
 import schema.blocks.implementation.ports.PortIn;
 import schema.blocks.implementation.ports.PortOut;
+import schema.blocks.implementation.type.Alcohol;
+import schema.blocks.implementation.type.Energy;
+import schema.blocks.implementation.type.Water;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Block {
+public abstract class Block implements Serializable {
 
-	public int id;
+	protected int id;
 
 	public List<PortIn> portsIn = new ArrayList<PortIn>();
 	public List<PortOut> portsOut = new ArrayList<PortOut>();
-	public int number;
-
-	protected Block() {
-		this.number = 0;
-		PortOut port = new PortOut();
-		this.portsOut.add(port);
-	}
+	public int maxInPorts;
+	public int maxOutPorts;
+	protected boolean resolved;
 
 	public enum Operation {
 		WARM,
@@ -40,36 +40,142 @@ public abstract class Block {
 
 			throw new AssertionError("Unknown type: " + this);
 		}
+
+	}
+
+	protected Block(Block.Operation op, int id) {
+		this.id = id;
+	    this.resolved = false;
+		switch (op) {
+			case WARM:
+			case FREEZE:
+				this.maxInPorts = 2;
+				this.maxOutPorts = 1;
+				break;
+			case MKICE:
+			case MKGASS:
+			case MKLIQUID:
+				this.maxInPorts = 1;
+				this.maxOutPorts = 2;
+				break;
+		}
+
+        for (int i = 0; i < this.maxInPorts; i++) {
+            this.createPortIn(i);
+        }
+
+        for (int i = 0; i < this.maxOutPorts; i++) {
+            this.createPortOut(i);
+        }
+
 	}
 
 	public abstract Block.Operation getOperation();
 
-	public abstract void resolve();
+	public abstract void calculate(Type material, Type energy);
 
-	public int createPort() {
-		if (this.number < 2) {
-			PortIn port = new PortIn();
-			this.portsIn.add(port);
-			this.number++;
-			return (number-1);
-		} else {
-			return -1;
-		}
+	public void createPortIn(int id) {
+
+		PortIn port = new PortIn(this, id);
+		this.portsIn.add(port);
 	}
 
-	public boolean setPortValue(int id, Type value) {
-		if (id == 0 || id == 1) {
-			if (id == 0 && !this.portsIn.get(1).value.equals(value)) {
-				this.portsIn.get(id).value = value;
-				return true;
-			} else if (id == 1 && !this.portsIn.get(0).value.equals(value)) {
-				this.portsIn.get(id).value = value;
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
+	public void createPortOut(int id) {
+
+		PortOut port = new PortOut(this, id);
+		this.portsOut.add(port);
 	}
+
+	public boolean setPortInType(int inPortId, Type.type type) {
+        Type value;
+	    switch (type) {
+            case WATER: {
+                value = new Water(0, 0);
+                break;
+            }
+            case ALCOHOL: {
+                value = new Alcohol(0, 0);
+                break;
+            }
+            case ENERGY: {
+                value = new Energy(0, 0);
+                break;
+            }
+            default:  {
+                value = new Energy(0, 0);
+                break;
+            }
+        }
+        // control if ports have different types
+	    for (int i = 0; i < maxInPorts; i++) {
+            if (i != inPortId & (this.portsIn.get(i).isMaterial() == value.isMaterial())) {
+                return false;
+            }
+        }
+	    this.portsIn.get(inPortId).setType(value);
+        return true;
+	}
+
+	public void setPortInValue(int inPortId, double mass, double temp) {
+		this.portsIn.get(inPortId).value.setValues(mass, temp);
+	}
+
+	public boolean setPortOutValue(int outPortId, Type type) {
+	    System.out.println("In setPortOutValue " + outPortId);
+	    PortOut port = this.portsOut.get(outPortId);
+        port.setType(type);
+        if (!port.isFree()) {
+            if (port.in.getBlock().setPortInType(port.in.getId(), type.getType())) {
+                port.in.getBlock().setPortInValue(port.in.getId(), type.getMass(), type.getTemp());
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+	        return true;
+        }
+    }
+
+	public boolean resolve() {
+	    this.resolved = true;
+	    Type material = null;
+	    Type energy = null;
+	    for (PortIn port : this.portsIn) {
+	        if (port.value.isMaterial() == 1) {
+	            material = port.value;
+            } else {
+                energy = port.value;
+            }
+        }
+	    this.calculate(material, energy);
+	    return true;
+    }
+
+//    public Type getPortValue(int portId) {
+//        return this.portsIn.get(portId).value;
+//    }
+
+	public int getId() {
+		return this.id;
+	}
+
+	public boolean isFull() {
+	    for (PortIn port : this.portsIn) {
+	        if (!port.hasValue()) return false;
+        }
+        return true;
+    }
+
+    public boolean isEmpty() {
+	    boolean empty = false;
+	    for (PortIn port : portsIn) {
+	        if (!port.hasValue()) empty = true;
+        }
+        return empty;
+    }
+
+    public boolean isResolved() {
+        return resolved;
+    }
 }
+
