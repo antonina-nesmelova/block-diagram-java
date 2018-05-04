@@ -46,28 +46,20 @@ public class BlockShape implements Serializable {
 		panel.setLayout(null);
 		
 		if(p_t == 0) {
-            
             if (block.portsOut.get(idOfPort).hasValue()) {
-            	String Type = "Type: " + block.portsOut.get(idOfPort).getType().toString() + " \n";
-            	String Mass = "Mass of out " + block.portsOut.get(idOfPort).getMass() + " \n"; 
             	String Temperature = "Temperature of out " + block.portsOut.get(idOfPort).getTemp();
             	String Joule = "Joule of out " + block.portsOut.get(idOfPort).getJoule();
-            	JLabel label = new JLabel(Type + " \n" + Mass + " \n" + Temperature  + " \n" + Joule); 
+            	JLabel label = new JLabel("<html>"  + "Type: " + block.portsOut.get(idOfPort).getType().toString() +  "<br/>" 
+            										+ "Mass of out: " + block.portsOut.get(idOfPort).getMass() + "<br/>" 
+            										+  "Out temp: " + block.portsOut.get(idOfPort).getTemp() + "<br/>"
+            										+ "Joules: " + block.portsOut.get(idOfPort).getJoule() + "</html>"); 
+            	
                 label.setBounds(0, 0, BLOCK_WIDTH, BLOCK_HEIGHT);
                 panel.add(label);
-            	
-            	Dimension labelSize = new Dimension(80, 80);
-                Border solidBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
-                label.setVerticalAlignment(JLabel.CENTER);
-                label.setHorizontalAlignment(JLabel.CENTER);
-                label.setPreferredSize(labelSize);
-                label.setBorder(solidBorder);
-    	        panel.add(label);
-            	panel.setBounds((x+125), (y-BLOCK_HEIGHT+55), 100, 85);
+            	panel.setBounds((x+125), (y-BLOCK_HEIGHT+55), 125, 105);
     			Window.desktopPane.add(panel);
             }
             
-			
 			/*switch (block.portsOut.get(idOfPort).getType()) {
                 case WATER: {
                     System.out.println("Type of out " + block.portsOut.get(idOfPort).getType().toString());
@@ -87,6 +79,18 @@ public class BlockShape implements Serializable {
                     System.out.println(0);
                 }
             }*/   
+            /*	Close Button	*/
+    		JButton close = new JButton("X");
+            close.setBorder(new EmptyBorder(0, 0, 0, 0));
+            close.setToolTipText("Close");
+            close.setBounds(113, 1, 12, 12);
+            panel.add(close);   
+            close.addActionListener(new ActionListener() {
+        		public void actionPerformed(ActionEvent arg0) {
+        			Window.desktopPane.remove(panel);
+        			Window.desktopPane.repaint();
+                }
+        	}); 
         }
         else {
     		panel.setBounds((x-BLOCK_WIDTH+35), (y-BLOCK_HEIGHT+55), 100, 100);
@@ -134,21 +138,20 @@ public class BlockShape implements Serializable {
                     }
                 }
             });
-
-
+            /*	Close Button	*/
+    		JButton close = new JButton("X");
+            close.setBorder(new EmptyBorder(0, 0, 0, 0));
+            close.setToolTipText("Close");
+            close.setBounds(87, 1, 12, 12);
+            panel.add(close);   
+            close.addActionListener(new ActionListener() {
+        		public void actionPerformed(ActionEvent arg0) {
+        			Window.desktopPane.remove(panel);
+        			Window.desktopPane.repaint();
+                }
+        	}); 
         }
-		/*	Close Button	*/
-		JButton close = new JButton("X");
-        close.setBorder(new EmptyBorder(0, 0, 0, 0));
-        close.setToolTipText("Close");
-        close.setBounds(87, 1, 12, 12);
-        panel.add(close);   
-        close.addActionListener(new ActionListener() {
-    		public void actionPerformed(ActionEvent arg0) {
-    			Window.desktopPane.remove(panel);
-    			Window.desktopPane.repaint();
-            }
-    	}); 
+		
         return panel; 
     }
 	
