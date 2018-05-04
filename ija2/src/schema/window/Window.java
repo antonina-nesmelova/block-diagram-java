@@ -2,24 +2,34 @@ package schema.window;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.*;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import schema.FullSchema;
 import schema.Schema;
+import schema.SchemaShape;
 import schema.blocks.implementation.blocks.Block;
 import schema.blocks.implementation.blocks.Block.Operation;
+import schema.save.Saving;
 
-import static interfaces.Constants.*;
+import static schema.window.Constants.*;
 
 public class Window {
-	public Schema schema;
-    private JFrame frame;
+	public static Schema schema;
+    public static SchemaShape schemaShape;
+    public static FullSchema full;
+    protected static JFrame frame;
     public static String NAME = "Block diagrams modeling physical processes";
     protected static JDesktopPane desktopPane;
     private int number;
+    private int schemaid;
+    private static Saving saver;
+
 	
     /**
      * Launch the application.
@@ -43,8 +53,13 @@ public class Window {
      */
     public Window() {
     	this.number = 0;
+    	this.schemaid = 1;
         initialize();
-        Schema schema = new Schema();
+        schemaShape = new SchemaShape();
+        schema = new Schema();
+        this.full = new FullSchema(schema, schemaShape);
+        Saving saver = new Saving();
+        this.saver = saver;
     }
     
     /**
@@ -72,9 +87,10 @@ public class Window {
             	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
     			int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
     			Block logicBlock = schema.createBlock(Operation.WARM);
-            	BlockShape block = new BlockShape(0, x, y, number, logicBlock);
+            	BlockShape block = new BlockShape(0, x, y, number, schema, schemaShape, logicBlock);
+                schemaShape.addShape(block);
             	number += 1;
-                desktopPane.add(block.block_creator(0, x, y));
+                desktopPane.add(block.block_creator());
                 frame.setVisible(true);
         	}
         });
@@ -93,9 +109,10 @@ public class Window {
             	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
         		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
         		Block logicBlock = schema.createBlock(Operation.FREEZE);
-        		BlockShape block = new BlockShape(1, x, y, number, logicBlock);
+        		BlockShape block = new BlockShape(1, x, y, number, schema, schemaShape, logicBlock);
+                schemaShape.addShape(block);
             	number += 1;
-                desktopPane.add(block.block_creator(1, x, y));
+                desktopPane.add(block.block_creator());
                 frame.setVisible(true);
         	}
         });
@@ -112,9 +129,10 @@ public class Window {
             	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
         		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
         		Block logicBlock = schema.createBlock(Operation.MKICE);
-        		BlockShape block = new BlockShape(2, x, y, number, logicBlock);
-            	number += 1;
-                desktopPane.add(block.block_creator(2, x, y));
+        		BlockShape block = new BlockShape(2, x, y, number, schema, schemaShape, logicBlock);
+                schemaShape.addShape(block);
+                number += 1;
+                desktopPane.add(block.block_creator());
                 frame.setVisible(true);       		
             }
         });
@@ -131,9 +149,10 @@ public class Window {
             	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
         		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
         		Block logicBlock = schema.createBlock(Operation.MKLIQUID);
-        		BlockShape block = new BlockShape(3, x, y, number, logicBlock);
-            	number += 1;
-                desktopPane.add(block.block_creator(3, x, y));
+        		BlockShape block = new BlockShape(3, x, y, number, schema, schemaShape, logicBlock);
+                schemaShape.addShape(block);
+                number += 1;
+                desktopPane.add(block.block_creator());
                 frame.setVisible(true);
         	}
         });
@@ -149,9 +168,10 @@ public class Window {
             	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
         		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
         		Block logicBlock = schema.createBlock(Operation.MKGASS);
-        		BlockShape block = new BlockShape(4, x, y, number, logicBlock);
-            	number += 1;
-                desktopPane.add(block.block_creator(4, x, y));
+        		BlockShape block = new BlockShape(4, x, y, number, schema, schemaShape, logicBlock);
+                schemaShape.addShape(block);
+                number += 1;
+                desktopPane.add(block.block_creator());
                 frame.setVisible(true);
         	}
         });
@@ -175,6 +195,13 @@ public class Window {
         save.setHorizontalAlignment(SwingConstants.LEFT);
         save.setForeground(new Color(128, 0, 128));
         Save.add(save);
+        save.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                System.out.println("Want to save");
+                saver.Save(schemaid, full);
+                schemaid +=1;
+            }
+        });
 
         JMenuItem saveas = new JMenuItem("Save As...");
         saveas.setHorizontalAlignment(SwingConstants.LEFT);
@@ -185,8 +212,54 @@ public class Window {
         Download.setForeground(new Color(128, 0, 128));
         menuBar.add(Download);
 
+        JMenuItem download = new JMenuItem("Download");
+        download.setHorizontalAlignment(SwingConstants.LEFT);
+        download.setForeground(new Color(128, 0, 128));
+        Download.add(download);
+        download.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                full = saver.Download("schema1.ser");
+                /* TODO clean desctopPane */
+                for (BlockShape shape : full.shape.blocksShape) {
+                    desktopPane.add(shape.block_creator());
+                }
+                frame.setVisible(true);
+            }
+        });
+
+
         JMenu Execute = new JMenu("Execute");
         Execute.setForeground(new Color(128, 0, 128));
         menuBar.add(Execute);
-    }
+
+        JMenuItem execute = new JMenuItem("Execute all");
+        execute.setHorizontalAlignment(SwingConstants.LEFT);
+        execute.setForeground(new Color(128, 0, 128));
+        Execute.add(execute);
+        execute.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                schema.resolveSchema();
+            }
+        });
+
+        JMenuItem step = new JMenuItem("Execute one block");
+        step.setHorizontalAlignment(SwingConstants.LEFT);
+        step.setForeground(new Color(128, 0, 128));
+        Execute.add(step);
+        step.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                Block block = schema.stepOfResolve();
+                if (block != null) {
+                    for (BlockShape shape : full.shape.blocksShape) {
+                        if (shape.getId() == block.getId()) {
+                            shape.shape.setBorder(new LineBorder(Color.GREEN));
+                        } else {
+                            shape.shape.setBorder(new LineBorder(Color.BLACK));
+                        }
+                    }
+                }
+            }
+        });
+
+}
 }
