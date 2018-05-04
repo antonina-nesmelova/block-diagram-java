@@ -53,7 +53,7 @@ public class BlockShape implements Serializable {
             										+ "State: " + block.portsOut.get(idOfPort).getState().toString() + "<br/>"
             										+ "Joules: " + block.portsOut.get(idOfPort).getJoule() + "</html>"); 
                 label.setBounds(10, -5, BLOCK_WIDTH, BLOCK_HEIGHT);
-                label.setFont(new Font("Courier New", Font.ITALIC, 12));
+                label.setFont(new Font("Courier New", Font.ITALIC, 11));
                 panel.add(label);
             	panel.setBounds((x+125), (y-BLOCK_HEIGHT+55), 125, 105);
     			Window.desktopPane.add(panel);
