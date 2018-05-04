@@ -27,6 +27,7 @@ public class BlockShape implements Serializable {
     public int x;
     public int y;
     public int type;
+    public JPanel shape;
 
 	public BlockShape(int t, int x, int y, int id, Schema schema, SchemaShape schemaShape, Block block) {
 	    this.block = block;
@@ -165,11 +166,10 @@ public class BlockShape implements Serializable {
         JPanel blockData;
         JPanel DelPan;
         GridLayout layout;
-        
         block  = new JPanel(); 
 		block.setBackground(new Color(255, 250, 240));
         block.setBounds(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
-
+        this.shape = block;
         blockData = new JPanel();
         layout = new GridLayout(0,3);
         blockData.setLayout(layout); 
