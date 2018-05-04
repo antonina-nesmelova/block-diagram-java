@@ -91,7 +91,7 @@ public class BlockShape implements Serializable {
 	        }
 //          label.setText("Type: " + block.portsOut.get(idOfPort).getType().toString() + " \n"); 
 
-	        
+	    */    
         }
         else {
     		panel.setBounds((x-BLOCK_WIDTH+35), (y-BLOCK_HEIGHT+55), 100, 100);
