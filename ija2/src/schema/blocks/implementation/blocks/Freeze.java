@@ -11,6 +11,12 @@ public class Freeze extends Block{
         super(Operation.FREEZE, id);
     }
 
+    /**
+     * Freezing liquid
+     * @param energy energy that will be removed from material
+     * @param material liquid that will be processed
+     * @return result material
+     */
     private Type processingLiquid(double energy, Type material) {
         // pocet stupnu do teploty ledu
         double difference = abs( material.getTemp() - material.getFreezeTemp());
@@ -37,12 +43,23 @@ public class Freeze extends Block{
 
     }
 
+    /**
+     * Freezing ice
+     * @param energy energy that will be removed from material
+     * @param material material that will be processed
+     * @return result material
+     */
     private Type processingIce(double energy, Type material) {
         double delta = energy / (material.getThermalConst()* material.getMass());
         material.setTemp(material.getTemp() - delta);
         return material;
     }
 
+    /**
+     * Calculating result material after freezing and set output port value
+     * @param material material for operation
+     * @param energy energy for operation
+     */
     public void calculate(Type material, Type energy) {
         TypesFactory factory = new TypesFactory();
         double joule = energy.getJoule() + material.getJoule(); //energie plus vnitrni teplota materialu
@@ -97,6 +114,10 @@ public class Freeze extends Block{
         }
     }
 
+    /**
+     * Return operation freeze
+     * @return freeze
+     */
     public Block.Operation getOperation() {
         return Operation.FREEZE;
     }

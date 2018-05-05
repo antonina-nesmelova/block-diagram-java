@@ -1,6 +1,7 @@
 package schema.blocks.implementation.ports;
 
 import schema.blocks.implementation.blocks.Block;
+import schema.blocks.implementation.type.Type;
 
 public class PortIn extends Port {
     public PortOut out;
@@ -11,7 +12,7 @@ public class PortIn extends Port {
     }
 
     public boolean connect(PortOut out) {
-        if (this.isFree()) {
+        if (this.isFree() & getBlock().controlTypes(getId(), out.value)) {
             this.setFree(false);
             this.out = out;
             return true;

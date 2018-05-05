@@ -7,11 +7,19 @@ import schema.blocks.implementation.type.TypesFactory;
 import static java.lang.Math.abs;
 
 public class Warm extends Block {
-	
+    /**
+     * Return operation warm
+     * @return warm
+     */
 	public Warm(int id) {
 		super(Operation.WARM, id);
 	}
-
+    /**
+     * Warming liquid
+     * @param energy energy that will be give to material
+     * @param material liquid that will be processed
+     * @return result material
+     */
 	private Type processingLiquid(double energy, Type material) {
         // pocet stupnu do teploty plynu
         double difference = abs( material.getTemp() - material.getGasTemp());
@@ -36,13 +44,23 @@ public class Warm extends Block {
         }
 
     }
-
+    /**
+     * Warming gas
+     * @param energy energy that will be give to material
+     * @param material gas that will be processed
+     * @return result material
+     */
     private Type processingGas(double energy, Type material) {
         double delta = energy / (material.getThermalConst()* material.getMass());
         material.setTemp(material.getTemp() + delta);
         return material;
     }
 
+    /**
+     * Calculating result material after warming and set output port value
+     * @param material material for operation
+     * @param energy energy for operation
+     */
 	public void calculate(Type material, Type energy) {
         TypesFactory factory = new TypesFactory();
 	    double joule = energy.getJoule() + material.getJoule(); //energie plus vnitrni teplota materialu

@@ -12,11 +12,19 @@ public class MakeLiquid extends Block {
         super(Operation.MKLIQUID, id);
     }
 
-    @Override
+    /**
+     * Return operation make liquid
+     * @return make liquid
+     */
     public Operation getOperation() {
         return Block.Operation.MKLIQUID;
     }
-
+    /**
+     * Making liquid from ice
+     * @param material material to be melted
+     * @param resultMaterial material to be returned
+     * @param resultEnergy energy to be used for make liquid
+     */
     private void processingIce(Type material, Type resultMaterial, Type resultEnergy) {
         double joule = (-1)*material.getJoule();
         double delta = abs(material.getTemp() - material.getFreezeTemp());
@@ -31,7 +39,12 @@ public class MakeLiquid extends Block {
         this.setPortOutValue(portsOut.get(1).getId(), resultEnergy);
         return;
     }
-
+    /**
+     * Making liquid from gas
+     * @param material material to be melted
+     * @param resultMaterial material to be returned
+     * @param resultEnergy energy that will be released after making liquid
+     */
     private void processingGas(Type material, Type resultMaterial, Type resultEnergy) {
         double joule = material.getJoule();
         double delta = abs(material.getTemp() - material.getGasTemp());
@@ -47,7 +60,9 @@ public class MakeLiquid extends Block {
         return;
     }
 
-    @Override
+    /**
+     * Calculating of energy that will be released or used after making liquid from material, setting output ports values
+     */
     public void calculate(Type material, Type energy) {
         TypesFactory factory = new TypesFactory();
         Type resultMaterial = factory.createMaterial(material.getType(), material.getMass(), material.getTemp());

@@ -21,6 +21,9 @@ public abstract class Block implements Serializable {
 	public int maxOutPorts;
 	protected boolean resolved;
 
+	/**
+	 * Types of blocks
+	 */
 	public enum Operation {
 		WARM,
 		FREEZE,
@@ -33,15 +36,21 @@ public abstract class Block implements Serializable {
 			switch (this) {
 				case WARM:    return "w";
 				case FREEZE: return "f";
-				case MKICE:   return "-";
-				case MKLIQUID:   return "*";
-				case MKGASS:   return "/";
+				case MKICE:   return "i";
+				case MKLIQUID:   return "l";
+				case MKGASS:   return "g";
 			}
 
 			throw new AssertionError("Unknown type: " + this);
 		}
 
 	}
+
+	/**
+	 * Constructor of block, setting number of ports
+	 * @param op operation that the block implements
+	 * @param id id of block
+	 */
 
 	protected Block(Block.Operation op, int id) {
 		this.id = id;
@@ -68,24 +77,49 @@ public abstract class Block implements Serializable {
             this.createPortOut(i);
         }
 
+        if (this.maxOutPorts == 1) {
+
+		}
+
 	}
 
+	/**
+	 * Return the operation that the block implements
+	 * @return operation
+	 */
 	public abstract Block.Operation getOperation();
 
+	/**
+	 * Calculate a result for outputs
+	 * @param material material for operation
+	 * @param energy energy for operation
+	 */
 	public abstract void calculate(Type material, Type energy);
 
+	/**
+	 * Create input port
+	 * @param id id of port
+	 */
 	public void createPortIn(int id) {
 
 		PortIn port = new PortIn(this, id);
 		this.portsIn.add(port);
 	}
-
+	/**
+	 * Create output port
+	 * @param id id of port
+	 */
 	public void createPortOut(int id) {
-
 		PortOut port = new PortOut(this, id);
 		this.portsOut.add(port);
 	}
 
+	/**
+	 * Set type of input port
+	 * @param inPortId id of port
+	 * @param type type to be set
+	 * @return successful of setting
+	 */
 	public boolean setPortInType(int inPortId, Type.type type) {
         Type value;
 	    switch (type) {
@@ -106,20 +140,45 @@ public abstract class Block implements Serializable {
                 break;
             }
         }
-        // control if ports have different types
-	    for (int i = 0; i < maxInPorts; i++) {
-            if (i != inPortId & (this.portsIn.get(i).isMaterial() == value.isMaterial())) {
-                return false;
-            }
-        }
-	    this.portsIn.get(inPortId).setType(value);
-        return true;
+        if (controlTypes(inPortId, value)){
+			this.portsIn.get(inPortId).setType(value);
+			return true;
+		} else {
+	    	return false;
+		}
 	}
 
+	/**
+	 * Control if ports have different types
+	 * @param id id of port to e set
+	 * @param value value to be set
+	 * @return successful of setting
+	 */
+	public boolean controlTypes(int id, Type value) {
+		for (int i = 0; i < maxInPorts; i++) {
+			if (i != id & (this.portsIn.get(i).isMaterial() == value.isMaterial())) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Set port mass and temperature
+	 * @param inPortId id of port
+	 * @param mass mass
+	 * @param temp temperature
+	 */
 	public void setPortInValue(int inPortId, double mass, double temp) {
 		this.portsIn.get(inPortId).value.setValues(mass, temp);
 	}
 
+	/**
+	 * Set type and value of output port if type is compatible
+	 * @param outPortId id of port
+	 * @param type type and values to be set
+	 * @return successful of setting
+	 */
 	public boolean setPortOutValue(int outPortId, Type type) {
 	    System.out.println("In setPortOutValue " + outPortId);
 	    PortOut port = this.portsOut.get(outPortId);
@@ -136,7 +195,10 @@ public abstract class Block implements Serializable {
         }
     }
 
-	public boolean resolve() {
+	/**
+	 * Calculate output value
+	 */
+	public void resolve() {
 	    this.resolved = true;
 	    Type material = null;
 	    Type energy = null;
@@ -148,17 +210,20 @@ public abstract class Block implements Serializable {
             }
         }
 	    this.calculate(material, energy);
-	    return true;
     }
 
-//    public Type getPortValue(int portId) {
-//        return this.portsIn.get(portId).value;
-//    }
-
+	/**
+	 * Return id of block
+	 * @return id
+	 */
 	public int getId() {
 		return this.id;
 	}
 
+	/**
+	 * Control if all input ports have values
+	 * @return if block is full of values
+	 */
 	public boolean isFull() {
 	    for (PortIn port : this.portsIn) {
 	        if (!port.hasValue()) return false;
@@ -166,6 +231,10 @@ public abstract class Block implements Serializable {
         return true;
     }
 
+	/**
+	 * Control if block need more values to be resolved
+	 * @return if block has not enough values
+	 */
     public boolean isEmpty() {
 	    boolean empty = false;
 	    for (PortIn port : portsIn) {
@@ -174,6 +243,10 @@ public abstract class Block implements Serializable {
         return empty;
     }
 
+	/**
+	 * Return if block is already resolved
+	 * @return resolved
+	 */
     public boolean isResolved() {
         return resolved;
     }
