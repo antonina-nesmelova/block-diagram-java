@@ -24,9 +24,7 @@ public class BlockShape extends JPanel implements Serializable {
     public static Block block;
     public Schema schema;
     public SchemaShape schemaShape;
-    public int x;
-    public int y;
-    public int type;
+    public int x, y, type;
     public JPanel shape;
     private static boolean in_1 = false;
     private static boolean in_2 = false;
@@ -80,7 +78,6 @@ public class BlockShape extends JPanel implements Serializable {
         else {
             panel.setBounds((x-BLOCK_WIDTH+35), (y-BLOCK_HEIGHT+55), 100, 100);
             Window.desktopPane.add(panel);
-
             /*	Choice Type */
             Choice type_choice = new Choice();
             panel.add(type_choice);
@@ -89,21 +86,18 @@ public class BlockShape extends JPanel implements Serializable {
             type_choice.add(Type.type.ALCOHOL.toString());
             type_choice.add(Type.type.ENERGY.toString());
             panel.setVisible(true);
-
             /* Input 1 */
             JFormattedTextField FirstField = new JFormattedTextField(new DecimalFormat("####.##"));
             FirstField.setToolTipText("Mass, kg");
             FirstField.setValue(0);
             FirstField.setBounds(13, 33, 70, 20);
             panel.add(FirstField);
-
             /* Input 2 */
             JFormattedTextField SecondField = new JFormattedTextField(new DecimalFormat("####.##"));
             SecondField.setToolTipText("Temperature, C");
             SecondField.setValue(0);
             SecondField.setBounds(13, 50, 70, 20);
             panel.add(SecondField);
-
             /*	Button Set	*/
             JButton set = new JButton("Set");
             set.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -136,29 +130,28 @@ public class BlockShape extends JPanel implements Serializable {
                 }
             });
         }
-
         return panel;
     }
 
     JPanel block_creator() {
-
-        JPanel block;
-        JLabel blockType = null;
-        JPanel blockData;
-        JPanel DelPan;
         GridLayout layout;
-
+        /*	Block	*/
+        JPanel block;
         block  = new JPanel();
         block.setBackground(new Color(255, 250, 240));
         block.setBounds(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
         this.shape = block;
+        /*	Top Buttons Area */
+        JPanel blockData;
         blockData = new JPanel();
         layout = new GridLayout(0,3);
         blockData.setLayout(layout);
-
+        /*	Delete Button Area 	*/
+        JPanel DelPan;
         DelPan = new JPanel();
         DelPan.setLayout(layout);
-
+        /*	Name of the block	*/
+        JLabel blockType = null;
         switch (this.type) {
             case 0: {
                 blockType = new JLabel("Warm", JLabel.CENTER );
@@ -181,24 +174,22 @@ public class BlockShape extends JPanel implements Serializable {
                 break;
             }
         }
-        block.add(blockType);
-        block.add(blockData);
-        block.add(DelPan);
-        block.setVisible(true);
-
-        /*	Name of the block	*/
         blockType.setFont(new Font("Verdana", 1, 14));
         blockType.setSize(BLOCK_WIDTH,BLOCK_HEIGHT);
-        block.add(blockType);
         block.setBorder(new LineBorder(Color.BLACK));
         block.setLayout(new GridLayout(3, 1));
-
         /*	Delete Button */
         JButton delete = new JButton("Delete");
         DelPan.setToolTipText("Delete Block");
         DelPan.setLayout(new BorderLayout());
+        /* 	Adding all components to block	*/
+        block.add(blockType);
+        block.add(blockData);
+        block.add(DelPan);
         DelPan.add(delete);
-
+        block.add(blockType);
+        block.setVisible(true);
+        /*	Delete block	*/
         delete.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 Window.desktopPane.remove(block);
@@ -207,15 +198,16 @@ public class BlockShape extends JPanel implements Serializable {
                 schemaShape.removeShape(id);
             }
         });
+        /*	Block has two in ports and one out port	*/
         if (this.type == 0 |this.type == 1) {
-            /*	In1 Button */
-            JButton In1 = new JButton("In1");
-            In1.setToolTipText("Insert Values");
-            blockData.add(In1);
-            In1.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
-            In1.setBorder(new EmptyBorder(0, 0, 0, 0));
-            In1.setBorder(new LineBorder(Color.BLACK));
-            /*	Left Click	on In1 */
+            JButton In1 = port("In1");  
+            JButton In2 = port("In2"); 
+            JButton Out = port("Out"); 
+            blockData.add(In1);    			//In1 Button
+            blockData.add(In2); 	//In2 Button
+            blockData.add(Out); 	//Out Button
+            
+            /*	Left Clicks	 */
             In1.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
                 	JPanel panel = Data(1, x, y, 0);
@@ -227,15 +219,6 @@ public class BlockShape extends JPanel implements Serializable {
                     });
                 }
             });
-               
-            /*	In2 Button */
-            JButton In2 = new JButton("In2");
-            In2.setToolTipText("Insert Values");
-            blockData.add(In2);
-            In2.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
-            In2.setBorder(new EmptyBorder(0, 0, 0, 0));
-            In2.setBorder(new LineBorder(Color.BLACK));
-            /*	Left Click	on In2 */
             In2.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
                     JPanel panel = Data(1, x+105, y-35, 1);
@@ -247,14 +230,6 @@ public class BlockShape extends JPanel implements Serializable {
                     });
                 }
             });
-            /*	Out Button */
-            JButton Out = new JButton("Out");
-            Out.setToolTipText("Insert Values");
-            blockData.add(Out);
-            Out.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
-            Out.setBorder(new EmptyBorder(0, 0, 0, 0));
-            Out.setBorder(new LineBorder(Color.BLACK));
-            /*	Left Click on Out  */
             Out.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
                     JPanel panel = Data(0, x, y, 0);
@@ -266,7 +241,7 @@ public class BlockShape extends JPanel implements Serializable {
                     });
                 }
             });
-            /* Right Clicks */
+            /*             Right Clicks 
             MouseListener mouseListener1 = new MouseAdapter() {
                 public void mousePressed(MouseEvent mouseEvent) {
                     int modifiers = mouseEvent.getModifiers();
@@ -293,10 +268,8 @@ public class BlockShape extends JPanel implements Serializable {
                     	out_1 = true;
                     }
                 }
-            }; 
-            In1.addMouseListener(mouseListener1);
-            In2.addMouseListener(mouseListener2);
-            Out.addMouseListener(mouseListener3);
+            };*/ 
+
         } else {
             /*	In1 Button */
             JButton In1 = new JButton("In1");
@@ -389,5 +362,13 @@ public class BlockShape extends JPanel implements Serializable {
     }
     public int getId() {
         return this.id;
+    }
+    public JButton port(String NAME) {
+    	JButton port = new JButton(NAME);
+        port.setToolTipText("Insert Values");
+        port.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
+        port.setBorder(new EmptyBorder(0, 0, 0, 0));
+        port.setBorder(new LineBorder(Color.BLACK));
+    	return port;
     }
 }
