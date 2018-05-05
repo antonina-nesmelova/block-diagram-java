@@ -5,11 +5,8 @@ import static schema.window.Constants.*;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.Point2D;
 import java.io.Serializable;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -48,7 +45,20 @@ public class BlockShape extends JPanel implements Serializable {
         panel.setBorder(new LineBorder(Color.BLACK));
         panel.setBackground(new Color(245, 222, 179));
         panel.setLayout(null);
-        /* 		Out panel	*/
+        
+        /*	Close Button	*/
+        JButton close = new JButton("X");
+        close.setBorder(new EmptyBorder(0, 0, 0, 0));
+        close.setToolTipText("Close");
+        panel.add(close);
+        close.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                Window.desktopPane.remove(panel);
+                Window.desktopPane.repaint();
+            }
+        });
+        
+        /* 		Output panel	*/
         if(p_t == 0) {
             if (block.portsOut.get(idOfPort).hasValue()) {
                 JLabel label = new JLabel("<html>"  + "Type: " + block.portsOut.get(idOfPort).getType().toString() +  "<br/>"
@@ -62,18 +72,7 @@ public class BlockShape extends JPanel implements Serializable {
                 panel.setBounds((x+125), (y-BLOCK_HEIGHT+55), 125, 105);
                 Window.desktopPane.add(panel);
             }
-            /*	Close Button	*/
-            JButton close = new JButton("X");
-            close.setBorder(new EmptyBorder(0, 0, 0, 0));
-            close.setToolTipText("Close");
-            close.setBounds(113, 1, 12, 12);
-            panel.add(close);
-            close.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent arg0) {
-                    Window.desktopPane.remove(panel);
-                    Window.desktopPane.repaint();
-                }
-            });
+            close.setBounds(113, 1, 12, 12);   
         }
         else {
             panel.setBounds((x-BLOCK_WIDTH+35), (y-BLOCK_HEIGHT+55), 100, 100);
@@ -117,18 +116,7 @@ public class BlockShape extends JPanel implements Serializable {
                     }
                 }
             });
-            /*	Close Button	*/
-            JButton close = new JButton("X");
-            close.setBorder(new EmptyBorder(0, 0, 0, 0));
-            close.setToolTipText("Close");
-            close.setBounds(87, 1, 12, 12);
-            panel.add(close);
-            close.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent arg0) {
-                    Window.desktopPane.remove(panel);
-                    Window.desktopPane.repaint();
-                }
-            });
+            close.setBounds(87, 1, 12, 12);       
         }
         return panel;
     }
