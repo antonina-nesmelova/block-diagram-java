@@ -28,6 +28,12 @@ public class BlockShape extends JPanel implements Serializable {
     public int y;
     public int type;
     public JPanel shape;
+    private static boolean in_1 = false;
+    private static boolean in_2 = false;
+    private static boolean in_3 = false;
+    private static boolean out_1 = false;
+    private static boolean out_2 = false;
+    private static boolean out_3 = false;
 
     public BlockShape(int t, int x, int y, int id, Schema schema, SchemaShape schemaShape, Block block) {
         this.block = block;
@@ -135,7 +141,7 @@ public class BlockShape extends JPanel implements Serializable {
     }
 
     JPanel block_creator() {
-    	boolean in_1 = false;
+
         JPanel block;
         JLabel blockType = null;
         JPanel blockData;
