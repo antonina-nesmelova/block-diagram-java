@@ -233,9 +233,12 @@ public class BlockShape extends JPanel implements Serializable {
             	public void mouseClicked (MouseEvent e) {
             	    if (e.getModifiers() == MouseEvent.BUTTON3_MASK) {
             	      In1.setBorder(new LineBorder(Color.GREEN));
+            	      in_1 = true;
+            	      System.out.println("IN1: " + in_1);
             	    }
             	  }
             };  
+            System.out.println("IN: " + in_1);
             MouseListener mouseListener2 = new MouseAdapter() {
             	public void mouseClicked (MouseEvent e) {
             	    if (e.getModifiers() == MouseEvent.BUTTON3_MASK) {
