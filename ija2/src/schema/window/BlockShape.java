@@ -211,26 +211,7 @@ public class BlockShape extends JPanel implements Serializable {
             In1.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
             In1.setBorder(new EmptyBorder(0, 0, 0, 0));
             In1.setBorder(new LineBorder(Color.BLACK));
-            
-            /*	Mouse Clicks */
-            MouseListener mouseListener = new MouseAdapter() {
-                public void mousePressed(MouseEvent mouseEvent) {
-                    int modifiers = mouseEvent.getModifiers();
-                    if ((modifiers & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) {
-                    	JPanel panel = Data(1, x, y, 0);
-                        delete.addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent arg0) {
-                                Window.desktopPane.remove(panel);
-                                Window.desktopPane.repaint();
-                            }
-                        });
-                    }
-                    if ((modifiers & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK) {
-                    	In1.setBorder(new LineBorder(Color.RED));
-                    }
-                }
-            };   
-            In1.addMouseListener(mouseListener);
+               
             /*	In2 Button */
             JButton In2 = new JButton("In2");
             In2.setToolTipText("Insert Values");
@@ -238,26 +219,18 @@ public class BlockShape extends JPanel implements Serializable {
             In2.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
             In2.setBorder(new EmptyBorder(0, 0, 0, 0));
             In2.setBorder(new LineBorder(Color.BLACK));
-            /*	Mouse Clicks */
-            MouseListener mouseListener2 = new MouseAdapter() {
-                public void mousePressed(MouseEvent mouseEvent) {
-                    int modifiers = mouseEvent.getModifiers();
-                    if ((modifiers & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) {
-                    	JPanel panel = Data(1, x+105, y-35, 1);
-                        delete.addActionListener(new ActionListener() {
-                    		public void actionPerformed(ActionEvent arg0) {
-                    			Window.desktopPane.remove(panel);
-                    			Window.desktopPane.repaint();
-                            }
-                    	});
-                    }
-                    if ((modifiers & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK) {
-                    	In2.setBorder(new LineBorder(Color.GREEN));
-                    }
+            /*	Left Click	on In2 */
+            In2.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent arg0) {
+                    JPanel panel = Data(1, x+105, y-35, 1);
+                    delete.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent arg0) {
+                            Window.desktopPane.remove(panel);
+                            Window.desktopPane.repaint();
+                        }
+                    });
                 }
-            };   
-            In2.addMouseListener(mouseListener2);
-            
+            });
             /*	Out Button */
             JButton Out = new JButton("Out");
             Out.setToolTipText("Insert Values");
@@ -265,11 +238,9 @@ public class BlockShape extends JPanel implements Serializable {
             Out.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
             Out.setBorder(new EmptyBorder(0, 0, 0, 0));
             Out.setBorder(new LineBorder(Color.BLACK));
-            /*	Mouse Clicks */
-            MouseListener mouseListener3 = new MouseAdapter() {
-                public void mousePressed(MouseEvent mouseEvent) {
-                    int modifiers = mouseEvent.getModifiers();
-                    if ((modifiers & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) {
+            /*	Left Click on Out  */
+            Out.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent arg0) {
                     JPanel panel = Data(0, x, y, 0);
                     delete.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent arg0) {
@@ -278,14 +249,36 @@ public class BlockShape extends JPanel implements Serializable {
                         }
                     });
                 }
+            });
+            /* Right Clicks */
+            MouseListener mouseListener1 = new MouseAdapter() {
+                public void mousePressed(MouseEvent mouseEvent) {
+                    int modifiers = mouseEvent.getModifiers();
                     if ((modifiers & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK) {
-                    	Out.setBorder(new LineBorder(Color.BLUE));
+                    	In1.setBorder(new LineBorder(Color.GREEN));
                     }
                 }
-            };
+            };  
+            MouseListener mouseListener2 = new MouseAdapter() {
+                public void mousePressed(MouseEvent mouseEvent) {
+                    int modifiers = mouseEvent.getModifiers();
+                    if ((modifiers & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK) {
+                    	In2.setBorder(new LineBorder(Color.GREEN));
+                    }
+                }
+            }; 
+            MouseListener mouseListener3 = new MouseAdapter() {
+                public void mousePressed(MouseEvent mouseEvent) {
+                    int modifiers = mouseEvent.getModifiers();
+                    if ((modifiers & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK) {
+                    	Out.setBorder(new LineBorder(Color.GREEN));
+                    }
+                }
+            }; 
+            In1.addMouseListener(mouseListener1);
+            In2.addMouseListener(mouseListener2);
             Out.addMouseListener(mouseListener3);
-        } 
-        else {
+        } else {
             /*	In1 Button */
             JButton In1 = new JButton("In1");
             In1.setToolTipText("Insert Values");
@@ -341,6 +334,7 @@ public class BlockShape extends JPanel implements Serializable {
                 }
             });
         }
+
         Movement drag = new Movement(this, block);
         return block;
     }
