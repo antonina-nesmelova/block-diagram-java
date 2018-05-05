@@ -2,6 +2,7 @@ package schema.window;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -29,6 +30,9 @@ public class Window {
     private int number;
     private int schemaid;
     private static Saving saver;
+    private Connection connections;
+
+    File[] files;
 
 	
     /**
@@ -66,20 +70,21 @@ public class Window {
      */
     private void initialize() {
     	Random rand = new Random();
-    	
+        connections = new Connection();
+        File[] files = new File("examples").listFiles();
     	/*	Window	*/
         frame = new JFrame(NAME);
         frame.setBounds(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(null); 
-        
-        /*	Working area	*/        
+        frame.getContentPane().setLayout(null);
+
+        /*	Working area	*/
         desktopPane = new JDesktopPane();
         desktopPane.setBackground(new Color(171, 171, 171));
         desktopPane.setBounds(155, 28, WORKING_AREA_WIDTH, WORKING_AREA_HEIGHT);
         frame.getContentPane().add(desktopPane);
 
-        /*	Button Warm	 */        
+        /*	Button Warm	 */
         JButton btnWarm = new JButton("Warm");
     	btnWarm.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
@@ -92,7 +97,7 @@ public class Window {
                 desktopPane.add(block.block_creator());
                 frame.setVisible(true);
         	}
-        });	
+        });
         btnWarm.setForeground(new Color(128, 0, 128));
         btnWarm.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 12));
         btnWarm.setBackground(new Color(211, 211, 211));
@@ -102,7 +107,7 @@ public class Window {
         /*	Button Freeze	 */
         JButton btnFreeze = new JButton("Freeze");
         btnFreeze.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {     	
+            public void actionPerformed(ActionEvent arg0) {
             	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
         		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
         		Block logicBlock = schema.createBlock(Operation.FREEZE);
@@ -118,11 +123,11 @@ public class Window {
         btnFreeze.setBackground(new Color(211, 211, 211));
         btnFreeze.setBounds(17, 158, BUTTON_WIDTH,BUTTON_HEIGHT);
         frame.getContentPane().add(btnFreeze);
-        
+
         /*	Button Make Ice	 */
         JButton btnMakeIce = new JButton("Make Ice");
         btnMakeIce.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {     	
+            public void actionPerformed(ActionEvent arg0) {
             	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
         		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
         		Block logicBlock = schema.createBlock(Operation.MKICE);
@@ -130,7 +135,7 @@ public class Window {
                 schemaShape.addShape(block);
                 number += 1;
                 desktopPane.add(block.block_creator());
-                frame.setVisible(true);       		
+                frame.setVisible(true);
             }
         });
         btnMakeIce.setForeground(new Color(128, 0, 128));
@@ -138,11 +143,11 @@ public class Window {
         btnMakeIce.setBackground(new Color(211, 211, 211));
         btnMakeIce.setBounds(17, 240, BUTTON_WIDTH,BUTTON_HEIGHT);
         frame.getContentPane().add(btnMakeIce);
-        
+
         /*	Button Make Liquid	 */
         JButton btnMakeLiquid = new JButton("Make Liquid");
         btnMakeLiquid.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {     	
+            public void actionPerformed(ActionEvent arg0) {
             	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
         		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
         		Block logicBlock = schema.createBlock(Operation.MKLIQUID);
@@ -161,7 +166,7 @@ public class Window {
 
         JButton btnMakeGas = new JButton("Make Gas");
         btnMakeGas.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {     	
+            public void actionPerformed(ActionEvent arg0) {
             	int x = rand.nextInt(SCREEN_WIDTH - 500) + 100;
         		int y = rand.nextInt(SCREEN_HEIGHT - 500) + 100;
         		Block logicBlock = schema.createBlock(Operation.MKGASS);
@@ -183,6 +188,20 @@ public class Window {
         menuBar.setBackground(new Color(211, 211, 211));
         frame.setVisible(true);
 
+        JMenu Download = new JMenu("Download");
+        Download.setForeground(new Color(128, 0, 128));
+        menuBar.add(Download);
+
+//        JMenuItem download = new JMenuItem("Download files");
+//        download.setHorizontalAlignment(SwingConstants.LEFT);
+//        download.setForeground(new Color(128, 0, 128));
+//        Download.add(download);
+//        download.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent arg0) {
+//
+//            }
+//        });
+
         JMenu Save = new JMenu("Save");
         Save.setForeground(new Color(128, 0, 128));
         menuBar.add(Save);
@@ -194,9 +213,33 @@ public class Window {
         Save.add(save);
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                System.out.println("Want to save");
+               // System.out.println("Want to save");
                 saver.Save(schemaid, full);
+                full.schemaid = schemaid;
                 schemaid +=1;
+                Download.removeAll();
+               // Download.add(download);
+                File[] files = new File("examples").listFiles();
+                for( File filename : files) {
+                    JMenuItem download = new JMenuItem(filename.getName());
+                    download.setHorizontalAlignment(SwingConstants.LEFT);
+                    download.setForeground(new Color(128, 0, 128));
+                    Download.add(download);
+                    download.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent arg0) {
+                            full = saver.Download("examples/" + filename.getName());
+                            schema = full.schema;
+                            schemaShape = full.shape;
+                            desktopPane.removeAll();
+                            desktopPane.repaint();
+                            for (BlockShape shape : full.shape.blocksShape) {
+                                desktopPane.add(shape.block_creator());
+                            }
+                            frame.setVisible(true);
+                            //schemaid = full.schemaid;
+                        }
+                    });
+                }
             }
         });
 
@@ -204,26 +247,6 @@ public class Window {
         saveas.setHorizontalAlignment(SwingConstants.LEFT);
         saveas.setForeground(new Color(128, 0, 128));
         Save.add(saveas);
-
-        JMenu Download = new JMenu("Download");
-        Download.setForeground(new Color(128, 0, 128));
-        menuBar.add(Download);
-
-        JMenuItem download = new JMenuItem("Download");
-        download.setHorizontalAlignment(SwingConstants.LEFT);
-        download.setForeground(new Color(128, 0, 128));
-        Download.add(download);
-        download.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                full = saver.Download("schema1.ser");
-                /* TODO clean desctopPane */
-                for (BlockShape shape : full.shape.blocksShape) {
-                    desktopPane.add(shape.block_creator());
-                }
-                frame.setVisible(true);
-            }
-        });
-
 
         JMenu Execute = new JMenu("Execute");
         Execute.setForeground(new Color(128, 0, 128));

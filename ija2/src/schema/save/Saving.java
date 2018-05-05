@@ -10,7 +10,7 @@ public class Saving {
     public Saving() {}
 
     public void Save(int id, FullSchema schema) {
-        String filename = "schema" + id + ".ser";
+        String filename = "examples/schema" + id + ".ser";
 
         FileOutputStream fos = null;
         ObjectOutputStream out = null;
@@ -31,7 +31,6 @@ public class Saving {
         ObjectInputStream in = null;
 
         try {
-
             fis = new FileInputStream(name);
             in = new ObjectInputStream(fis);
             schema = (FullSchema) in.readObject();
