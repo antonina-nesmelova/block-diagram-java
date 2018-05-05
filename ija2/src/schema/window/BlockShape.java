@@ -17,19 +17,22 @@ import schema.blocks.implementation.blocks.Block;
 import schema.blocks.implementation.type.Type;
 
 public class BlockShape extends JPanel implements Serializable {
-    private int id;
+	private int id;
     public static Block block;
     public Schema schema;
     public SchemaShape schemaShape;
     public int x, y, type;
     public JPanel shape;
-    private static boolean in_1 = false;
-    private static boolean in_2 = false;
-    private static boolean in_3 = false;
-    private static boolean out_1 = false;
-    private static boolean out_2 = false;
-    private static boolean out_3 = false;
 
+    /**
+     * Constructor for shape of the block
+     * @param t    			type of the block
+     * @param x				x-coordinate of the block
+     * @param y				y-coordinate of the block	 
+     * @param schema		instance of the schema class	
+     * @param schemaShape	instance of the schemaShape class	
+     * @param block			instance of the block class
+     */
     public BlockShape(int t, int x, int y, int id, Schema schema, SchemaShape schemaShape, Block block) {
         this.block = block;
         this.id = id;
@@ -37,15 +40,20 @@ public class BlockShape extends JPanel implements Serializable {
         this.schemaShape = schemaShape;
         this.x = x;
         this.y = y;
-        this.type = t;
+        this.type = t;   
     }
-
+    /**
+     * Function for block's date
+     * @param p_t    		type of the information panel(input/output)
+     * @param x				x-coordinate of the information panel
+     * @param y				y-coordinate of the information panel	 
+     * @param idOfPort		id of port	
+     */
     public JPanel Data(int p_t, int x, int y, int idOfPort) {
         JPanel panel = new JPanel();
         panel.setBorder(new LineBorder(Color.BLACK));
         panel.setBackground(new Color(245, 222, 179));
-        panel.setLayout(null);
-        
+        panel.setLayout(null);   
         /*	Close Button	*/
         JButton close = new JButton("X");
         close.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -56,8 +64,7 @@ public class BlockShape extends JPanel implements Serializable {
                 Window.desktopPane.remove(panel);
                 Window.desktopPane.repaint();
             }
-        });
-        
+        });     
         /* 		Output panel	*/
         if(p_t == 0) {
             if (block.portsOut.get(idOfPort).hasValue()) {
@@ -120,7 +127,9 @@ public class BlockShape extends JPanel implements Serializable {
         }
         return panel;
     }
-
+    /**
+     * Function for creating blocks 
+     */
     JPanel block_creator() {
         GridLayout layout;
         /*	Block	*/
@@ -188,12 +197,17 @@ public class BlockShape extends JPanel implements Serializable {
         });
         /*	Block has two in ports and one out port	*/
         if (this.type == 0 |this.type == 1) {
-            JButton In1 = port("In1");  
-            JButton In2 = port("In2"); 
-            JButton Out = port("Out"); 
+        	Port_In Port_In = new Port_In(schemaShape);
+            JButton In1 = Port_In.port("In1");  
+            JButton In2 = Port_In.port("In2");
+            JButton Out = Port_Out.port("Out");
             blockData.add(In1);    			//In1 Button
             blockData.add(In2); 			//In2 Button
             blockData.add(Out); 			//Out Button
+            /*  Right Clicks */
+            In1.addMouseListener(new Port_In(schemaShape));
+            In2.addMouseListener(new Port_In(schemaShape));
+            Out.addMouseListener(new Port_In(schemaShape));
             /*	Left Clicks	 */
             In1.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
@@ -228,21 +242,21 @@ public class BlockShape extends JPanel implements Serializable {
                     });
                 }
             });
-            /*  Right Clicks */
+            /*  Right Clicks 
             MouseListener mouseListener1 = new MouseAdapter() {
             	public void mouseClicked (MouseEvent e) {
             	    if (e.getModifiers() == MouseEvent.BUTTON3_MASK) {
             	      In1.setBorder(new LineBorder(Color.GREEN));
             	      in_1 = true;
-            	      System.out.println("IN1: " + in_1);
             	    }
             	  }
             };  
-            System.out.println("IN: " + in_1);
             MouseListener mouseListener2 = new MouseAdapter() {
             	public void mouseClicked (MouseEvent e) {
             	    if (e.getModifiers() == MouseEvent.BUTTON3_MASK) {
             	      In2.setBorder(new LineBorder(Color.GREEN));
+            	      BlockShape.in_2 = true;
+            	      
             	    }
             	  }
             }; 
@@ -250,18 +264,19 @@ public class BlockShape extends JPanel implements Serializable {
             	public void mouseClicked (MouseEvent e) {
             	    if (e.getModifiers() == MouseEvent.BUTTON3_MASK) {
             	      Out.setBorder(new LineBorder(Color.RED));
+            	      BlockShape.out = true;
             	    }
             	  }
             };
             In1.addMouseListener(mouseListener1);
             In2.addMouseListener(mouseListener2);
-            Out.addMouseListener(mouseListener3);
+            Out.addMouseListener(mouseListener3);*/
         } 
         /*  One in port, two outs port  */
         else {
-        	JButton In = port("In1");  
-            JButton Out1 = port("Out1"); 
-            JButton Out2 = port("Out2"); 
+        	JButton In = Port_In.port("In1");  
+            JButton Out1 = Port_In.port("Out1"); 
+            JButton Out2 = Port_Out.port("Out2"); 
             blockData.add(In);    			//In1 Button
             blockData.add(Out1); 			//In2 Button
             blockData.add(Out2); 			//Out Button	
@@ -299,47 +314,12 @@ public class BlockShape extends JPanel implements Serializable {
                     });
                 }
             });
-            /* Right Clicks */
-            MouseListener mouseListener1 = new MouseAdapter() {
-            	public void mouseClicked (MouseEvent e) {
-            	    if (e.getModifiers() == MouseEvent.BUTTON3_MASK) {
-            	      In.setBorder(new LineBorder(Color.GREEN));
-            	    }
-            	  }
-            };  
-            MouseListener mouseListener2 = new MouseAdapter() {
-            	public void mouseClicked (MouseEvent e) {
-            	    if (e.getModifiers() == MouseEvent.BUTTON3_MASK) {
-            	      Out1.setBorder(new LineBorder(Color.RED));
-            	    }
-            	  }
-            }; 
-            MouseListener mouseListener3 = new MouseAdapter() {
-            	public void mouseClicked (MouseEvent e) {
-            	    if (e.getModifiers() == MouseEvent.BUTTON3_MASK) {
-            	      Out2.setBorder(new LineBorder(Color.RED));
-            	    }
-            	  }
-            }; 
-            In.addMouseListener(mouseListener1);
-            Out1.addMouseListener(mouseListener2);
-            Out2.addMouseListener(mouseListener3);
         }
-      if(in_1){
-    	  System.out.println("ok");
-      }
         Movement drag = new Movement(this, block);
+        
         return block;
     }
     public int getId() {
         return this.id;
-    }
-    public JButton port(String NAME) {
-    	JButton port = new JButton(NAME);
-        port.setToolTipText("Insert Values");
-        port.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
-        port.setBorder(new EmptyBorder(0, 0, 0, 0));
-        port.setBorder(new LineBorder(Color.BLACK));
-    	return port;
-    }
+    }    
 }
