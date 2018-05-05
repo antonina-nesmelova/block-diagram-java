@@ -28,8 +28,6 @@ public class BlockShape extends JPanel implements Serializable {
     public int y;
     public int type;
     public JPanel shape;
-    public List<Block> blocks;
-    public Point2D offset;
 
     public BlockShape(int t, int x, int y, int id, Schema schema, SchemaShape schemaShape, Block block) {
         this.block = block;
@@ -39,7 +37,6 @@ public class BlockShape extends JPanel implements Serializable {
         this.x = x;
         this.y = y;
         this.type = t;
-        blocks = new ArrayList<>();  // Stores the block names & coords
     }
 
     public JPanel Data(int p_t, int x, int y, int idOfPort) {
@@ -138,6 +135,7 @@ public class BlockShape extends JPanel implements Serializable {
     }
 
     JPanel block_creator() {
+    	boolean in_1 = false;
         JPanel block;
         JLabel blockType = null;
         JPanel blockData;
@@ -211,6 +209,18 @@ public class BlockShape extends JPanel implements Serializable {
             In1.setFont(new Font("Source Code Pro Semibold", Font.PLAIN, 15));
             In1.setBorder(new EmptyBorder(0, 0, 0, 0));
             In1.setBorder(new LineBorder(Color.BLACK));
+            /*	Left Click	on In1 */
+            In1.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent arg0) {
+                	JPanel panel = Data(1, x, y, 0);
+                    delete.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent arg0) {
+                            Window.desktopPane.remove(panel);
+                            Window.desktopPane.repaint();
+                        }
+                    });
+                }
+            });
                
             /*	In2 Button */
             JButton In2 = new JButton("In2");
@@ -255,7 +265,8 @@ public class BlockShape extends JPanel implements Serializable {
                 public void mousePressed(MouseEvent mouseEvent) {
                     int modifiers = mouseEvent.getModifiers();
                     if ((modifiers & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK) {
-                    	In1.setBorder(new LineBorder(Color.GREEN));
+                    	//In1.setBorder(new LineBorder(Color.GREEN));
+                    	in_1 = true;
                     }
                 }
             };  
@@ -263,7 +274,8 @@ public class BlockShape extends JPanel implements Serializable {
                 public void mousePressed(MouseEvent mouseEvent) {
                     int modifiers = mouseEvent.getModifiers();
                     if ((modifiers & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK) {
-                    	In2.setBorder(new LineBorder(Color.GREEN));
+                    	//In2.setBorder(new LineBorder(Color.GREEN));
+                    	in_2 = true;
                     }
                 }
             }; 
@@ -271,7 +283,8 @@ public class BlockShape extends JPanel implements Serializable {
                 public void mousePressed(MouseEvent mouseEvent) {
                     int modifiers = mouseEvent.getModifiers();
                     if ((modifiers & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK) {
-                    	Out.setBorder(new LineBorder(Color.GREEN));
+                    	//Out.setBorder(new LineBorder(Color.GREEN));
+                    	out_1 = true;
                     }
                 }
             }; 
@@ -333,8 +346,38 @@ public class BlockShape extends JPanel implements Serializable {
                     });
                 }
             });
+            /* Right Clicks */
+            MouseListener mouseListener1 = new MouseAdapter() {
+                public void mousePressed(MouseEvent mouseEvent) {
+                    int modifiers = mouseEvent.getModifiers();
+                    if ((modifiers & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK) {
+                    	in_3 = true;
+                    }
+                }
+            };  
+            MouseListener mouseListener2 = new MouseAdapter() {
+                public void mousePressed(MouseEvent mouseEvent) {
+                    int modifiers = mouseEvent.getModifiers();
+                    if ((modifiers & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK) {
+                    	out_2 = true;
+                    }
+                }
+            }; 
+            MouseListener mouseListener3 = new MouseAdapter() {
+                public void mousePressed(MouseEvent mouseEvent) {
+                    int modifiers = mouseEvent.getModifiers();
+                    if ((modifiers & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK) {
+                    	out_3 = true;
+                    }
+                }
+            }; 
+            In1.addMouseListener(mouseListener1);
+            Out1.addMouseListener(mouseListener2);
+            Out2.addMouseListener(mouseListener3);
         }
-
+      if(in_1){
+    	  System.out.println("ok");
+      }
         Movement drag = new Movement(this, block);
         return block;
     }
