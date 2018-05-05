@@ -6,8 +6,11 @@ import static schema.window.Constants.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -19,7 +22,7 @@ import schema.SchemaShape;
 import schema.blocks.implementation.blocks.Block;
 import schema.blocks.implementation.type.Type;
 
-public class BlockShape implements Serializable {
+public class BlockShape extends JPanel implements Serializable {
 	private int id;
 	public static Block block;
 	public Schema schema;
@@ -28,6 +31,8 @@ public class BlockShape implements Serializable {
     public int y;
     public int type;
     public JPanel shape;
+    private ArrayList<Block> blocks;
+	public boolean click1;
 
 	public BlockShape(int t, int x, int y, int id, Schema schema, SchemaShape schemaShape, Block block) {
 	    this.block = block;
@@ -37,6 +42,7 @@ public class BlockShape implements Serializable {
 		this.x = x;
 		this.y = y;
 		this.type = t;
+		blocks = new ArrayList<Block>();
 	}
 	
 	public JPanel Data(int p_t, int x, int y, int idOfPort) {
@@ -200,6 +206,8 @@ public class BlockShape implements Serializable {
             }
     	});
         if (this.type == 0 |this.type == 1) {
+        	boolean click1 = false;
+        	
             /*	In1 Button */
             JButton In1 = new JButton("In1");
             In1.setToolTipText("Insert Values");
@@ -218,6 +226,12 @@ public class BlockShape implements Serializable {
                 	});
                 }
             });
+            
+            In1.addMouseListener(new MyListener());
+            if(click1) {
+            	In1.setBorder(new LineBorder(Color.GREEN));
+            }
+            
             /*	In2 Button */
             JButton In2 = new JButton("In2");
             In2.setToolTipText("Insert Values");
@@ -236,6 +250,12 @@ public class BlockShape implements Serializable {
                 	});
                 }
             });
+            
+            In2.addMouseListener(new MyListener());
+            if(click1) {
+            	In2.setBorder(new LineBorder(Color.RED));
+            }
+            
             /*	Out Button */
             JButton Out = new JButton("Out");
             Out.setToolTipText("Insert Values");
@@ -254,6 +274,8 @@ public class BlockShape implements Serializable {
                 	});
                 }
             });
+            Out.addMouseListener(new MyListener());
+            
         } else {
             /*	In1 Button */
             JButton In1 = new JButton("In1");
@@ -312,10 +334,20 @@ public class BlockShape implements Serializable {
         }
 
         Movement drag = new Movement(block);
-        Line l = new Line(Window.frame);
       return block;
  }
  public int getId() {
 	    return this.id;
+ }
+ class MyListener  extends MouseAdapter
+ {
+   public void mouseClicked (MouseEvent e) 
+   {       			
+     if (e.getModifiers() == MouseEvent.BUTTON3_MASK)
+     {
+       click1 = true;
+       System.out.println("right clicked");
+     }
+   }
  }
 }
