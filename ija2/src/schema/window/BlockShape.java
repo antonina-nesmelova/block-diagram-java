@@ -321,7 +321,7 @@ public class BlockShape extends JPanel implements Serializable {
             });
         }
 
-        Movement drag = new Movement(block);
+        Movement drag = new Movement(this, block);
         //Line l = new Line(Window.frame);
         return block;
     }

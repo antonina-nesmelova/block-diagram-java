@@ -13,8 +13,10 @@ public class Movement extends JPanel implements MouseMotionListener, MouseListen
     private int blockY;
     private int dst_X;
     private int dst_Y;
+    private BlockShape blockShape;
 
-    public Movement(Component... pns) {
+    public Movement(BlockShape blockShape, Component... pns) {
+        this.blockShape = blockShape;
         for(Component frame : pns) {
             frame.addMouseListener(this);
             frame.addMouseMotionListener(this);
@@ -29,6 +31,8 @@ public class Movement extends JPanel implements MouseMotionListener, MouseListen
         dst_X = blockX+evt.getComponent().getX();
         dst_Y = blockY+evt.getComponent().getY();
         evt.getComponent().setLocation(dst_X, dst_Y);
+        blockShape.x = dst_X;
+        blockShape.y = dst_Y;
     }
     /**
      * Funkce získává souřadnice kurzoru myši.
