@@ -1,53 +1,56 @@
-<project name="ija2016-3" default="compile">
-<!-- def properties  -->
+<?xml version="1.0"?>
+<project name="BlockScheme" default="all" basedir=".">
+	<!-- Properties -->
+	<property name="src" value="${basedir}/src"/>
+	<property name="build" value="${basedir}/build"/>
+	<property name="doc" value="${basedir}/doc"/>
+	<property name="client" value="${basedir}/dest-client"/>
+	<property name="application" value="${client}/ija-client.jar"/>
+	<property name="manifest" value="${src}/MANIFEST.MF"/>
 	<property name="dest.dir" value="build"/>
-	<property
-		name="lib.path"
-		value="lib/junit-4.12.jar:lib/hamcrest-core-1.3.jar"
-	/>
 
-	<property
-		name="test.classpath"
-		value="${lib.path}:${dest.dir}:."
-	/>
-	<property name="test.class.name" value="KlondikeTest"/>
-<!-- end of properties -->
-
-<!-- def targets -->
-	<target name="compile" depends="compile.proj">
+	<!-- Compile -->
+	<target name="compile">
 		<javac
-			srcdir="src"
-			classpath="${test.classpath}"
-			destdir="${dest.dir}"
-			includeAntRuntime="no"
-		>			
-			<include name="${test.class.name}.java"/>
+			srcdir="${src}"
+			destdir="${build}"
+			debug="false"
+			deprecation="true"
+			optimize="true"
+			includeantruntime="false">
 		</javac>
+		<antcall target="doc"></antcall>
+		<antcall target="make.jar"></antcall>
 	</target>
 
-	<target name="run" depends="compile">
-		<java
-			classpath="${test.classpath}:"
-			classname="org.junit.runner.JUnitCore"
-		>
-			<arg value="${test.class.name}"/>
-		</java>
+	<!-- Jar-file creating  -->
+	<target name="make.jar" description="Create jar-file">
+		<jar
+			jarfile="${application}"
+			basedir="${build}"
+			manifest="${manifest}"/>
 	</target>
 
-	<target name="clean">
-		<delete failonerror="false">
-			<fileset dir="${dest.dir}" includes="**/*"/>
-		</delete>
+	<!-- Generation of documentation -->
+	<target name="doc" description="Generate documentation">
+		<javadoc
+			encoding="UTF-8"
+			charset="UTF-8"
+			docencoding="UTF-8"
+			sourcepath="${src}"
+			destdir="${doc}">
+		</javadoc>
 	</target>
 
-	<target name="compile.proj">
-		<javac
-			srcdir="src/" 
-			destdir="${dest.dir}"
-			includeAntRuntime="no"
-		>
-			<exclude name="${test.class.name}.java"/>
-		</javac>
+	<!-- Run -->
+	<target name="run" description="Run the application">
+		<java jar="${application}" fork="true"/>
 	</target>
-<!-- end of targets -->
+
+	<!-- Clearing -->
+	<target name="clean" description="Clearing">
+		<delete dir="${build}"/>
+		<delete dir="${doc}"/>
+		<delete dir="${client}"/>
+	</target>
 </project>

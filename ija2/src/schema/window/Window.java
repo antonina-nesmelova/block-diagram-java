@@ -71,7 +71,7 @@ public class Window {
     private void initialize() {
     	Random rand = new Random();
         connections = new Connection();
-        File[] files = new File("examples").listFiles();
+
     	/*	Window	*/
         frame = new JFrame(NAME);
         frame.setBounds(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -192,15 +192,26 @@ public class Window {
         Download.setForeground(new Color(128, 0, 128));
         menuBar.add(Download);
 
-//        JMenuItem download = new JMenuItem("Download files");
-//        download.setHorizontalAlignment(SwingConstants.LEFT);
-//        download.setForeground(new Color(128, 0, 128));
-//        Download.add(download);
-//        download.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent arg0) {
-//
-//            }
-//        });
+        File[] files = new File("examples").listFiles();
+        for( File filename : files) {
+            JMenuItem download = new JMenuItem(filename.getName());
+            download.setHorizontalAlignment(SwingConstants.LEFT);
+            download.setForeground(new Color(128, 0, 128));
+            Download.add(download);
+            download.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent arg0) {
+                    full = saver.Download("examples/" + filename.getName());
+                    schema = full.schema;
+                    schemaShape = full.shape;
+                    desktopPane.removeAll();
+                    desktopPane.repaint();
+                    for (BlockShape shape : full.shape.blocksShape) {
+                        desktopPane.add(shape.block_creator());
+                    }
+                    frame.setVisible(true);
+                }
+            });
+        }
 
         JMenu Save = new JMenu("Save");
         Save.setForeground(new Color(128, 0, 128));
