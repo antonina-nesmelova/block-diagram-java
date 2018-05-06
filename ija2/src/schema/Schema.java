@@ -109,9 +109,13 @@ public class Schema implements Serializable {
     public boolean findLoop(int out, int in) {
 		if (out == in) return true;
 		else {
-			for (PortOut outPort : this.blocks.get(in).portsOut) {
-				if (outPort.isFree()) continue;
-				else if (findLoop(out, outPort.in.getBlock().getId())) return true;
+			for (Block block : blocks) {
+				if (block.getId() == in) {
+					for (PortOut outPort : block.portsOut) {
+						if (outPort.isFree()) continue;
+						else if (findLoop(out, outPort.in.getBlock().getId())) return true;
+					}
+				}
 			}
 		}
 		return false;

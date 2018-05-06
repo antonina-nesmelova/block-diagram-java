@@ -30,8 +30,6 @@ public class Window {
     private int number;
     private int schemaid;
     private static Saving saver;
-    private Connection connections;
-
     File[] files;
 
 	
@@ -70,7 +68,6 @@ public class Window {
      */
     private void initialize() {
     	Random rand = new Random();
-        connections = new Connection();
 
     	/*	Window	*/
         frame = new JFrame(NAME);

@@ -15,6 +15,7 @@ public class PortIn extends Port {
         if (this.isFree() & getBlock().controlTypes(getId(), out.value)) {
             this.setFree(false);
             this.out = out;
+            this.value = out.value;
             return true;
         } else {
             return false;

@@ -56,6 +56,7 @@ public class SchemaShape implements Serializable {
 
     public void removeShape(int id) {
         boolean removed = this.blocksShape.removeIf(block -> (block.getId() == id));
+        this.portsShape.removeIf(port -> (port.blockId == id));
         if (removed) System.out.println("Removed shape " + id);
     }
     public BlockShape getShape(int id) {
