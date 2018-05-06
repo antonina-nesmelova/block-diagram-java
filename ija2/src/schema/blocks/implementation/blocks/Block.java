@@ -155,6 +155,9 @@ public abstract class Block implements Serializable {
 	 * @return successful of setting
 	 */
 	public boolean controlTypes(int id, Type value) {
+		if (value == null) {
+			return true;
+		}
 		for (int i = 0; i < maxInPorts; i++) {
 			if (i != id & (this.portsIn.get(i).isMaterial() == value.isMaterial())) {
 				return false;
@@ -250,5 +253,23 @@ public abstract class Block implements Serializable {
     public boolean isResolved() {
         return resolved;
     }
+
+    public PortIn getPortIn (int id) {
+    	for (PortIn port : portsIn) {
+    		if (port.getId() == id) {
+    			return port;
+			}
+		}
+		return null;
+	}
+
+	public PortOut getPortOut (int id) {
+		for (PortOut port : portsOut) {
+			if (port.getId() == id) {
+				return port;
+			}
+		}
+		return null;
+	}
 }
 

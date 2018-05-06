@@ -27,15 +27,15 @@ import schema.blocks.implementation.type.Type;
 
 public class BlockShape extends JPanel implements Serializable {
     private int id;
-    public static Block block;
+    public Block block;
     public Schema schema;
     public SchemaShape schemaShape;
     public int x;
     public int y;
     public int type;
     public JPanel shape;
-    public List<Block> blocks;
-    public Point2D offset;
+//    public List<Block> blocks;
+//    public Point2D offset;
 
     public BlockShape(int t, int x, int y, int id, Schema schema, SchemaShape schemaShape, Block block) {
         this.block = block;
@@ -45,7 +45,7 @@ public class BlockShape extends JPanel implements Serializable {
         this.x = x;
         this.y = y;
         this.type = t;
-        blocks = new ArrayList<>();  // Stores the block names & coords
+//        blocks = new ArrayList<>();  // Stores the block names & coords
     }
 
     public JPanel Data(int p_t, int x, int y, int idOfPort) {
@@ -56,11 +56,18 @@ public class BlockShape extends JPanel implements Serializable {
         /* 		Out panel	*/
         if(p_t == 0) {
             if (block.portsOut.get(idOfPort).hasValue()) {
-                JLabel label = new JLabel("<html>"  + "Type: " + block.portsOut.get(idOfPort).getType().toString() +  "<br/>"
-                        + "Mass of out: " + block.portsOut.get(idOfPort).getMass() + "<br/>"
-                        +  "Out temp: " + block.portsOut.get(idOfPort).getTemp() + "<br/>"
-                        + "State: " + block.portsOut.get(idOfPort).getState().toString() + "<br/>"
-                        + "Joules: " + block.portsOut.get(idOfPort).getJoule() + "</html>");
+                String info;
+                if(block.portsOut.get(idOfPort).isMaterial() == 1) {
+                    info = "<html>"  + "Type: " + block.portsOut.get(idOfPort).getType().toString() +  "<br/>"
+                            + "Mass of out: " + block.portsOut.get(idOfPort).getMass() + "<br/>"
+                            +  "Out temp: " + block.portsOut.get(idOfPort).getTemp() + "<br/>"
+                            + "State: " + block.portsOut.get(idOfPort).getState().toString() + "<br/>"
+                            + "Joules: " + block.portsOut.get(idOfPort).getJoule() + "</html>";
+                } else {
+                    info = "<html>"  + "Type: " + block.portsOut.get(idOfPort).getType().toString() +  "<br/>"
+                            + "Joules: " + block.portsOut.get(idOfPort).getJoule() + "</html>";
+                }
+                JLabel label = new JLabel(info);
                 label.setBounds(10, -5, BLOCK_WIDTH, BLOCK_HEIGHT);
                 label.setFont(new Font("Courier New", Font.ITALIC, 11));
                 panel.add(label);
@@ -228,6 +235,7 @@ public class BlockShape extends JPanel implements Serializable {
                     });
                 }
             });
+            schemaShape.addPortShape(new PortShape(this.id, 0, true));
             /*	In2 Button */
             JButton In2 = new JButton("In2");
             In2.setToolTipText("Insert Values");
@@ -246,6 +254,7 @@ public class BlockShape extends JPanel implements Serializable {
                     });
                 }
             });
+            schemaShape.addPortShape(new PortShape(this.id, 1, true));
             /*	Out Button */
             JButton Out = new JButton("Out");
             Out.setToolTipText("Insert Values");
@@ -264,6 +273,10 @@ public class BlockShape extends JPanel implements Serializable {
                     });
                 }
             });
+            schemaShape.addPortShape(new PortShape(this.id, 0, false));
+            In1.addMouseListener(new Listener(id, 0, true, schemaShape));
+            In2.addMouseListener(new Listener(id, 1, true, schemaShape));
+            Out.addMouseListener(new Listener(id, 0, false, schemaShape));
         } else {
             /*	In1 Button */
             JButton In1 = new JButton("In1");
@@ -283,6 +296,7 @@ public class BlockShape extends JPanel implements Serializable {
                     });
                 }
             });
+            schemaShape.addPortShape(new PortShape(this.id, 0, true));
             /*	Out1 Button */
             JButton Out1 = new JButton("Out1");
             Out1.setToolTipText("Values");
@@ -301,6 +315,7 @@ public class BlockShape extends JPanel implements Serializable {
                     });
                 }
             });
+            schemaShape.addPortShape(new PortShape(this.id, 0, false));
             /*	Out2 Button */
             JButton Out2 = new JButton("Out2");
             Out2.setToolTipText("Values");
@@ -319,6 +334,7 @@ public class BlockShape extends JPanel implements Serializable {
                     });
                 }
             });
+            schemaShape.addPortShape(new PortShape(this.id, 1, false));
         }
 
         Movement drag = new Movement(this, block);

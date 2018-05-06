@@ -24,7 +24,7 @@ public class Window {
 	public static Schema schema;
     public static SchemaShape schemaShape;
     public static FullSchema full;
-    protected static JFrame frame;
+    public static JFrame frame;
     public static String NAME = "Block diagrams modeling physical processes";
     protected static JDesktopPane desktopPane;
     private int number;
@@ -58,8 +58,8 @@ public class Window {
     	this.number = 0;
     	this.schemaid = 1;
         initialize();
-        schemaShape = new SchemaShape();
         schema = new Schema();
+        schemaShape = new SchemaShape(schema);
         this.full = new FullSchema(schema, schemaShape);
         Saving saver = new Saving();
         this.saver = saver;
