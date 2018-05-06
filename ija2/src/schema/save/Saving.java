@@ -9,6 +9,11 @@ public class Saving {
 
     public Saving() {}
 
+    /**
+     * Serialize schema of logic blocks and views of blocks
+     * @param id id of schema
+     * @param schema schema
+     */
     public void Save(int id, FullSchema schema) {
         String filename = "examples/schema" + id + ".ser";
 
@@ -24,6 +29,11 @@ public class Saving {
         }
     }
 
+    /**
+     * Download and deserialize schema
+     * @param name name of file
+     * @return schema with logic and view
+     */
     public FullSchema Download(String name) {
         System.out.println("Want to download");
         FullSchema schema = null;

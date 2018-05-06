@@ -6,6 +6,13 @@ public class TypesFactory {
 
     }
 
+    /**
+     * Creating instance of type and setting values
+     * @param type type
+     * @param mass mass
+     * @param temp temperature
+     * @return
+     */
     public Type createMaterial(Type.type type, double mass, double temp) {
         switch (type) {
             case WATER: {

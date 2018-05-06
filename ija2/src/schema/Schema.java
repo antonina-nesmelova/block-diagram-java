@@ -165,4 +165,11 @@ public class Schema implements Serializable {
         boolean removed = this.blocks.removeIf(block -> (block.getId() == id));
         if (removed) System.out.println("Removed block " + id);
 	}
+
+	public Block getBlock(int id) {
+        for (Block block : this.blocks) {
+            if (block.getId() == id) return block;
+        }
+        return null;
+    }
 }

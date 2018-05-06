@@ -2,25 +2,42 @@ package schema.blocks.implementation.type;
 
 public class Energy extends AbstractType {
 	public double joule;
-	
+
+	/**
+	 * Initialize energy, set joules from mass
+	 * @param mass set as joules
+	 * @param temp ignored
+	 */
 	public Energy(double mass, double temp) {
 		setJoule(mass);
 	}
 
-	@Override
+	/**
+	 * Energy is not material - returns 2
+	 * @return
+	 */
 	public int isMaterial() {
 		return 2;
 	}
-
+	/**
+	 * Returnes type energy
+	 * @return
+	 */
 	public type getType() {
 		return type.ENERGY;
 	}
-
+	/**
+	 * Returns joules
+	 * @return joules
+	 */
 	public void setJoule(double joule) {
 		this.joule = joule;
 	}
 
-	@Override
+	/**
+	 * Set joules
+	 * @return joules
+	 */
 	public double getJoule() { return this.joule; }
 
 	@Override
@@ -42,6 +59,11 @@ public class Energy extends AbstractType {
 		return;
 	}
 
+	/**
+	 * Set joules from mass
+	 * @param mass set as joules
+	 * @param temp ignored
+	 */
 	public void setValues(double mass, double temp) {
 		this.setJoule(mass);
 		return;}

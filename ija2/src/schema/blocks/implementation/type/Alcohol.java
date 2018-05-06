@@ -1,6 +1,11 @@
 package schema.blocks.implementation.type;
 
 public class Alcohol extends AbstractMaterial {
+	/**
+	 * Initialize material alcohol
+	 * @param mass mass
+	 * @param temp temperature
+	 */
 	public Alcohol(double mass, double temp) {
 		super();
 		this.gas_t = 78.33;
@@ -12,6 +17,10 @@ public class Alcohol extends AbstractMaterial {
 		this.setJoule(0);
 	}
 
+	/**
+	 * Returnes type alcohol
+	 * @return
+	 */
 	public type getType() {
 		return type.ALCOHOL;
 	}

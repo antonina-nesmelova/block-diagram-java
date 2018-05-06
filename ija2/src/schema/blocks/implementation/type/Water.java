@@ -1,6 +1,11 @@
 package schema.blocks.implementation.type;
 
 public class Water extends AbstractMaterial{
+	/**
+	 * Initialize material water
+	 * @param mass mass
+	 * @param temp temperature
+	 */
 	public Water(double mass, double temp) {
 		super();
 		this.freeze_t = 0;
@@ -12,6 +17,10 @@ public class Water extends AbstractMaterial{
 		this.setJoule(0);
 	}
 
+	/**
+	 * Returnes type water
+	 * @return
+	 */
 	public type getType() {
 		return type.WATER;
 	}
