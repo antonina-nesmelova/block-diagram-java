@@ -23,6 +23,14 @@ public class BlockShape extends JPanel implements Serializable {
     public SchemaShape schemaShape;
     public int x, y, type;
     public JPanel shape;
+    public static JButton In1;
+    public static JButton In2;
+    public static JButton Out;
+    public static JButton In;
+    public static JButton Out1;
+    public static JButton Out2;
+    public static int p_in_count = 0;
+    public static int p_out_count = 0;
 
     /**
      * Constructor for shape of the block
@@ -197,17 +205,17 @@ public class BlockShape extends JPanel implements Serializable {
         });
         /*	Block has two in ports and one out port	*/
         if (this.type == 0 |this.type == 1) {
-        	Port_In Port_In = new Port_In(schemaShape);
-            JButton In1 = Port_In.port("In1");  
-            JButton In2 = Port_In.port("In2");
-            JButton Out = Port_Out.port("Out");
+        	Port Port = new Port(schemaShape);
+            In1 = Port.port_bttn("In1");  
+            In2 = Port.port_bttn("In2");
+            Out = Port.port_bttn("Out");
             blockData.add(In1);    			//In1 Button
             blockData.add(In2); 			//In2 Button
             blockData.add(Out); 			//Out Button
             /*  Right Clicks */
-            In1.addMouseListener(new Port_In(schemaShape));
-            In2.addMouseListener(new Port_In(schemaShape));
-            Out.addMouseListener(new Port_In(schemaShape));
+            In1.addMouseListener(new Port(schemaShape));
+            In2.addMouseListener(new Port(schemaShape));
+            Out.addMouseListener(new Port(schemaShape));
             /*	Left Clicks	 */
             In1.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
@@ -242,44 +250,20 @@ public class BlockShape extends JPanel implements Serializable {
                     });
                 }
             });
-            /*  Right Clicks 
-            MouseListener mouseListener1 = new MouseAdapter() {
-            	public void mouseClicked (MouseEvent e) {
-            	    if (e.getModifiers() == MouseEvent.BUTTON3_MASK) {
-            	      In1.setBorder(new LineBorder(Color.GREEN));
-            	      in_1 = true;
-            	    }
-            	  }
-            };  
-            MouseListener mouseListener2 = new MouseAdapter() {
-            	public void mouseClicked (MouseEvent e) {
-            	    if (e.getModifiers() == MouseEvent.BUTTON3_MASK) {
-            	      In2.setBorder(new LineBorder(Color.GREEN));
-            	      BlockShape.in_2 = true;
-            	      
-            	    }
-            	  }
-            }; 
-            MouseListener mouseListener3 = new MouseAdapter() {
-            	public void mouseClicked (MouseEvent e) {
-            	    if (e.getModifiers() == MouseEvent.BUTTON3_MASK) {
-            	      Out.setBorder(new LineBorder(Color.RED));
-            	      BlockShape.out = true;
-            	    }
-            	  }
-            };
-            In1.addMouseListener(mouseListener1);
-            In2.addMouseListener(mouseListener2);
-            Out.addMouseListener(mouseListener3);*/
         } 
         /*  One in port, two outs port  */
         else {
-        	JButton In = Port_In.port("In1");  
-            JButton Out1 = Port_In.port("Out1"); 
-            JButton Out2 = Port_Out.port("Out2"); 
+        	Port Port = new Port(schemaShape);
+            In = Port.port_bttn("In");  
+            Out1 = Port.port_bttn("Out1");
+            Out2 = Port.port_bttn("Out2"); 
             blockData.add(In);    			//In1 Button
             blockData.add(Out1); 			//In2 Button
             blockData.add(Out2); 			//Out Button	
+            /*  Right Clicks */
+            In.addMouseListener(new Port(schemaShape));
+            Out1.addMouseListener(new Port(schemaShape));
+            Out2.addMouseListener(new Port(schemaShape));
             /*	Left Clicks	 */
             In.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
